@@ -1,10 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './Components/App.js';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App.js";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./index.css";
 
 ReactDOM.render(
-    <div className='appContainer'>
-        <App />
-    </div>, document.getElementById('app')
-  )
+  <div className="appContainer">
+    <App />
+  </div>,
+  document.getElementById("app")
+);

@@ -1,0 +1,28 @@
+.titleBar {
+  background-color: rgb(120, 192, 120);
+  height: 10vh;
+  color: #6d5050;
+}
+
+.titleIcon {
+  color: #6d5050;
+  margin: auto;
+}
+
+.mainNav {
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
+a {
+  text-decoration: none;
+  color: #d0021b;
+}
+
+.selected {
+  font-weight: bold;
+}
+
+.underline {
+  border-bottom: solid 1px lightgray;
+}
