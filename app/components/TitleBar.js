@@ -26,7 +26,7 @@ export default class TitleBar extends React.Component {
   handleClick = this.props.handleClick;
   static propTypes = {
     signedIn: PropTypes.bool.isRequired,
-    handleClick: PropTypes.func.isRequired
+    handleClick: PropTypes.func
   };
   render() {
     return (
@@ -38,7 +38,7 @@ export default class TitleBar extends React.Component {
           <h1>Lancer</h1>
         </Col>
         <Col xs="2" className="titleIcon">
-          <AuthButton />
+          {this.props.signedIn ? <AuthButton /> : ""}
         </Col>
       </Row>
     );

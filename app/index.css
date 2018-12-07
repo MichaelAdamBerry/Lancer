@@ -4,9 +4,19 @@
   color: #6d5050;
 }
 
-.titleIcon {
+.jumbotron {
+  text-align: center;
+  margin-top: 10%;
   color: #6d5050;
+}
+
+.titleIcon {
+  color: #d0021b;
   margin: auto;
+}
+
+.formContainer {
+  margin-top: 5%;
 }
 
 .mainNav {
