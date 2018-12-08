@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 export default class Nav extends React.Component {
   render() {
     return (
-      <Col sm="12" md="3">
+      <Col sm="12" md="3" lg="2">
         <ListGroup flush>
           <ListGroupItem>
             <NavLink to="/myjobs/past" activeClassName="selected">
