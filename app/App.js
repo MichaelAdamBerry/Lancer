@@ -22,7 +22,7 @@ import {
 } from "react-router-dom";
 import Register from "./components/Register";
 import fakeAuth from "./fakeData/fakeAuth";
-import Login from "./components/Login";
+import Login from "./components/Login/Login";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
