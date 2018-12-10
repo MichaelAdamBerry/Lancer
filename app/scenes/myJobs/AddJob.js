@@ -47,39 +47,9 @@ export default class AddJob extends React.Component {
     }
   };
 
-  handleClientChange = event => {
-    const value = event.target.value;
-    this.setState({ client: value });
-  };
-
-  handleDateChange = event => {
-    const value = event.target.value;
-    this.setState({ date: value });
-  };
-
-  handleRateChange = event => {
-    const value = event.target.value;
-    this.setState({ rate: value });
-  };
-
-  handleStartTimeChange = event => {
-    const value = event.target.value;
-    this.setState({ startTime: value });
-  };
-
-  handleEndTimeChange = event => {
-    const value = event.target.value;
-    this.setState({ endTime: value });
-  };
-
-  handleLocationChange = event => {
-    const value = event.target.value;
-    this.setState({ location: value });
-  };
-
-  handleNotesChange = event => {
-    const value = event.target.value;
-    this.setState({ notes: value });
+  handleChange = event => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   };
 
   render() {
@@ -99,13 +69,13 @@ export default class AddJob extends React.Component {
             <h3>Record a New Job</h3>
             <Form onSubmit={this.handleSubmit}>
               <FormGroup>
-                <Label for="clientName">Name</Label>
+                <Label for="client">Name</Label>
                 <Input
                   type="select"
                   value={client}
-                  onChange={this.handleClientChange}
-                  name="clientName"
-                  id="clientName">
+                  name="client"
+                  onChange={this.handleChange}
+                  id="client">
                   <option>choose a client</option>
                   <option>Example one</option>
                   <option>Example two</option>
@@ -117,7 +87,7 @@ export default class AddJob extends React.Component {
                   type="date"
                   name="date"
                   value={date}
-                  onChange={this.handleDateChange}
+                  onChange={this.handleChange}
                   id="Date"
                   placeholder="date placeholder"
                 />
@@ -126,9 +96,9 @@ export default class AddJob extends React.Component {
               <Input
                 type="select"
                 value={rate}
-                onChange={this.handleRateChange}
-                name="rateType"
-                id="rateType">
+                onChange={this.handleChange}
+                name="rate"
+                id="rate">
                 <option>Hourly</option>
                 <option>Day Rate</option>
                 <option>Multi-day Job Rate</option>
@@ -138,17 +108,17 @@ export default class AddJob extends React.Component {
                 <Input
                   type="time"
                   value={startTime}
-                  onChange={this.handleStartTimeChange}
-                  name="time"
-                  id="StartTime"
+                  onChange={this.handleChange}
+                  name="startTime"
+                  id="startTime"
                   placeholder="time placeholder"
                 />
                 <Label for="EndTime">End Time</Label>
                 <Input
                   type="time"
-                  name="time"
+                  name="endTime"
                   value={endTime}
-                  onChange={this.handleEndTimeChange}
+                  onChange={this.handleChange}
                   id="EndTime"
                   placeholder="time placeholder"
                 />
@@ -158,7 +128,7 @@ export default class AddJob extends React.Component {
                 <Input
                   type="text"
                   value={location}
-                  onChange={this.handleLocationChange}
+                  onChange={this.handleChange}
                   name="location"
                   id="location"
                 />
@@ -168,7 +138,7 @@ export default class AddJob extends React.Component {
                 <Input
                   type="textarea"
                   value={notes}
-                  onChange={this.handleNotesChange}
+                  onChange={this.handleChange}
                   name="notes"
                   id="notes"
                 />

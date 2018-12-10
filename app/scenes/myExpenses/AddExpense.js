@@ -29,19 +29,9 @@ export default class AddExpense extends React.Component {
     this.setState({ client: "Job A", price: "", description: "" });
   };
 
-  handlePriceChange = event => {
-    const value = event.target.value;
-    this.setState({ price: value });
-  };
-
-  handleDescriptionChange = event => {
-    const value = event.target.value;
-    this.setState({ description: value });
-  };
-
-  handleClientChange = event => {
-    const value = event.target.value;
-    this.setState({ client: value });
+  handleChange = event => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   };
   render() {
     const { price, client, description } = this.state;
@@ -60,9 +50,9 @@ export default class AddExpense extends React.Component {
                 <Input
                   type="select"
                   value={client}
-                  onChange={this.handleClientChange}
+                  onChange={this.handleChange}
                   id="jobSelect"
-                  name="jobSelect">
+                  name="client">
                   <option>Job A</option>
                   <option>Job B</option>
                   <option>Job C</option>
@@ -73,7 +63,7 @@ export default class AddExpense extends React.Component {
                 <Input
                   type="textarea"
                   value={description}
-                  onChange={this.handleDescriptionChange}
+                  onChange={this.handleChange}
                   name="description"
                   id="description"
                 />
@@ -87,8 +77,9 @@ export default class AddExpense extends React.Component {
                   <input
                     type="text"
                     value={price}
+                    name="price"
                     className="form-control"
-                    onChange={this.handlePriceChange}
+                    onChange={this.handleChange}
                     aria-label="Amount (to the nearest dollar)"
                   />
                   <div className="input-group-append">

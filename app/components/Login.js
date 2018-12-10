@@ -24,14 +24,9 @@ class LoginForm extends React.Component {
     this.props.handleClick();
   };
 
-  handleEmailChange = event => {
-    const value = event.target.value;
-    this.setState({ email: value });
-  };
-
-  handlePasswordChange = event => {
-    const value = event.target.value;
-    this.setState({ password: value });
+  handleChange = event => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   };
 
   render() {
@@ -45,7 +40,7 @@ class LoginForm extends React.Component {
             <Input
               type="email"
               value={email}
-              onChange={this.handleEmailChange}
+              onChange={this.handleChange}
               name="email"
               id="email"
             />
@@ -55,7 +50,7 @@ class LoginForm extends React.Component {
             <Input
               type="password"
               value={password}
-              onChange={this.handlePasswordChange}
+              onChange={this.handleChange}
               name="password"
               id="Password"
             />

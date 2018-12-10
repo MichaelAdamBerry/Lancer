@@ -34,20 +34,11 @@ class RegisterForm extends React.Component {
     }
   };
 
-  handlePasswordChange = event => {
-    const value = event.target.value;
-    this.setState({ password: value });
+  handleChange = event => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   };
 
-  handleEmailChange = event => {
-    const value = event.target.value;
-    this.setState({ email: value });
-  };
-
-  handleVerifiedPasswordChange = event => {
-    const value = event.target.value;
-    this.setState({ verifiedPassword: value });
-  };
   render() {
     const { email, password, verifiedPassword } = this.state;
     return (
@@ -59,7 +50,7 @@ class RegisterForm extends React.Component {
             <Input
               type="email"
               value={email}
-              onChange={this.handleEmailChange}
+              onChange={this.handleChange}
               name="email"
               id="email"
             />
@@ -69,7 +60,7 @@ class RegisterForm extends React.Component {
             <Input
               type="password"
               value={password}
-              onChange={this.handlePasswordChange}
+              onChange={this.handleChange}
               name="password"
               id="Password"
             />
@@ -79,8 +70,8 @@ class RegisterForm extends React.Component {
             <Input
               type="password"
               value={verifiedPassword}
-              onChange={this.handleVerifiedPasswordChange}
-              name="password"
+              onChange={this.handleChange}
+              name="verifiedPassword"
               id="verifiedPassword"
             />
           </FormGroup>
