@@ -37,7 +37,7 @@ class LoginForm extends React.Component {
   render() {
     const { email, password } = this.state;
     return (
-      <Col className="formContainer">
+      <Col md="12" lg="6" className="formContainer">
         <h4 className="display-4">Welcome back!</h4>
         <Form>
           <FormGroup>

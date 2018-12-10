@@ -51,7 +51,7 @@ class RegisterForm extends React.Component {
   render() {
     const { email, password, verifiedPassword } = this.state;
     return (
-      <Col className="formContainer">
+      <Col md="12" lg="8" className="formContainer">
         <h4 className="display-4">Let's get started!</h4>
         <Form>
           <FormGroup>
