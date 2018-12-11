@@ -11,6 +11,7 @@ import {
   Input,
   Label,
   FormGroup,
+  FormText,
   Button
 } from "reactstrap";
 
@@ -19,11 +20,13 @@ export default class AddClient extends React.Component {
     super(props);
     this.state = {
       clientName: "",
+      clientNameInvalid: true,
       contactName: "",
       phone: "",
       hrRate: "",
       dayRate: "",
-      otRate: ""
+      otRate: "",
+      rateInvalid: true
     };
   }
 
@@ -38,9 +41,11 @@ export default class AddClient extends React.Component {
       console.log(this.state);
       this.setState({
         clientName: "",
+        clientNameInvalid: true,
         contactName: "",
         phone: "",
         hrRate: "",
+        rateInvalid: true,
         dayRate: "",
         otRate: ""
       });
@@ -52,20 +57,35 @@ export default class AddClient extends React.Component {
     this.setState({ [name]: value });
   };
 
+  handleRequiredFieldChange = event => {
+    const { name, value } = event.target;
+    const invalidName = `${name}Invalid`;
+    this.setState({ [name]: value });
+    if (value === "") {
+      this.setState({ [invalidName]: true });
+    } else {
+      this.setState({ [invalidName]: false });
+    }
+  };
+
   render() {
     const {
       clientName,
+      clientNameInvalid,
       contactName,
       phone,
       hrRate,
       dayRate,
+      rateInvalid,
       otRate
     } = this.state;
     return (
       <Container>
         <Row>
-          <Col md="12" lg="6">
-            <h3>Add a New Client to your Client List</h3>
+          <Col md="12" lg="6" className="addForm shadow">
+            <h3 className="text-center formTitle">
+              Add a New Client to your Client List
+            </h3>
             <Form onSubmit={this.handleSubmit}>
               <FormGroup>
                 <Label for="clientName">Name</Label>
@@ -73,9 +93,15 @@ export default class AddClient extends React.Component {
                   type="text"
                   name="clientName"
                   value={clientName}
-                  onChange={this.handleChange}
+                  onChange={this.handleRequiredFieldChange}
                   id="clientName"
+                  className="shadow p-3 bg-light rounded"
+                  invalid={clientNameInvalid}
+                  valid={!clientNameInvalid}
                 />
+                <FormText>
+                  {clientNameInvalid ? "required field" : "👍🏽  Looks Good"}
+                </FormText>
               </FormGroup>
               <FormGroup>
                 <Label for="contactName">Main Contact</Label>
@@ -85,6 +111,7 @@ export default class AddClient extends React.Component {
                   value={contactName}
                   onChange={this.handleChange}
                   id="contactName"
+                  className="shadow p-3 bg-light rounded"
                 />
                 <Label for="contactPhone">Contacts Phone</Label>
                 <Input
@@ -93,6 +120,7 @@ export default class AddClient extends React.Component {
                   value={phone}
                   onChange={this.handleChange}
                   id="contactTel"
+                  className="shadow p-3 bg-light rounded"
                 />
               </FormGroup>
               <FormGroup>
@@ -102,6 +130,7 @@ export default class AddClient extends React.Component {
                   name="hrRate"
                   value={hrRate}
                   onChange={this.handleChange}
+                  className="shadow p-3 bg-light rounded"
                 />
                 <Label for="dayRate">Day Rate</Label>
                 <Input
@@ -109,6 +138,7 @@ export default class AddClient extends React.Component {
                   value={dayRate}
                   name="dayRate"
                   onChange={this.handleChange}
+                  className="shadow p-3 bg-light rounded"
                 />
                 <Label for="overTimeRate">Overtime Rate</Label>
                 <Input
@@ -116,13 +146,14 @@ export default class AddClient extends React.Component {
                   name="otRate"
                   value={otRate}
                   onChange={this.handleChange}
+                  className="shadow p-3 bg-light rounded"
                 />
               </FormGroup>
             </Form>
             <Button
               type="button"
               onClick={this.handleSubmit}
-              className="btn btn-success">
+              className="btn btn-success shadow formButton">
               Add a New Client
             </Button>
           </Col>

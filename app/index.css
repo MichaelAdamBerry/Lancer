@@ -36,3 +36,22 @@ a {
 .underline {
   border-bottom: solid 1px lightgray;
 }
+
+.addForm {
+  margin: auto;
+  background-color: #efefef;
+  border: solid 1px #cccaca;
+  border-radius: 5%;
+}
+
+.formTitle {
+  margin-top: 1em;
+}
+
+.formButton {
+  margin-bottom: 1em;
+}
+
+.siteText {
+  color: #6d5050;
+}
