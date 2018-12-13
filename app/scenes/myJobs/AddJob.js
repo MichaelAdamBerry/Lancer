@@ -1,4 +1,5 @@
 import React from "react";
+import firebase from "firebase";
 import {
   Container,
   Row,
@@ -15,7 +16,13 @@ import {
 export default class AddJob extends React.Component {
   constructor(props) {
     super(props);
+    this.clearState = this.clearState.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.validateForm = this.validateForm.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleRequiredFieldChange = this.handleRequiredFieldChange.bind(this);
     this.state = {
+      paid: false,
       client: "",
       clientInvalid: true,
       date: "",
@@ -29,7 +36,7 @@ export default class AddJob extends React.Component {
     };
   }
 
-  clearState = () => {
+  clearState() {
     this.setState({
       clientInvalid: true,
       client: "",
@@ -42,21 +49,31 @@ export default class AddJob extends React.Component {
       location: "",
       notes: ""
     });
-  };
+  }
 
-  handleSubmit = event => {
+  handleSubmit(event) {
     event.preventDefault();
+    const jobsRef = firebase.database().ref("jobs");
+    const job = {
+      client: this.state.client,
+      date: this.state.date,
+      rate: this.state.rate,
+      startTime: this.state.startTime,
+      endTime: this.state.endTime,
+      location: this.state.location,
+      notes: this.state.notes
+    };
     this.validateForm();
     if (!this.state.client || !this.state.date || !this.state.rate) {
       console.log("Client Name, Date, and Rate Type are all required fields");
       return;
     } else {
-      console.log(this.state);
+      jobsRef.push(job);
       this.clearState();
     }
-  };
+  }
 
-  validateForm = () => {
+  validateForm() {
     if (!this.state.client) {
       this.setState({ clientInvalid: true });
     } else if (!this.state.date) {
@@ -64,18 +81,18 @@ export default class AddJob extends React.Component {
     } else if (!this.state.rate) {
       this.setState({ rateInvalid: true });
     }
-  };
+  }
 
-  handleChange = event => {
+  handleChange(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
-  };
+  }
 
-  handleRequiredFieldChange = event => {
+  handleRequiredFieldChange(event) {
     const { name, value } = event.target;
     const nameInvalid = `${name}Invalid`;
     this.setState({ [name]: value, [nameInvalid]: false });
-  };
+  }
 
   render() {
     const {
