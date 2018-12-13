@@ -25,7 +25,7 @@ export default class MyExpenses extends React.Component {
         id: expense,
         amount: expenses[expense].price,
         description: expenses[expense].description,
-        user: expenses[expense].user
+        userId: expenses[expense].user
       });
     }
     this.setState({ expenses: newState }, console.log(this.state));
@@ -59,6 +59,7 @@ export default class MyExpenses extends React.Component {
                     <tr key={`${i}${i.id}`}>
                       <td>{i.amount}</td>
                       <td>{i.description}</td>
+                      <td>{i.userId}</td>
                       <td>
                         <button
                           type="button"

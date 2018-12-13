@@ -12,7 +12,6 @@ import {
   Button
 } from "reactstrap";
 import PropTypes from "prop-types";
-import Nav from "../dashboard/components/Nav";
 
 export default class AddExpense extends React.Component {
   constructor(props) {
@@ -23,22 +22,22 @@ export default class AddExpense extends React.Component {
       client: "",
       clientInvalid: true,
       description: "",
-      user: this.props.user
+      userId: this.props.userId
     };
   }
 
   static defaultProps = {
-    user: "admin"
+    userId: "admin"
   };
   static propTypes = {
-    user: PropTypes.string.isRequired
+    userId: PropTypes.string.isRequired
   };
 
   handleSubmit = event => {
     event.preventDefault();
     const expensesRef = firebase.database().ref("expenses");
     const expense = {
-      user: this.state.user,
+      userId: this.state.userId,
       client: this.state.client,
       price: this.state.price,
       description: this.state.description
