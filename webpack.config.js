@@ -1,25 +1,24 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: [ '@babel/polyfill', './app/index.js'],
+  entry: ["@babel/polyfill", "./app/index.js"],
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'index_bundle.js',
-    crossOriginLoading: 'anonymous'
+    path: path.resolve(__dirname, "dist"),
+    filename: "index_bundle.js",
+    crossOriginLoading: "anonymous"
   },
 
   module: {
     rules: [
-      { test: /\.(js)$/, use: 'babel-loader' },
-      { test: /\.css$/, use: [ 'style-loader', 'css-loader']},
+      { test: /\.(js)$/, use: "babel-loader" },
+      { test: /\.css$/, use: ["style-loader", "css-loader"] }
     ]
   },
   plugins: [
     new HtmlWebpackPlugin({
-        template: 'app/index.html'
+      template: "app/index.html"
     })
   ],
-  mode: process.env.NODE_ENV === 'production' ? 'production': 'development'
+  mode: process.env.NODE_ENV === "production" ? "production" : "development"
 };

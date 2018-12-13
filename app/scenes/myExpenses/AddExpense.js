@@ -1,4 +1,5 @@
 import React from "react";
+import firebase from "firebase";
 import {
   Container,
   Row,
@@ -10,6 +11,7 @@ import {
   Input,
   Button
 } from "reactstrap";
+import PropTypes from "prop-types";
 import Nav from "../dashboard/components/Nav";
 
 export default class AddExpense extends React.Component {
@@ -20,15 +22,30 @@ export default class AddExpense extends React.Component {
       priceInvalid: true,
       client: "",
       clientInvalid: true,
-      description: ""
+      description: "",
+      user: this.props.user
     };
   }
 
+  static defaultProps = {
+    user: "admin"
+  };
+  static propTypes = {
+    user: PropTypes.string.isRequired
+  };
+
   handleSubmit = event => {
     event.preventDefault();
+    const expensesRef = firebase.database().ref("expenses");
+    const expense = {
+      user: this.state.user,
+      client: this.state.client,
+      price: this.state.price,
+      description: this.state.description
+    };
     this.state.price === "" || this.state.client === ""
       ? console.log("include a price")
-      : console.log(this.state);
+      : expensesRef.push(expense);
     this.setState({ client: "Job A", price: "", description: "" });
   };
 
