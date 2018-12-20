@@ -1,6 +1,6 @@
 .titleBar {
   background-color: rgb(120, 192, 120);
-  height: 10vh;
+  height: 20vh;
   color: #6d5050;
 }
 
@@ -54,4 +54,29 @@ a {
 
 .siteText {
   color: #6d5050;
+}
+
+html {
+  font-size: 0.7rem;
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width: 480px) {
+  html {
+    font-size: 1rem;
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+  html {
+    font-size: 1rem;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 992px) {
+  html {
+    font-size: 1rem;
+  }
 }

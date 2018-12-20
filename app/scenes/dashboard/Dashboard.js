@@ -6,27 +6,27 @@ import Past from "../myJobs/Past";
 import { Link } from "react-router-dom";
 import Stats from "../myStats/Stats";
 
-export default class Dashboard extends React.Component {
-  render() {
-    return (
-      <Container>
-        <Row>
-          <Nav />
-          <Col sm="12" md="9">
-            <Container>
-              <Row style={{ height: "50vh" }}>
-                <Future fullView={false} />
-                <Past fullView={false} />
-              </Row>
-              <Row className="align-content-center" style={{ height: "30vh" }}>
-                <Col>
-                  <Stats showNav={false} />
-                </Col>
-              </Row>
-            </Container>
-          </Col>
-        </Row>
-      </Container>
-    );
-  }
-}
+const Dashboard = () => {
+  return (
+    <div className="container-fluid">
+      <div className="row">
+        <Nav />
+        <Col sm="12" md="9">
+          <div className={"container-fluid"}>
+            <Row>
+              <Future fullView={false} />
+              <Past fullView={false} />
+            </Row>
+            <Row className="align-content-center">
+              <Col>
+                <Stats showNav={false} />
+              </Col>
+            </Row>
+          </div>
+        </Col>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;

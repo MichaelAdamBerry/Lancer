@@ -3,10 +3,10 @@ import ReactDOM from "react-dom";
 import App from "./App.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
-import "./firebase/firebase";
+import "./firebase";
 
 ReactDOM.render(
-  <div className="appContainer">
+  <div className="container-fluid appContainer">
     <App />
   </div>,
   document.getElementById("app")

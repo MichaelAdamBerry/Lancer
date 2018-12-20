@@ -1,12 +1,12 @@
 import React from "react";
-import firebase from "firebase";
+import { firestore } from "../../../app/firebase";
+import { collectIdsAndDocs } from "../../../app/utilities";
 import {
   Container,
   Row,
   Col,
   Form,
   FormGroup,
-  FormFeedback,
   FormText,
   Label,
   Input,
@@ -16,11 +16,6 @@ import {
 export default class AddJob extends React.Component {
   constructor(props) {
     super(props);
-    this.clearState = this.clearState.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.validateForm = this.validateForm.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleRequiredFieldChange = this.handleRequiredFieldChange.bind(this);
     this.state = {
       paid: false,
       client: "",
@@ -36,7 +31,7 @@ export default class AddJob extends React.Component {
     };
   }
 
-  clearState() {
+  clearState = () => {
     this.setState({
       clientInvalid: true,
       client: "",
@@ -49,11 +44,30 @@ export default class AddJob extends React.Component {
       location: "",
       notes: ""
     });
-  }
+  };
 
-  handleSubmit(event) {
+  unsubscribe = null;
+
+  componentDidMount = async () => {
+    this.unsubscribe = await firestore
+      .collection("clients")
+      .onSnapshot(snapshot => {
+        const clientData = snapshot.docs.map(collectIdsAndDocs);
+        this.setState({ clientData });
+      });
+  };
+
+  componentWillUnmount = () => {
+    this.unsubscribe();
+  };
+
+  handleCreate = async newJob => {
+    const docRef = await firestore.collection("jobs").add(newJob);
+    return docRef;
+  };
+
+  handleSubmit = event => {
     event.preventDefault();
-    const jobsRef = firebase.database().ref("jobs");
     const job = {
       client: this.state.client,
       date: this.state.date,
@@ -68,12 +82,12 @@ export default class AddJob extends React.Component {
       console.log("Client Name, Date, and Rate Type are all required fields");
       return;
     } else {
-      jobsRef.push(job);
+      this.handleCreate(job);
       this.clearState();
     }
-  }
+  };
 
-  validateForm() {
+  validateForm = () => {
     if (!this.state.client) {
       this.setState({ clientInvalid: true });
     } else if (!this.state.date) {
@@ -81,18 +95,18 @@ export default class AddJob extends React.Component {
     } else if (!this.state.rate) {
       this.setState({ rateInvalid: true });
     }
-  }
+  };
 
-  handleChange(event) {
+  handleChange = event => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
-  }
+  };
 
-  handleRequiredFieldChange(event) {
+  handleRequiredFieldChange = event => {
     const { name, value } = event.target;
     const nameInvalid = `${name}Invalid`;
     this.setState({ [name]: value, [nameInvalid]: false });
-  }
+  };
 
   render() {
     const {
@@ -105,7 +119,8 @@ export default class AddJob extends React.Component {
       startTime,
       endTime,
       location,
-      notes
+      notes,
+      clientData
     } = this.state;
     return (
       <Container>
@@ -119,15 +134,20 @@ export default class AddJob extends React.Component {
                   className="shadow p-3 bg-light rounded"
                   type="select"
                   value={client}
+                  placeholder="pick a client"
                   name="client"
                   onChange={this.handleRequiredFieldChange}
                   id="client"
                   invalid={clientInvalid}
                   valid={!clientInvalid}>
-                  <option disabled>pick one</option>
-                  <option>Example one</option>
-                  <option>Example two</option>
-                  <option>Example three</option>
+                  <option />
+                  {!clientData
+                    ? null
+                    : clientData.map(client => {
+                        return (
+                          <option key={client.id}>{client.clientName}</option>
+                        );
+                      })}
                 </Input>
                 <FormText className="text-right">
                   {clientInvalid ? "required field" : "👍🏽  Looks Good"}

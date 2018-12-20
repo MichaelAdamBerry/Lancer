@@ -4,13 +4,19 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import firebase from "firebase";
 import Nav from "../dashboard/components/Nav";
+import { firestore } from "../../../app/firebase";
+import {
+  collectIdsAndDocs,
+  formatDate,
+  formatTime
+} from "../../../app/utilities";
 
 const DashTable = props => {
   const jobs = props.jobs;
   return (
     <Col>
       <h5 className="tableHeading">Upcomping Jobs</h5>
-      <Table hover striped>
+      <Table hover striped responsive>
         <thead>
           <tr>
             <th>Date</th>
@@ -20,9 +26,9 @@ const DashTable = props => {
           </tr>
           {jobs.map(job => {
             return (
-              <tr>
-                <td>{job.date}</td>
-                <td>{job.startTime}</td>
+              <tr key={job.id}>
+                <td>{formatDate(job.date)}</td>
+                <td>{formatTime(job.startTime)}</td>
                 <td>{job.client}</td>
                 <td>{job.location}</td>
               </tr>
@@ -35,14 +41,14 @@ const DashTable = props => {
 };
 
 const FullTable = props => {
-  const jobs = props.jobs;
+  const { jobs, handleRemove } = props;
   return (
-    <Container>
+    <Container fluid>
       <Row>
         <Nav />
         <Col>
           <h5 className="tableHeading">Upcomping Jobs</h5>
-          <Table hover striped>
+          <Table hover striped responsive>
             <thead>
               <tr>
                 <th>Date</th>
@@ -54,11 +60,21 @@ const FullTable = props => {
             <tbody>
               {jobs.map(job => {
                 return (
-                  <tr>
+                  <tr key={job.id}>
                     <td>{job.date}</td>
-                    <td>{job.startTime}</td>
+                    <td>{formatTime(job.startTime)}</td>
                     <td>{job.client}</td>
                     <td>{job.location}</td>
+                    <td>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleRemove(job.id);
+                        }}
+                        className="btn btn-small btn-danger">
+                        Remove
+                      </button>
+                    </td>
                   </tr>
                 );
               })}
@@ -73,50 +89,49 @@ const FullTable = props => {
 export default class Future extends React.Component {
   constructor(props) {
     super(props);
-    this.callback = this.callback.bind(this);
     this.state = {
-      jobs: []
+      jobs: null,
+      userId: null
     };
   }
 
-  callback(snapshot) {
-    let jobs = snapshot.val();
-    let jobsArr = [];
-    for (let job in jobs) {
-      if (moment().isBefore(jobs[job].date) === true) {
-        jobsArr.push({
-          id: job,
-          client: jobs[job].client,
-          date: jobs[job].date,
-          location: jobs[job].location,
-          startTime: jobs[job].startTime,
-          endTime: jobs[job].endTime
-        });
-      }
-    }
-    this.setState({ jobs: jobsArr }, console.log(this.state));
-  }
+  unsubscribe = null;
 
-  componentDidMount() {
-    const jobsRef = firebase.database().ref("jobs");
-    jobsRef.on("value", this.callback);
-  }
+  componentDidMount = async () => {
+    this.unsubscribe = await firestore
+      .collection("jobs")
+      .onSnapshot(snapshot => {
+        const jobs = snapshot.docs.map(collectIdsAndDocs);
+        this.setState({ jobs }, console.log(jobs));
+      });
+  };
 
-  componentWillUnmount() {
-    const jobsRef = firebase.database().ref("jobs");
-    jobsRef.off("value", this.callback);
-  }
+  componentWillUnmount = () => {
+    this.unsubscribe();
+  };
+
+  handleRemove = async id => {
+    await firestore.doc(`jobs/${id}`).delete();
+  };
+
   static propTypes = { fullView: PropTypes.bool.isRequired };
   static defaultProps = { fullView: true };
   render() {
-    return (
-      <Col>
-        {!this.props.fullView ? (
-          <DashTable jobs={this.state.jobs} />
-        ) : (
-          <FullTable jobs={this.state.jobs} />
-        )}
-      </Col>
-    );
+    if (!this.state.jobs) {
+      return <div>loading</div>;
+    } else {
+      return (
+        <Col>
+          {!this.props.fullView ? (
+            <DashTable jobs={this.state.jobs} />
+          ) : (
+            <FullTable
+              jobs={this.state.jobs}
+              handleRemove={this.handleRemove}
+            />
+          )}
+        </Col>
+      );
+    }
   }
 }

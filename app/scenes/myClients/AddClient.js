@@ -14,6 +14,8 @@ import {
   FormText,
   Button
 } from "reactstrap";
+import { firestore } from "../../../app/firebase";
+import { toHtml } from "@fortawesome/fontawesome-svg-core";
 
 export default class AddClient extends React.Component {
   constructor(props) {
@@ -30,26 +32,48 @@ export default class AddClient extends React.Component {
     };
   }
 
-  handleSubmit = event => {
-    event.preventDefault();
+  validate = () => {
     if (this.state.hrRate === "" && this.state.dayRate === "") {
       console.log("either an hourly rate or a day rate are required");
       return;
     } else if (this.state.client === "") {
       console.log("the client must have a name");
+      return;
     } else {
-      console.log(this.state);
-      this.setState({
-        clientName: "",
-        clientNameInvalid: true,
-        contactName: "",
-        phone: "",
-        hrRate: "",
-        rateInvalid: true,
-        dayRate: "",
-        otRate: ""
-      });
+      const newClient = {
+        clientName: this.state.clientName,
+        contactName: this.state.contactName,
+        phone: this.state.phone,
+        hrRate: this.state.hrRate,
+        dayRate: this.state.dayRate,
+        otRate: this.state.otRate
+      };
+      this.handleCreate(newClient);
     }
+  };
+
+  handleCreate = async clientObj => {
+    const docRef = await firestore.collection("clients").add(clientObj);
+    return docRef;
+  };
+
+  clearState = () => {
+    this.setState({
+      clientName: "",
+      clientNameInvalid: true,
+      contactName: "",
+      phone: "",
+      hrRate: "",
+      dayRate: "",
+      otRate: "",
+      rateInvalid: true
+    });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    this.validate();
+    this.clearState();
   };
 
   handleChange = event => {
@@ -67,7 +91,6 @@ export default class AddClient extends React.Component {
       this.setState({ [invalidName]: false });
     }
   };
-
   render() {
     const {
       clientName,

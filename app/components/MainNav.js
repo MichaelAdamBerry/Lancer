@@ -28,6 +28,7 @@ export default class MainNav extends React.Component {
   }
 
   render() {
+    const userId = this.props.userId;
     return (
       <Row className="mainNav d-flex justify-content-around">
         <Col xs="2" className="d-md-none ">
@@ -42,7 +43,9 @@ export default class MainNav extends React.Component {
         </Col>
         <Col xs="2" md="3">
           {" "}
-          <Link className="btn btn-outline-success" to="/dashboard">
+          <Link
+            className="btn btn-outline-success"
+            to={{ pathname: "/dashboard", state: { userId: userId } }}>
             {" "}
             <FontAwesomeIcon icon={faHome} />{" "}
             <p className="d-none d-md-inline">| Go to Dashboard</p>
@@ -50,19 +53,25 @@ export default class MainNav extends React.Component {
         </Col>
         <Col xs="2" md="3">
           {" "}
-          <Link className="btn btn-outline-success" to="/addjob">
+          <Link
+            className="btn btn-outline-success"
+            to={{ pathname: "/addjob", state: { userId: userId } }}>
             <FontAwesomeIcon icon={faCalendarPlus} />{" "}
             <span className="d-none d-md-inline">| Add a Job</span>
           </Link>
         </Col>
         <Col xs="2" md="3">
-          <Link className="btn btn-outline-success" to="/addclient">
+          <Link
+            className="btn btn-outline-success"
+            to={{ pathname: "/addclient", state: { userId: userId } }}>
             <FontAwesomeIcon icon={faUserTie} />{" "}
             <span className="d-none d-md-inline">| Add a Client</span>
           </Link>
         </Col>
         <Col xs="2" md="3">
-          <Link className="btn btn-outline-success" to="/addexpense">
+          <Link
+            className="btn btn-outline-success"
+            to={{ pathname: "/addexpense", state: { userId: userId } }}>
             <FontAwesomeIcon icon={faCalculator} />{" "}
             <span className="d-none d-md-inline"> | Add an Expense</span>
           </Link>

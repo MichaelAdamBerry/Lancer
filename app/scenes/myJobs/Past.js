@@ -2,15 +2,16 @@ import React from "react";
 import { Container, Row, Col, Table } from "reactstrap";
 import PropTypes from "prop-types";
 import moment from "moment";
-import firebase from "firebase";
 import Nav from "../dashboard/components/Nav";
+import { firestore } from "../../../app/firebase";
+import { collectIdsAndDocs, formatDate } from "../../../app/utilities";
 
 const DashTable = props => {
   const jobs = props.jobs;
   return (
     <Col>
       <h5 className="tableHeading">Past Jobs</h5>
-      <Table hover striped>
+      <Table hover striped responsive>
         <thead>
           <tr>
             <th>Client</th>
@@ -22,9 +23,9 @@ const DashTable = props => {
         <tbody>
           {jobs.map(job => {
             return (
-              <tr>
+              <tr key={job.id}>
                 <td>{job.client}</td>
-                <td>{job.date}</td>
+                <td>{formatDate(job.date)}</td>
                 <td />
                 <td>{!job.paid ? "nope" : "yep"}</td>
               </tr>
@@ -37,14 +38,14 @@ const DashTable = props => {
 };
 
 const FullTable = props => {
-  const jobs = props.jobs;
+  const { jobs, handleRemove, handleEdit } = props;
   return (
-    <Container>
+    <Container fluid>
       <Row>
         <Nav />
         <Col>
           <h5 className="tableHeading">Past Jobs</h5>
-          <Table hover striped>
+          <Table hover striped responsive>
             <thead>
               <tr>
                 <th>Client</th>
@@ -56,11 +57,29 @@ const FullTable = props => {
             <tbody>
               {jobs.map(job => {
                 return (
-                  <tr>
+                  <tr key={job.id}>
                     <td>{job.client}</td>
-                    <td>{job.date}</td>
+                    <td>{formatDate(job.date)}</td>
                     <td />
                     <td>{!job.paid ? "nope" : "yep"}</td>
+                    <td>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleRemove(job.id);
+                        }}
+                        className="btn btn-small btn-danger">
+                        Remove
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleEdit(job);
+                        }}
+                      />
+                    </td>
                   </tr>
                 );
               })}
@@ -75,49 +94,54 @@ const FullTable = props => {
 export default class Past extends React.Component {
   constructor(props) {
     super(props);
-    this.callback = this.callback.bind(this);
     this.state = {
-      jobs: []
+      jobs: null
     };
   }
 
-  callback(snapshot) {
-    let jobs = snapshot.val();
-    let jobsArr = [];
-    for (let job in jobs) {
-      if (moment().isBefore(jobs[job].date) === false) {
-        jobsArr.push({
-          id: job,
-          client: jobs[job].client,
-          date: jobs[job].date,
-          paid: jobs[job].paid
-        });
-      }
-    }
-    this.setState({ jobs: jobsArr }, console.log(this.state));
-  }
+  unsubscribe = null;
 
-  componentDidMount() {
-    const jobsRef = firebase.database().ref("jobs");
-    jobsRef.on("value", this.callback);
-  }
+  componentDidMount = async () => {
+    this.unsubscribe = await firestore
+      .collection("jobs")
+      .onSnapshot(snapshot => {
+        const jobs = snapshot.docs.map(collectIdsAndDocs);
+        this.setState({ jobs }, console.log(this.state));
+      });
+  };
 
-  componentWillUnmount() {
-    const jobsRef = firebase.database().ref("jobs");
-    jobsRef.off("value", this.callback);
-  }
+  componentWillUnmount = () => {
+    this.unsubscribe();
+  };
 
+  handleEdit = job => {
+    const properties = { ...job };
+    console.log("handleEdit fired", job);
+    //redirect to new route EditJob component job as props. New form that has an onSubmit function that updates database
+  };
+
+  handleRemove = async id => {
+    firestore.doc(`jobs/${id}`).delete();
+  };
   static propTypes = { fullView: PropTypes.bool.isRequired };
   static defaultProps = { fullView: true };
   render() {
-    return (
-      <Col>
-        {!this.props.fullView ? (
-          <DashTable jobs={this.state.jobs} />
-        ) : (
-          <FullTable jobs={this.state.jobs} />
-        )}
-      </Col>
-    );
+    if (!this.state.jobs) {
+      return <div>loading</div>;
+    } else {
+      return (
+        <Col>
+          {!this.props.fullView ? (
+            <DashTable jobs={this.state.jobs} />
+          ) : (
+            <FullTable
+              jobs={this.state.jobs}
+              handleRemove={this.handleRemove}
+              handleEdit={this.handleEdit}
+            />
+          )}
+        </Col>
+      );
+    }
   }
 }

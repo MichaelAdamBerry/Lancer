@@ -1,51 +1,47 @@
 import React from "react";
 import { Col, ListGroup, ListGroupItem } from "reactstrap";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default class Nav extends React.Component {
   render() {
+    const userId = this.props.userId;
     return (
       <Col md="3" lg="2" className="d-none d-md-block">
         <ListGroup flush>
           <ListGroupItem>
-            <NavLink
-              to="/myjobs/past"
-              className="dropdown-item"
-              activeClassName="selected">
+            <Link
+              to={{ pathname: "/myjobs/past", state: { userId: userId } }}
+              className="dropdown-item">
               Past Jobs
-            </NavLink>
+            </Link>
           </ListGroupItem>
           <ListGroupItem>
-            <NavLink
-              to="/myjobs/future"
-              className="dropdown-item"
-              activeClassName="selected">
+            <Link
+              to={{ pathname: "/myjobs/future", state: { userId: userId } }}
+              className="dropdown-item">
               Upcoming Jobs
-            </NavLink>
+            </Link>
           </ListGroupItem>
           <ListGroupItem>
-            <NavLink
-              to="/myclients"
-              className="dropdown-item"
-              activeClassName="selected">
+            <Link
+              to={{ pathname: "/myclients", state: { userId: userId } }}
+              className="dropdown-item">
               My Clients
-            </NavLink>
+            </Link>
           </ListGroupItem>
           <ListGroupItem>
-            <NavLink
-              to="/myexpenses"
-              className="dropdown-item"
-              activeClassName="selected">
+            <Link
+              to={{ pathname: "/myexpenses", state: { userId: userId } }}
+              className="dropdown-item">
               My Expenses
-            </NavLink>
+            </Link>
           </ListGroupItem>
           <ListGroupItem>
-            <NavLink
-              to="/mystats"
-              className="dropdown-item"
-              activeClassName="selected">
+            <Link
+              to={{ pathname: "/mystats", state: { userId: userId } }}
+              className="dropdown-item">
               My Stats
-            </NavLink>
+            </Link>
           </ListGroupItem>
         </ListGroup>
       </Col>

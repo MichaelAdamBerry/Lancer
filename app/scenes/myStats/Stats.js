@@ -17,7 +17,7 @@ export default class Stats extends React.Component {
   render() {
     const { ytd, mtd, showNav } = this.props;
     return (
-      <Container>
+      <Container fluid>
         <Row className="underline">
           <Col>
             <h5>My Stats</h5>

@@ -1,5 +1,7 @@
 import React from "react";
 import firebase from "firebase";
+import { firestore } from "../../../app/firebase";
+import { collectIdsAndDocs } from "../../../app/utilities";
 import {
   Container,
   Row,
@@ -21,31 +23,25 @@ export default class AddExpense extends React.Component {
       priceInvalid: true,
       client: "",
       clientInvalid: true,
-      description: "",
-      userId: this.props.userId
+      description: ""
     };
   }
 
-  static defaultProps = {
-    userId: "admin"
-  };
-  static propTypes = {
-    userId: PropTypes.string.isRequired
-  };
-
   handleSubmit = event => {
     event.preventDefault();
-    const expensesRef = firebase.database().ref("expenses");
-    const expense = {
-      userId: this.state.userId,
-      client: this.state.client,
-      price: this.state.price,
-      description: this.state.description
+    const { price, client, description } = this.state;
+    const expenseObj = {
+      price: price,
+      client: client,
+      description: description
     };
-    this.state.price === "" || this.state.client === ""
-      ? console.log("include a price")
-      : expensesRef.push(expense);
-    this.setState({ client: "Job A", price: "", description: "" });
+    this.handleCreate(expenseObj);
+    this.setState({ price: "", client: "", description: "" });
+  };
+
+  handleCreate = async expenseObj => {
+    const docRef = await firestore.collection("expenses").add(expenseObj);
+    return docRef;
   };
 
   handleChange = event => {

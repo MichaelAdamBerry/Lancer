@@ -1,8 +1,6 @@
 import React from "react";
 import Dashboard from "./scenes/dashboard/Dashboard";
 import TitleBar from "./components/TitleBar";
-import WelcomeSplash from "./components/WelcomeSplash";
-import { Container, Row, Col, Jumbotron } from "reactstrap";
 import Future from "./scenes/myJobs/Future";
 import Past from "./scenes/myJobs/Past";
 import AddJob from "./scenes/myJobs/AddJob";
@@ -12,75 +10,49 @@ import MyExpenses from "./scenes/myExpenses/MyExpenses";
 import AddExpense from "./scenes/myExpenses/AddExpense";
 import Stats from "./scenes/myStats/Stats";
 import MainNav from "./components/MainNav";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect,
-  Switch,
-  withRouter
-} from "react-router-dom";
-import Register from "./components/Register";
-import fakeAuth from "./fakeData/fakeAuth";
-import Login from "./components/Login/Login";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { auth } from "./firebase";
+import Authentication from "./Authentication";
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      fakeAuth.isAuthenticated === true ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{
-            pathname: "/login",
-            state: { from: props.location }
-          }}
-        />
-      )
-    }
-  />
-);
-//if authenticated render Nav
-const Title = withRouter(({ history }) =>
-  fakeAuth.isAuthenticated ? (
-    <Container fluid>
-      <TitleBar
-        signedIn={true}
-        handleClick={() => {
-          fakeAuth.signout();
-        }}
-      />
-      <MainNav />
-    </Container>
-  ) : (
-    <Container fluid>
-      <TitleBar signedIn={false} />
-    </Container>
-  )
-);
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { user: null, userId: null };
+  }
 
-export default function AuthExample() {
-  return (
-    <Router>
-      <div>
-        <Title />
+  unsubscribeToAuth = null;
 
-        <Route path="/login" component={Login} />
-        <Switch>
-          <Route path="/register" component={Register} />
-          <Route exact path="/" component={WelcomeSplash} />
-          <PrivateRoute path="/myjobs/past" component={Past} />
-          <PrivateRoute path="/myjobs/future" component={Future} />
-          <PrivateRoute exact path="/dashboard" component={Dashboard} />
-          <PrivateRoute path="/addjob" component={AddJob} />
-          <PrivateRoute path="/addclient" component={AddClient} />
-          <PrivateRoute path="/myclients" component={Clients} />
-          <PrivateRoute path="/mystats" component={Stats} />
-          <PrivateRoute path="/myexpenses" component={MyExpenses} />
-          <PrivateRoute path="/addexpense" component={AddExpense} />
-        </Switch>
-      </div>
-    </Router>
-  );
+  componentDidMount = async () => {
+    this.unsubscribeToAuth = auth.onAuthStateChanged(user => {
+      this.setState({ user });
+    });
+  };
+
+  componentWillUnmount() {
+    this.unsubscribeToAuth();
+  }
+
+  render() {
+    return (
+      <Router>
+        <div className="container-fluid">
+          <TitleBar />
+          <Authentication user={this.state.user} />
+          <MainNav user={this.state.user} />
+          <Switch>
+            <Route exact path="/" component={Dashboard} />
+            <Route path="/myjobs/past" component={Past} />
+            <Route path="/myjobs/future" component={Future} />
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Route path="/addjob" component={AddJob} />
+            <Route path="/addclient" component={AddClient} />
+            <Route path="/myclients" component={Clients} />
+            <Route path="/mystats" component={Stats} />
+            <Route path="/myexpenses" component={MyExpenses} />
+            <Route path="/addexpense" component={AddExpense} />
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
 }
