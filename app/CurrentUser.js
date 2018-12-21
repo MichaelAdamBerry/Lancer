@@ -5,20 +5,33 @@ import Avatar from "./Avatar";
 const CurrentUser = ({ user }) => {
   return (
     <div
+      className="container"
       style={{
+        height: "100px",
         width: "100px",
-        height: "200px",
         position: "absolute",
         top: "5px",
         right: "5px"
       }}>
-      <Avatar photoURL={user.photoURL} />
-      <button
-        className="btn btn-sm btn-outline-success"
-        type="button"
-        onClick={() => auth.signOut()}>
-        SignOut
-      </button>
+      <div className="row">
+        <div className="col">
+          <img
+            className="userAvatar"
+            style={{ height: "50px", width: "auto", margin: "auto" }}
+            src={user.photoURL}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col">
+          <button
+            className="btn btn-sm btn-secondary"
+            type="button"
+            onClick={() => auth.signOut()}>
+            SignOut
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

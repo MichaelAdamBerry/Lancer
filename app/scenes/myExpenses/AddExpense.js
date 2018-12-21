@@ -1,6 +1,6 @@
 import React from "react";
 import firebase from "firebase";
-import { firestore } from "../../../app/firebase";
+import { firestore, auth } from "../../../app/firebase";
 import { collectIdsAndDocs } from "../../../app/utilities";
 import {
   Container,
@@ -40,7 +40,10 @@ export default class AddExpense extends React.Component {
   };
 
   handleCreate = async expenseObj => {
-    const docRef = await firestore.collection("expenses").add(expenseObj);
+    const uid = auth.currentUser.uid;
+    const docRef = await firestore
+      .collection(`users/${uid}/expenses`)
+      .add(expenseObj);
     return docRef;
   };
 

@@ -1,6 +1,3 @@
-//TODO add input for contact email address
-//TODO
-
 import React from "react";
 import PropTypes from "prop-types";
 import {
@@ -14,7 +11,7 @@ import {
   FormText,
   Button
 } from "reactstrap";
-import { firestore } from "../../../app/firebase";
+import { firestore, auth } from "../../../app/firebase";
 import { toHtml } from "@fortawesome/fontawesome-svg-core";
 
 export default class AddClient extends React.Component {
@@ -53,7 +50,10 @@ export default class AddClient extends React.Component {
   };
 
   handleCreate = async clientObj => {
-    const docRef = await firestore.collection("clients").add(clientObj);
+    const uid = auth.currentUser.uid;
+    const docRef = await firestore
+      .collection(`users/${uid}/clients`)
+      .add(clientObj);
     return docRef;
   };
 

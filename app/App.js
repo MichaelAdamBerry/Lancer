@@ -11,7 +11,7 @@ import AddExpense from "./scenes/myExpenses/AddExpense";
 import Stats from "./scenes/myStats/Stats";
 import MainNav from "./components/MainNav";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { auth } from "./firebase";
+import { auth, firestore } from "./firebase";
 import Authentication from "./Authentication";
 
 export default class App extends React.Component {
@@ -39,6 +39,7 @@ export default class App extends React.Component {
           <TitleBar />
           <Authentication user={this.state.user} />
           <MainNav user={this.state.user} />
+          <Dashboard user={this.state.user} />
           <Switch>
             <Route exact path="/" component={Dashboard} />
             <Route path="/myjobs/past" component={Past} />

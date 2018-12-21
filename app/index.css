@@ -3,6 +3,11 @@
   height: 20vh;
   color: #6d5050;
 }
+.content {
+  margin: auto;
+  background-color: #efefef;
+  border: solid 1px #cccaca;
+}
 
 .jumbotron {
   text-align: center;
@@ -41,7 +46,15 @@ a {
   margin: auto;
   background-color: #efefef;
   border: solid 1px #cccaca;
-  border-radius: 5%;
+  border-radius: 10px;
+}
+
+.dashTable {
+  margin: auto;
+  background-color: #efefef;
+  border: solid 1px #cccaca;
+  border-radius: 10px;
+  margin-bottom: 1em;
 }
 
 .formTitle {
@@ -58,6 +71,7 @@ a {
 
 html {
   font-size: 0.7rem;
+  color: #6d5050;
 }
 
 /* Extra Small Devices, Phones */

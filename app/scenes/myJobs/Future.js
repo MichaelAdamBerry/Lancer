@@ -1,10 +1,10 @@
 import React from "react";
-import { Container, Row, Col, Table } from "reactstrap";
+import { Col, Table } from "reactstrap";
 import PropTypes from "prop-types";
 import moment from "moment";
-import firebase from "firebase";
 import Nav from "../dashboard/components/Nav";
-import { firestore } from "../../../app/firebase";
+import firebase from "firebase";
+import { firestore, auth } from "../../firebase";
 import {
   collectIdsAndDocs,
   formatDate,
@@ -24,6 +24,8 @@ const DashTable = props => {
             <th>Client</th>
             <th>Location</th>
           </tr>
+        </thead>
+        <tbody>
           {jobs.map(job => {
             return (
               <tr key={job.id}>
@@ -34,7 +36,7 @@ const DashTable = props => {
               </tr>
             );
           })}
-        </thead>
+        </tbody>
       </Table>
     </Col>
   );
@@ -43,10 +45,10 @@ const DashTable = props => {
 const FullTable = props => {
   const { jobs, handleRemove } = props;
   return (
-    <Container fluid>
-      <Row>
+    <div className="container-fluid">
+      <div className="row">
         <Nav />
-        <Col>
+        <div className="col content shadow">
           <h5 className="tableHeading">Upcomping Jobs</h5>
           <Table hover striped responsive>
             <thead>
@@ -80,18 +82,27 @@ const FullTable = props => {
               })}
             </tbody>
           </Table>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 };
 
 export default class Future extends React.Component {
+  render() {
+    if (!this.props.user) {
+      return <div>loading</div>;
+    } else {
+      return <RenderFutureJobs user={this.props.user} />;
+    }
+  }
+}
+
+class RenderFutureJobs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      jobs: null,
-      userId: null
+      jobs: null
     };
   }
 
@@ -99,26 +110,30 @@ export default class Future extends React.Component {
 
   componentDidMount = async () => {
     this.unsubscribe = await firestore
-      .collection("jobs")
+      .collection(`users/${this.props.user.uid}/jobs`)
       .onSnapshot(snapshot => {
         const jobs = snapshot.docs.map(collectIdsAndDocs);
-        this.setState({ jobs }, console.log(jobs));
+        this.setState({ jobs });
       });
   };
 
-  componentWillUnmount = () => {
+  componentWillUnmount = async () => {
     this.unsubscribe();
   };
 
   handleRemove = async id => {
-    await firestore.doc(`jobs/${id}`).delete();
+    await firestore.doc(`users/${this.props.user.uid}/jobs/${id}`).delete();
   };
 
   static propTypes = { fullView: PropTypes.bool.isRequired };
   static defaultProps = { fullView: true };
   render() {
     if (!this.state.jobs) {
-      return <div>loading</div>;
+      return (
+        <small className="text-muted">
+          You have no upcoming jobs to display
+        </small>
+      );
     } else {
       return (
         <Col>

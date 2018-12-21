@@ -2,15 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Col, Table } from "reactstrap";
 import Nav from "../dashboard/components/Nav";
-import { firestore } from "../../../app/firebase";
+import { firestore, auth } from "../../../app/firebase";
 import { collectIdsAndDocs } from "../../../app/utilities";
 
 const ClientsView = ({ clients, handleRemove }) => {
   return (
-    <Container fluid>
-      <Row>
+    <div className="container-fluid">
+      <div className="row">
         <Nav />
-        <Col sm="12" md="12" lg="9">
+        <div className="col content shadow">
           <h5 className="tableHeading">Clients</h5>
           <Table hover striped>
             <thead>
@@ -40,26 +40,28 @@ const ClientsView = ({ clients, handleRemove }) => {
               })}
             </thead>
           </Table>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 };
 
 export default class Clients extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { userId: "", clients: null };
+    this.state = { clients: null };
   }
 
   unmount = null;
 
   componentDidMount = async () => {
+    const uid = auth.currentUser.uid;
+    this.setState({ uid });
     this.unmount = await firestore
-      .collection("clients")
+      .collection(`users/${uid}/clients`)
       .onSnapshot(snapshot => {
         const clients = snapshot.docs.map(collectIdsAndDocs);
-        this.setState({ clients }, console.log(clients));
+        this.setState({ clients });
       });
   };
 
@@ -68,7 +70,7 @@ export default class Clients extends React.Component {
   }
 
   handleRemove = async id => {
-    await firestore.doc(`clients/${id}`).delete();
+    await firestore.doc(`users/${this.state.uid}/clients/${id}`).delete();
   };
   render() {
     if (!this.state.clients) {

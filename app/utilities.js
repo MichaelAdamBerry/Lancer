@@ -4,7 +4,7 @@ export const formatDate = str => {
   const date = moment(str);
   const now = moment();
   const isInFuture = now.isBefore(str); //bool true if date is after now
-  const diff = now.diff(date, "days");
+  const diff = moment().diff(date, "days");
   if (isInFuture === true && diff <= 7) {
     return date.fromNow();
   } else if (isInFuture === false && diff <= 7) {

@@ -2,15 +2,15 @@ import React from "react";
 import { Container, Row, Col, Table } from "reactstrap";
 import Nav from "../dashboard/components/Nav";
 import firebase from "firebase";
-import { firestore } from "../../../app/firebase";
+import { firestore, auth } from "../../../app/firebase";
 import { collectIdsAndDocs } from "../../../app/utilities";
 
 const MyExpensesView = ({ expenses, handleRemove }) => {
   return (
-    <Container>
-      <Row>
+    <div className="container-fluid">
+      <div className="row">
         <Nav />
-        <Col>
+        <div className="col">
           <h5 className="tableHeading">My Expenses</h5>
           <Table hover striped>
             <thead>
@@ -38,9 +38,9 @@ const MyExpensesView = ({ expenses, handleRemove }) => {
               })}
             </thead>
           </Table>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -52,8 +52,10 @@ export default class MyExpenses extends React.Component {
   unsubscribe = null;
 
   componentDidMount = async () => {
+    const uid = auth.currentUser.uid;
+    this.setState({ uid });
     this.unsubscribe = await firestore
-      .collection("expenses")
+      .collection(`users/${this.state.uid}/expenses`)
       .onSnapshot(snapshot => {
         const expenses = snapshot.docs.map(collectIdsAndDocs);
         this.setState({ expenses });
@@ -66,7 +68,7 @@ export default class MyExpenses extends React.Component {
   };
 
   handleRemove = async id => {
-    await firestore.doc(`expenses/${id}`).delete();
+    await firestore.doc(`user/${this.state.uid}expenses/${id}`).delete();
   };
 
   render() {

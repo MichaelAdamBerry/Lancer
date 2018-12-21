@@ -4,7 +4,6 @@ import { Container, Row, Col } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDragon, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { withRouter } from "react-router-dom";
-import fakeAuth from "../fakeData/fakeAuth";
 
 export default class TitleBar extends React.Component {
   render() {

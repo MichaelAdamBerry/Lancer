@@ -1,5 +1,5 @@
 import React from "react";
-import { firestore } from "../../../app/firebase";
+import { firestore, auth } from "../../../app/firebase";
 import { collectIdsAndDocs } from "../../../app/utilities";
 import {
   Container,
@@ -49,20 +49,23 @@ export default class AddJob extends React.Component {
   unsubscribe = null;
 
   componentDidMount = async () => {
+    const uid = await auth.currentUser.uid;
+    this.setState({ uid });
     this.unsubscribe = await firestore
-      .collection("clients")
+      .collection(`users/${this.state.uid}/clients`)
       .onSnapshot(snapshot => {
         const clientData = snapshot.docs.map(collectIdsAndDocs);
         this.setState({ clientData });
       });
   };
 
-  componentWillUnmount = () => {
+  componentWillUnmount() {
     this.unsubscribe();
-  };
+  }
 
   handleCreate = async newJob => {
-    const docRef = await firestore.collection("jobs").add(newJob);
+    const uid = auth.currentUser.uid;
+    const docRef = await firestore.collection(`users/${uid}/jobs`).add(newJob);
     return docRef;
   };
 

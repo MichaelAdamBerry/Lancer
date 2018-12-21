@@ -5,9 +5,4 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import "./firebase";
 
-ReactDOM.render(
-  <div className="container-fluid appContainer">
-    <App />
-  </div>,
-  document.getElementById("app")
-);
+ReactDOM.render(<App />, document.getElementById("app"));
