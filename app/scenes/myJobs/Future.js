@@ -11,37 +11,6 @@ import {
   formatTime
 } from "../../../app/utilities";
 
-const DashTable = props => {
-  const jobs = props.jobs;
-  return (
-    <Col>
-      <h5 className="tableHeading">Upcomping Jobs</h5>
-      <Table hover striped responsive>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Client</th>
-            <th>Location</th>
-          </tr>
-        </thead>
-        <tbody>
-          {jobs.map(job => {
-            return (
-              <tr key={job.id}>
-                <td>{formatDate(job.date)}</td>
-                <td>{formatTime(job.startTime)}</td>
-                <td>{job.client}</td>
-                <td>{job.location}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-    </Col>
-  );
-};
-
 const FullTable = props => {
   const { jobs, handleRemove } = props;
   return (
@@ -89,16 +58,6 @@ const FullTable = props => {
 };
 
 export default class Future extends React.Component {
-  render() {
-    if (!this.props.user) {
-      return <div>loading</div>;
-    } else {
-      return <RenderFutureJobs user={this.props.user} />;
-    }
-  }
-}
-
-class RenderFutureJobs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -110,7 +69,7 @@ class RenderFutureJobs extends React.Component {
 
   componentDidMount = async () => {
     this.unsubscribe = await firestore
-      .collection(`users/${this.props.user.uid}/jobs`)
+      .collection(`users/${this.props.location.state.uid}/jobs`)
       .onSnapshot(snapshot => {
         const jobs = snapshot.docs.map(collectIdsAndDocs);
         this.setState({ jobs });
@@ -122,7 +81,9 @@ class RenderFutureJobs extends React.Component {
   };
 
   handleRemove = async id => {
-    await firestore.doc(`users/${this.props.user.uid}/jobs/${id}`).delete();
+    await firestore
+      .doc(`users/${this.props.location.state.uid}/jobs/${id}`)
+      .delete();
   };
 
   static propTypes = { fullView: PropTypes.bool.isRequired };
@@ -137,14 +98,7 @@ class RenderFutureJobs extends React.Component {
     } else {
       return (
         <Col>
-          {!this.props.fullView ? (
-            <DashTable jobs={this.state.jobs} />
-          ) : (
-            <FullTable
-              jobs={this.state.jobs}
-              handleRemove={this.handleRemove}
-            />
-          )}
+          <FullTable jobs={this.state.jobs} handleRemove={this.handleRemove} />
         </Col>
       );
     }

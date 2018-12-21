@@ -17,7 +17,7 @@ import Authentication from "./Authentication";
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { user: null, userId: null };
+    this.state = { user: null };
   }
 
   unsubscribeToAuth = null;
@@ -39,9 +39,8 @@ export default class App extends React.Component {
           <TitleBar />
           <Authentication user={this.state.user} />
           <MainNav user={this.state.user} />
-          <Dashboard user={this.state.user} />
+
           <Switch>
-            <Route exact path="/" component={Dashboard} />
             <Route path="/myjobs/past" component={Past} />
             <Route path="/myjobs/future" component={Future} />
             <Route exact path="/dashboard" component={Dashboard} />

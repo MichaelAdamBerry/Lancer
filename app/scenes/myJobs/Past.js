@@ -6,37 +6,6 @@ import Nav from "../dashboard/components/Nav";
 import { firestore, auth } from "../../firebase";
 import { collectIdsAndDocs, formatDate } from "../../../app/utilities";
 
-const DashTable = props => {
-  const jobs = props.jobs;
-  return (
-    <Col>
-      <h5 className="tableHeading">Past Jobs</h5>
-      <Table hover striped responsive>
-        <thead>
-          <tr>
-            <th>Client</th>
-            <th>Date</th>
-            <th>Total $</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {jobs.map(job => {
-            return (
-              <tr key={job.id}>
-                <td>{job.client}</td>
-                <td>{formatDate(job.date)}</td>
-                <td />
-                <td>{!job.paid ? "nope" : "yep"}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-    </Col>
-  );
-};
-
 const FullTable = props => {
   const { jobs, handleRemove, handleEdit } = props;
   return (
@@ -107,7 +76,7 @@ export default class Past extends React.Component {
 
   getJobsData = async () => {
     this.unsubscribe = await firestore
-      .collection(`users/${this.props.user.uid}/jobs`)
+      .collection(`users/${this.props.location.state.uid}/jobs`)
       .onSnapshot(snapshot => {
         const jobs = snapshot.docs.map(collectIdsAndDocs);
         this.setState({ jobs });
@@ -125,7 +94,7 @@ export default class Past extends React.Component {
   };
 
   handleRemove = async id => {
-    firestore.doc(`users/${this.props.user.uid}jobs/${id}`).delete();
+    firestore.doc(`users/${this.props.location.state.uid}jobs/${id}`).delete();
   };
 
   render() {
@@ -137,15 +106,11 @@ export default class Past extends React.Component {
     } else {
       return (
         <Col>
-          {!this.props.fullView ? (
-            <DashTable jobs={this.state.jobs} />
-          ) : (
-            <FullTable
-              jobs={this.state.jobs}
-              handleRemove={this.handleRemove}
-              handleEdit={this.handleEdit}
-            />
-          )}
+          <FullTable
+            jobs={this.state.jobs}
+            handleRemove={this.handleRemove}
+            handleEdit={this.handleEdit}
+          />
         </Col>
       );
     }

@@ -40,7 +40,7 @@ export default class AddExpense extends React.Component {
   };
 
   handleCreate = async expenseObj => {
-    const uid = auth.currentUser.uid;
+    const uid = "user";
     const docRef = await firestore
       .collection(`users/${uid}/expenses`)
       .add(expenseObj);

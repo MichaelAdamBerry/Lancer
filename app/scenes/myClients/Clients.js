@@ -55,7 +55,7 @@ export default class Clients extends React.Component {
   unmount = null;
 
   componentDidMount = async () => {
-    const uid = auth.currentUser.uid;
+    const uid = "user";
     this.setState({ uid });
     this.unmount = await firestore
       .collection(`users/${uid}/clients`)

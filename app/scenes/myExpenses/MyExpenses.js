@@ -52,10 +52,10 @@ export default class MyExpenses extends React.Component {
   unsubscribe = null;
 
   componentDidMount = async () => {
-    const uid = auth.currentUser.uid;
+    const uid = "user";
     this.setState({ uid });
     this.unsubscribe = await firestore
-      .collection(`users/${this.state.uid}/expenses`)
+      .collection(`users/${uid}/expenses`)
       .onSnapshot(snapshot => {
         const expenses = snapshot.docs.map(collectIdsAndDocs);
         this.setState({ expenses });
@@ -68,7 +68,8 @@ export default class MyExpenses extends React.Component {
   };
 
   handleRemove = async id => {
-    await firestore.doc(`user/${this.state.uid}expenses/${id}`).delete();
+    const uid = "user";
+    await firestore.doc(`users/${uid}/expenses/${id}`).delete();
   };
 
   render() {

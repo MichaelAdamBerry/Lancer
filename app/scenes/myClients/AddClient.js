@@ -50,7 +50,7 @@ export default class AddClient extends React.Component {
   };
 
   handleCreate = async clientObj => {
-    const uid = auth.currentUser.uid;
+    const uid = this.props.location.state.uid;
     const docRef = await firestore
       .collection(`users/${uid}/clients`)
       .add(clientObj);

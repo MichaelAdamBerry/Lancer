@@ -49,10 +49,10 @@ export default class AddJob extends React.Component {
   unsubscribe = null;
 
   componentDidMount = async () => {
-    const uid = await auth.currentUser.uid;
+    const uid = "user";
     this.setState({ uid });
     this.unsubscribe = await firestore
-      .collection(`users/${this.state.uid}/clients`)
+      .collection(`users/${uid}/clients`)
       .onSnapshot(snapshot => {
         const clientData = snapshot.docs.map(collectIdsAndDocs);
         this.setState({ clientData });
@@ -64,7 +64,7 @@ export default class AddJob extends React.Component {
   }
 
   handleCreate = async newJob => {
-    const uid = auth.currentUser.uid;
+    const uid = "users";
     const docRef = await firestore.collection(`users/${uid}/jobs`).add(newJob);
     return docRef;
   };
