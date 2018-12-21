@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Row, Col, Table } from "reactstrap";
-import Nav from "../dashboard/components/Nav";
 import firebase from "firebase";
 import { firestore, auth } from "../../../app/firebase";
 import { collectIdsAndDocs } from "../../../app/utilities";
@@ -9,7 +8,6 @@ const MyExpensesView = ({ expenses, handleRemove }) => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <Nav />
         <div className="col">
           <h5 className="tableHeading">My Expenses</h5>
           <Table hover striped>

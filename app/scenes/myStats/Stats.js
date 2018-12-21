@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "reactstrap";
-import Nav from "../dashboard/components/Nav";
 
 export default class Stats extends React.Component {
   static propTypes = {
@@ -15,7 +14,7 @@ export default class Stats extends React.Component {
     showNav: true
   };
   render() {
-    const { ytd, mtd, showNav } = this.props;
+    const { ytd, mtd } = this.props;
     return (
       <Container fluid>
         <Row className="underline">
@@ -24,7 +23,6 @@ export default class Stats extends React.Component {
           </Col>
         </Row>
         <Row className="d-flex align-content-around">
-          {showNav === true ? <Nav /> : null}
           <Col className="align-content-center">
             <h5>Earnings</h5>
             <Container>

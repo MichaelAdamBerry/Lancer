@@ -1,5 +1,4 @@
 import React from "react";
-import { Col, ListGroup, ListGroupItem } from "reactstrap";
 import { Link } from "react-router-dom";
 
 export default class Nav extends React.Component {
@@ -45,7 +44,6 @@ export default class Nav extends React.Component {
           </li>
         </ul>
       </div>
-      //  </Col>
     );
   }
 }

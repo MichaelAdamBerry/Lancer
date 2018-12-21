@@ -2,7 +2,6 @@ import React from "react";
 import { Col, Table } from "reactstrap";
 import PropTypes from "prop-types";
 import moment from "moment";
-import Nav from "../dashboard/components/Nav";
 import firebase from "firebase";
 import { firestore, auth } from "../../firebase";
 import {
@@ -16,7 +15,6 @@ const FullTable = props => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <Nav />
         <div className="col content shadow">
           <h5 className="tableHeading">Upcomping Jobs</h5>
           <Table hover striped responsive>

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Col, Table } from "reactstrap";
-import Nav from "../dashboard/components/Nav";
 import { firestore, auth } from "../../../app/firebase";
 import { collectIdsAndDocs } from "../../../app/utilities";
 
@@ -9,7 +8,6 @@ const ClientsView = ({ clients, handleRemove }) => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <Nav />
         <div className="col content shadow">
           <h5 className="tableHeading">Clients</h5>
           <Table hover striped>

@@ -11,8 +11,8 @@ import AddExpense from "./scenes/myExpenses/AddExpense";
 import Stats from "./scenes/myStats/Stats";
 import MainNav from "./components/MainNav";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { auth, firestore } from "./firebase";
-import Authentication from "./Authentication";
+import { auth, firestore, signInWithPopup } from "./firebase";
+import Authentication from "./components/Authentication";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -33,11 +33,17 @@ export default class App extends React.Component {
   }
 
   render() {
+    const signOut = () => auth.signOut();
+
     return (
       <Router>
-        <div className="container-fluid">
+        <>
           <TitleBar />
-          <Authentication user={this.state.user} />
+          <Authentication
+            user={this.state.user}
+            signOut={signOut}
+            signInWithPopup={signInWithPopup}
+          />
           <MainNav user={this.state.user} />
 
           <Switch>
@@ -51,7 +57,7 @@ export default class App extends React.Component {
             <Route path="/myexpenses" component={MyExpenses} />
             <Route path="/addexpense" component={AddExpense} />
           </Switch>
-        </div>
+        </>
       </Router>
     );
   }

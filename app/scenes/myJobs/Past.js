@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col, Table } from "reactstrap";
 import PropTypes from "prop-types";
 import moment from "moment";
-import Nav from "../dashboard/components/Nav";
+
 import { firestore, auth } from "../../firebase";
 import { collectIdsAndDocs, formatDate } from "../../../app/utilities";
 
@@ -11,7 +11,6 @@ const FullTable = props => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <Nav />
         <div className="col content shadow">
           <h5 className="tableHeading">Past Jobs</h5>
           <Table hover striped responsive>

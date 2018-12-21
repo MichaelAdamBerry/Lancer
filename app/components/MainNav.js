@@ -10,7 +10,6 @@ import {
   faArrowCircleDown
 } from "@fortawesome/free-solid-svg-icons";
 import DropdownContent from "./DropdownContent";
-import { auth } from "../firebase";
 
 export default class MainNav extends React.Component {
   constructor(props) {
@@ -54,17 +53,18 @@ export default class MainNav extends React.Component {
 const RenderMainNav = ({ uid, dropdownOpen, toggle }) => {
   return (
     <Row className="mainNav d-flex justify-content-around">
-      <Col xs="2" className="d-md-none ">
+      <Col xs="2">
         <Dropdown isOpen={dropdownOpen} toggle={toggle}>
           <DropdownToggle>
             <FontAwesomeIcon icon={faArrowCircleDown} />
+            <p className="d-none d-md-inline">| My Data </p>
           </DropdownToggle>
           <DropdownMenu>
             <DropdownContent />
           </DropdownMenu>
         </Dropdown>
       </Col>
-      <Col xs="2" md="3">
+      <Col xs="2">
         {" "}
         <Link
           className="btn btn-outline-success"
@@ -74,7 +74,7 @@ const RenderMainNav = ({ uid, dropdownOpen, toggle }) => {
           <p className="d-none d-md-inline">| Go to Dashboard</p>
         </Link>
       </Col>
-      <Col xs="2" md="3">
+      <Col xs="2">
         {" "}
         <Link
           className="btn btn-outline-success"
@@ -83,7 +83,7 @@ const RenderMainNav = ({ uid, dropdownOpen, toggle }) => {
           <span className="d-none d-md-inline">| Add a Job</span>
         </Link>
       </Col>
-      <Col xs="2" md="3">
+      <Col xs="2">
         <Link
           className="btn btn-outline-success"
           to={{ pathname: "/addclient", state: { uid: uid } }}>
@@ -91,7 +91,7 @@ const RenderMainNav = ({ uid, dropdownOpen, toggle }) => {
           <span className="d-none d-md-inline">| Add a Client</span>
         </Link>
       </Col>
-      <Col xs="2" md="3">
+      <Col xs="2">
         <Link
           className="btn btn-outline-success"
           to={{ pathname: "/addexpense", state: { uid: uid } }}>

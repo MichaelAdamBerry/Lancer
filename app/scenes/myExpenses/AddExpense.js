@@ -1,7 +1,5 @@
 import React from "react";
-import firebase from "firebase";
-import { firestore, auth } from "../../../app/firebase";
-import { collectIdsAndDocs } from "../../../app/utilities";
+import { firestore } from "../../../app/firebase";
 import {
   Container,
   Row,
