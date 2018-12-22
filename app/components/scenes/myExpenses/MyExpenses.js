@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row, Col, Table } from "reactstrap";
 import firebase from "firebase";
-import { firestore, auth } from "../../../app/firebase";
-import { collectIdsAndDocs } from "../../../app/utilities";
+import { firestore, auth } from "../../../firebase";
+import { collectIdsAndDocs } from "../../../utilities";
 
 const MyExpensesView = ({ expenses, handleRemove }) => {
   return (

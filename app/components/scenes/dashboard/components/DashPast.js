@@ -1,44 +1,44 @@
 import React from "react";
-import { Col, Table } from "reactstrap";
-import { formatTime, formatDate } from "../../../utilities";
+import { Table } from "reactstrap";
+import { formatDate } from "../../../../utilities";
 import PropTypes from "prop-types";
 
-const DashFuture = ({ jobs }) => {
+const DashPast = ({ jobs }) => {
   return (
-    <Col>
-      <h5 className="tableHeading">Upcomping Jobs</h5>
+    <div className="col">
+      <h5 className="tableHeading">Past Jobs</h5>
       <Table hover striped responsive>
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Time</th>
             <th>Client</th>
-            <th>Location</th>
+            <th>Date</th>
+            <th>Total $</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
           {jobs.map(job => {
             return (
               <tr key={job.id}>
-                <td>{formatDate(job.date)}</td>
-                <td>{formatTime(job.startTime)}</td>
                 <td>{job.client}</td>
-                <td>{job.location}</td>
+                <td>{formatDate(job.date)}</td>
+                <td />
+                <td />
               </tr>
             );
           })}
         </tbody>
       </Table>
-    </Col>
+    </div>
   );
 };
 
-export default DashFuture;
+export default DashPast;
 
-DashFuture.propTypes = {
+DashPast.propTypes = {
   jobs: PropTypes.array.isRequired
 };
 
-DashFuture.defaultProps = {
+DashPast.defaultProps = {
   jobs: [{ id: "1", client: "", date: "" }, { id: "2", client: "", date: "" }]
 };

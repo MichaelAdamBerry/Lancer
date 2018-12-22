@@ -1,6 +1,6 @@
 import React from "react";
-import { firestore } from "../../firebase";
-import { collectIdsAndDocs } from "../../utilities";
+import { firestore } from "../../../firebase";
+import { collectIdsAndDocs } from "../../../utilities";
 import DashboardView from "./components/DashboardView";
 
 class Dashboard extends React.Component {
