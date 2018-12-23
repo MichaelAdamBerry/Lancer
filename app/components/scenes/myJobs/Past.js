@@ -1,63 +1,7 @@
 import React from "react";
-import { Container, Row, Col, Table } from "reactstrap";
-import PropTypes from "prop-types";
-import moment from "moment";
-
 import { firestore, auth } from "../../../firebase";
-import { collectIdsAndDocs, formatDate } from "../../../utilities";
-
-const FullTable = props => {
-  const { jobs, handleRemove, handleEdit } = props;
-  return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col content shadow">
-          <h5 className="tableHeading">Past Jobs</h5>
-          <Table hover striped responsive>
-            <thead>
-              <tr>
-                <th>Client</th>
-                <th>Date</th>
-                <th>Total $</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {jobs.map(job => {
-                return (
-                  <tr key={job.id}>
-                    <td>{job.client}</td>
-                    <td>{formatDate(job.date)}</td>
-                    <td />
-                    <td>{!job.paid ? "nope" : "yep"}</td>
-                    <td>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleRemove(job.id);
-                        }}
-                        className="btn btn-small btn-danger">
-                        Remove
-                      </button>
-                    </td>
-                    <td>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleEdit(job);
-                        }}
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
-        </div>
-      </div>
-    </div>
-  );
-};
+import { collectIdsAndDocs } from "../../../utilities";
+import PastView from "./PastView";
 
 export default class Past extends React.Component {
   constructor(props) {
@@ -74,8 +18,9 @@ export default class Past extends React.Component {
   };
 
   getJobsData = async () => {
+    const uid = "user";
     this.unsubscribe = await firestore
-      .collection(`users/${this.props.location.state.uid}/jobs`)
+      .collection(`users/${uid}/jobs`)
       .onSnapshot(snapshot => {
         const jobs = snapshot.docs.map(collectIdsAndDocs);
         this.setState({ jobs });
@@ -93,7 +38,7 @@ export default class Past extends React.Component {
   };
 
   handleRemove = async id => {
-    firestore.doc(`users/${this.props.location.state.uid}jobs/${id}`).delete();
+    firestore.doc(`users/${uid}jobs/${id}`).delete();
   };
 
   render() {
@@ -104,13 +49,13 @@ export default class Past extends React.Component {
       );
     } else {
       return (
-        <Col>
-          <FullTable
+        <div className="col">
+          <PastView
             jobs={this.state.jobs}
             handleRemove={this.handleRemove}
             handleEdit={this.handleEdit}
           />
-        </Col>
+        </div>
       );
     }
   }

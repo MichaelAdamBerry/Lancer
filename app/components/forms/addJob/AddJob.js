@@ -54,7 +54,7 @@ export default class AddJob extends React.Component {
   }
 
   handleCreate = async newJob => {
-    const uid = "users";
+    const uid = "user";
     const docRef = await firestore.collection(`users/${uid}/jobs`).add(newJob);
     return docRef;
   };
@@ -103,19 +103,6 @@ export default class AddJob extends React.Component {
 
   render() {
     const state = this.state;
-    const {
-      client,
-      clientInvalid,
-      date,
-      dateInvalid,
-      rate,
-      rateInvalid,
-      startTime,
-      endTime,
-      location,
-      notes,
-      clientData
-    } = this.state;
 
     return (
       <AddJobView

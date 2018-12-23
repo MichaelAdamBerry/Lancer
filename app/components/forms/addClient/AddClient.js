@@ -1,19 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import AddClientView from "./AddClientView";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Input,
-  Label,
-  FormGroup,
-  FormText,
-  Button
-} from "reactstrap";
 import { firestore, auth } from "../../../firebase";
-import { toHtml } from "@fortawesome/fontawesome-svg-core";
 
 export default class AddClient extends React.Component {
   constructor(props) {
@@ -51,7 +38,7 @@ export default class AddClient extends React.Component {
   };
 
   handleCreate = async clientObj => {
-    const uid = this.props.location.state.uid;
+    const uid = "user";
     const docRef = await firestore
       .collection(`users/${uid}/clients`)
       .add(clientObj);

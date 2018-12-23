@@ -3,46 +3,7 @@ import PropTypes from "prop-types";
 import { Container, Row, Col, Table } from "reactstrap";
 import { firestore, auth } from "../../../firebase";
 import { collectIdsAndDocs } from "../../../utilities";
-
-const ClientsView = ({ clients, handleRemove }) => {
-  return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col content shadow">
-          <h5 className="tableHeading">Clients</h5>
-          <Table hover striped>
-            <thead>
-              <tr>
-                <th>Client</th>
-                <th>Main Contact</th>
-                <th>phone</th>
-              </tr>
-              {clients.map(client => {
-                return (
-                  <tr key={client.id}>
-                    <td>{client.clientName}</td>
-                    <td>{client.contactName}</td>
-                    <td>{client.phone}</td>
-                    <td>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleRemove(client.id);
-                        }}
-                        className="btn btn-small btn-danger">
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </thead>
-          </Table>
-        </div>
-      </div>
-    </div>
-  );
-};
+import MyClientsView from "./MyClientsView";
 
 export default class Clients extends React.Component {
   constructor(props) {
@@ -75,7 +36,7 @@ export default class Clients extends React.Component {
       return <div>loading</div>;
     } else {
       return (
-        <ClientsView
+        <MyClientsView
           clients={this.state.clients}
           handleRemove={this.handleRemove}
         />

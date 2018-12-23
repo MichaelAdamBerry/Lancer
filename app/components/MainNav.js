@@ -7,7 +7,7 @@ import {
   faUserTie,
   faHome,
   faCalculator,
-  faArrowCircleDown
+  faBars
 } from "@fortawesome/free-solid-svg-icons";
 import DropdownContent from "./DropdownContent";
 
@@ -55,8 +55,8 @@ const RenderMainNav = ({ uid, dropdownOpen, toggle }) => {
     <Row className="mainNav d-flex justify-content-around">
       <Col xs="2">
         <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-          <DropdownToggle>
-            <FontAwesomeIcon icon={faArrowCircleDown} />
+          <DropdownToggle className="btn btn-outline-success">
+            <FontAwesomeIcon icon={faBars} />
             <p className="d-none d-md-inline">| My Data </p>
           </DropdownToggle>
           <DropdownMenu>
@@ -71,7 +71,7 @@ const RenderMainNav = ({ uid, dropdownOpen, toggle }) => {
           to={{ pathname: "/dashboard", state: { uid: uid } }}>
           {" "}
           <FontAwesomeIcon icon={faHome} />{" "}
-          <p className="d-none d-md-inline">| Go to Dashboard</p>
+          <p className="d-none d-md-inline">| Dashboard</p>
         </Link>
       </Col>
       <Col xs="2">

@@ -1,46 +1,7 @@
 import React from "react";
-import { Container, Row, Col, Table } from "reactstrap";
-import firebase from "firebase";
-import { firestore, auth } from "../../../firebase";
+import { firestore } from "../../../firebase";
 import { collectIdsAndDocs } from "../../../utilities";
-
-const MyExpensesView = ({ expenses, handleRemove }) => {
-  return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col">
-          <h5 className="tableHeading">My Expenses</h5>
-          <Table hover striped>
-            <thead>
-              <tr>
-                <th>Amount</th>
-                <th>Description</th>
-              </tr>
-              {expenses.map(i => {
-                return (
-                  <tr key={`${i}${i.id}`}>
-                    <td>{i.price}</td>
-                    <td>{i.description}</td>
-                    <td>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleRemove(i.id);
-                        }}
-                        className="btn btn-small btn-danger">
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </thead>
-          </Table>
-        </div>
-      </div>
-    </div>
-  );
-};
+import MyExpensesView from "./MyExpensesView";
 
 export default class MyExpenses extends React.Component {
   constructor(props) {

@@ -69,6 +69,14 @@ a {
   color: #6d5050;
 }
 
+.userCard {
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
 html {
   font-size: 0.7rem;
   color: #6d5050;
