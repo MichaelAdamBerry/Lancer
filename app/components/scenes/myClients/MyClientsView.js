@@ -2,6 +2,26 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Table } from "reactstrap";
 
+const Client = ({ clientName, contactName, phone, id, handleRemove }) => {
+  return (
+    <tr>
+      <td>{clientName}</td>
+      <td>{contactName}</td>
+      <td>{phone}</td>
+      <td>
+        <button
+          type="button"
+          onClick={() => {
+            handleRemove(id);
+          }}
+          className="btn btn-small btn-danger">
+          Remove
+        </button>
+      </td>
+    </tr>
+  );
+};
+
 export default function MyClientsView({ clients, handleRemove }) {
   return (
     <div className="container-fluid">
@@ -17,21 +37,11 @@ export default function MyClientsView({ clients, handleRemove }) {
               </tr>
               {clients.map(client => {
                 return (
-                  <tr key={client.id}>
-                    <td>{client.clientName}</td>
-                    <td>{client.contactName}</td>
-                    <td>{client.phone}</td>
-                    <td>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleRemove(client.id);
-                        }}
-                        className="btn btn-small btn-danger">
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
+                  <Client
+                    {...client}
+                    key={client.id}
+                    handleRemove={handleRemove}
+                  />
                 );
               })}
             </thead>

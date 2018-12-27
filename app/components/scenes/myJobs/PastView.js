@@ -3,6 +3,35 @@ import { Table } from "reactstrap";
 import PropTypes from "prop-types";
 import { formatDate } from "../../../utilities";
 
+const Job = ({ id, client, paid, date, handleRemove, handleEdit }) => {
+  return (
+    <tr>
+      <td>{client}</td>
+      <td>{formatDate(job.date)}</td>
+      <td />
+      <td>{!paid ? "nope" : "yep"}</td>
+      <td>
+        <button
+          type="button"
+          onClick={() => {
+            handleRemove(id);
+          }}
+          className="btn btn-small btn-danger">
+          Remove
+        </button>
+      </td>
+      <td>
+        <button
+          type="button"
+          onClick={() => {
+            handleEdit(id);
+          }}
+        />
+      </td>
+    </tr>
+  );
+};
+
 export default function PastView({ jobs, handleRemove, handleEdit }) {
   return (
     <div className="container-fluid">
@@ -21,30 +50,12 @@ export default function PastView({ jobs, handleRemove, handleEdit }) {
             <tbody>
               {jobs.map(job => {
                 return (
-                  <tr key={job.id}>
-                    <td>{job.client}</td>
-                    <td>{formatDate(job.date)}</td>
-                    <td />
-                    <td>{!job.paid ? "nope" : "yep"}</td>
-                    <td>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleRemove(job.id);
-                        }}
-                        className="btn btn-small btn-danger">
-                        Remove
-                      </button>
-                    </td>
-                    <td>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleEdit(job);
-                        }}
-                      />
-                    </td>
-                  </tr>
+                  <Job
+                    key={job.id}
+                    handleEdit={handleEdit}
+                    handleRemove={handleRemove}
+                    {...job}
+                  />
                 );
               })}
             </tbody>

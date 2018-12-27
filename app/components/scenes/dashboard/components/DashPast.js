@@ -3,6 +3,17 @@ import { Table } from "reactstrap";
 import { formatDate } from "../../../../utilities";
 import PropTypes from "prop-types";
 
+const Job = ({ client, date }) => {
+  return (
+    <tr>
+      <td>{client}</td>
+      <td>{formatDate(date)}</td>
+      <td />
+      <td />
+    </tr>
+  );
+};
+
 const DashPast = ({ jobs }) => {
   return (
     <div className="col">
@@ -18,14 +29,7 @@ const DashPast = ({ jobs }) => {
         </thead>
         <tbody>
           {jobs.map(job => {
-            return (
-              <tr key={job.id}>
-                <td>{job.client}</td>
-                <td>{formatDate(job.date)}</td>
-                <td />
-                <td />
-              </tr>
-            );
+            return <Job {...job} key={job.id} />;
           })}
         </tbody>
       </Table>

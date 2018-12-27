@@ -3,6 +3,27 @@ import { Table } from "reactstrap";
 import PropTypes from "prop-types";
 import { formatTime } from "../../../utilities";
 
+const Job = ({ date, startTime, client, location, handleRemove }) => {
+  return (
+    <tr>
+      <td>{date}</td>
+      <td>{formatTime(startTime)}</td>
+      <td>{client}</td>
+      <td>{location}</td>
+      <td>
+        <button
+          type="button"
+          onClick={() => {
+            handleRemove(id);
+          }}
+          className="btn btn-small btn-danger">
+          Remove
+        </button>
+      </td>
+    </tr>
+  );
+};
+
 export default function FutureView({ jobs, handleRemove }) {
   return (
     <div className="container-fluid">
@@ -21,22 +42,7 @@ export default function FutureView({ jobs, handleRemove }) {
             <tbody>
               {jobs.map(job => {
                 return (
-                  <tr key={job.id}>
-                    <td>{job.date}</td>
-                    <td>{formatTime(job.startTime)}</td>
-                    <td>{job.client}</td>
-                    <td>{job.location}</td>
-                    <td>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleRemove(job.id);
-                        }}
-                        className="btn btn-small btn-danger">
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
+                  <Job key={job.id} handleRemove={handleRemove} {...job} />
                 );
               })}
             </tbody>
