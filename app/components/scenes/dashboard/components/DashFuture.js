@@ -1,7 +1,5 @@
 import React from "react";
 import { Col, Table } from "reactstrap";
-import { formatTime, formatDate } from "../../../../utilities";
-import PropTypes from "prop-types";
 import DashFutureJob from "./DashFutureJob";
 
 class DashFuture extends React.Component {

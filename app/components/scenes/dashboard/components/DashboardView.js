@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Col } from "reactstrap";
 import DashFuture from "./DashFuture";
 import DashPast from "./DashPast";

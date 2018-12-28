@@ -1,8 +1,6 @@
 import React from "react";
 import { Table } from "reactstrap";
 import DashPastJob from "./DashPastJob";
-import { formatDate } from "../../../../utilities";
-import PropTypes from "prop-types";
 
 class DashPast extends React.Component {
   renderJobs = () => {
