@@ -1,9 +1,11 @@
 import React from "react";
-import { firestore, auth } from "../../../firebase";
+import { firestore } from "../../../firebase";
+import collectIdsAndDocs from "../../../utilities";
+import { connect } from "react-redux";
+import * as actions from "../../../actions/actions";
 import AddJobView from "./AddJobView";
-import { collectIdsAndDocs } from "../../../utilities";
 
-export default class AddJob extends React.Component {
+class AddJob extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,32 +38,19 @@ export default class AddJob extends React.Component {
     });
   };
 
-  unsubscribe = null;
-
-  componentDidMount = async () => {
-    const uid = "user";
-    this.setState({ uid });
-    this.unsubscribe = await firestore
-      .collection(`users/${uid}/clients`)
-      .onSnapshot(snapshot => {
-        const clientData = snapshot.docs.map(collectIdsAndDocs);
-        this.setState({ clientData });
-      });
-  };
-
-  componentWillUnmount() {
-    this.unsubscribe();
+  componentWillMount() {
+    this.props.fetchClients();
+    this.setState({ clientData: this.props.clients });
   }
 
-  handleCreate = async newJob => {
-    const uid = "user";
-    const docRef = await firestore.collection(`users/${uid}/jobs`).add(newJob);
-    return docRef;
-  };
+  componentWillUnmount() {
+    this.props.fetchClients();
+  }
 
   handleSubmit = event => {
     event.preventDefault();
-    const job = {
+    const addJob = this.props.addJob;
+    const jobObj = {
       client: this.state.client,
       date: this.state.date,
       rate: this.state.rate,
@@ -75,7 +64,7 @@ export default class AddJob extends React.Component {
       console.log("Client Name, Date, and Rate Type are all required fields");
       return;
     } else {
-      this.handleCreate(job);
+      addJob(jobObj);
       this.clearState();
     }
   };
@@ -114,3 +103,14 @@ export default class AddJob extends React.Component {
     );
   }
 }
+
+const mapStateToProps = ({ clients }) => {
+  return {
+    clients
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  actions
+)(AddJob);

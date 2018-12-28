@@ -1,6 +1,6 @@
 import { auth, firestore } from "../firebase";
 import { collectIdsAndDocs } from "../utilities";
-import { FETCH_EXPENSES, FETCH_CLIENTS } from "./types";
+import { FETCH_EXPENSES, FETCH_CLIENTS, FETCH_JOBS } from "./types";
 
 export const removeExpense = expenseID => async dispatch => {
   const uid = auth.currentUser.uid;
@@ -10,6 +10,11 @@ export const removeExpense = expenseID => async dispatch => {
 export const removeClient = clientID => async dispatch => {
   const uid = auth.currentUser.uid;
   await firestore.doc(`users/${uid}/clients/${clientID}`).delete();
+};
+
+export const removeJob = jobID => async dispatch => {
+  const uid = auth.currentUser.uid;
+  await firestore.doc(`users/${uid}/jobs/${jobID}`).delete();
 };
 
 export const addExpense = expenseObj => async dispatch => {
@@ -25,6 +30,12 @@ export const addClient = clientObj => async dispatch => {
   const docRef = await firestore
     .collection(`users/${uid}/clients`)
     .add(clientObj);
+  return docRef;
+};
+
+export const addJob = jobObj => async dispatch => {
+  const uid = auth.currentUser.uid;
+  const docRef = await firestore.collection(`users/${uid}/jobs`).add(jobObj);
   return docRef;
 };
 
@@ -59,10 +70,21 @@ export const fetchClients = () => async dispatch => {
   const uid = auth.currentUser.uid;
   await firestore.collection(`users/${uid}/clients`).onSnapshot(snapshot => {
     const clients = snapshot.docs.map(collectIdsAndDocs);
-    console.log("action fetchClients returns clients: ", clients);
     dispatch({
       type: FETCH_CLIENTS,
       payload: clients
+    });
+  });
+};
+
+export const fetchJobs = () => async dispatch => {
+  const uid = auth.currentUser.uid;
+  await firestore.collection(`users/${uid}/jobs`).onSnapshot(snapshot => {
+    const jobs = snapshot.docs.map(collectIdsAndDocs);
+    console.log("action fetchJobs returns jobs: ", jobs);
+    dispatch({
+      type: FETCH_JOBS,
+      payload: jobs
     });
   });
 };
