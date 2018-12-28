@@ -2,6 +2,19 @@ import { auth, firestore } from "../firebase";
 import { collectIdsAndDocs } from "../utilities";
 import { FETCH_EXPENSES } from "./types";
 
+export const removeExpense = expenseID => async dispatch => {
+  const uid = auth.currentUser.uid;
+  await firestore.doc(`users/${uid}/expenses/${expenseID}`).delete();
+};
+
+export const addExpense = expenseObj => async dispatch => {
+  const uid = auth.currentUser.uid;
+  const docRef = await firestore
+    .collection(`users/${uid}/expenses`)
+    .add(expenseObj);
+  return docRef;
+};
+
 export const fetchUser = () => async dispatch => {
   const user = auth.currentUser;
   dispatch({
@@ -18,7 +31,6 @@ export const fetchUID = () => async dispatch => {
 };
 
 export const fetchExpenses = () => async dispatch => {
-  console.log("fetchExpenses fires from action.js");
   const uid = auth.currentUser.uid;
   await firestore.collection(`users/${uid}/expenses`).onSnapshot(snapshot => {
     console.log(snapshot.docs.map(collectIdsAndDocs));
@@ -28,8 +40,4 @@ export const fetchExpenses = () => async dispatch => {
       payload: expenses
     });
   });
-};
-
-export const removeExpense = id => async dispatch => {
-  await firestore.collection(``);
 };

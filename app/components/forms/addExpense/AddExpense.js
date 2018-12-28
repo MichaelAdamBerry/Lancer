@@ -1,8 +1,9 @@
 import React from "react";
-import { firestore } from "../../../firebase";
+import { connect } from "react-redux";
 import AddExpenseView from "./AddExpenseView";
+import { addExpense } from "../../../actions/actions";
 
-export default class AddExpense extends React.Component {
+class AddExpense extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,22 +17,16 @@ export default class AddExpense extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    //addExpense a redux action to write to database
+    const { addExpense } = this.props;
     const { price, client, description } = this.state;
     const expenseObj = {
       price: price,
       client: client,
       description: description
     };
-    this.handleCreate(expenseObj);
+    addExpense(expenseObj);
     this.setState({ price: "", client: "", description: "" });
-  };
-
-  handleCreate = async expenseObj => {
-    const uid = "user";
-    const docRef = await firestore
-      .collection(`users/${uid}/expenses`)
-      .add(expenseObj);
-    return docRef;
   };
 
   handleChange = event => {
@@ -60,3 +55,8 @@ export default class AddExpense extends React.Component {
     );
   }
 }
+
+export default connect(
+  null,
+  { addExpense }
+)(AddExpense);

@@ -13,18 +13,16 @@ class MyExpenses extends React.Component {
     this.props.fetchExpenses();
   };
 
-  //todo handleremove
-
   render() {
     const { expenses } = this.props;
     console.log(
       "this.props.expenses at MyExpenses render ",
       this.props.expenses
     );
-    if (!expenses) {
+    if (!this.props.expenses) {
       return <div>loading</div>;
     } else {
-      return <MyExpensesView expenses={expenses} />;
+      return <MyExpensesView expenses={this.props.expenses} />;
     }
   }
 }
