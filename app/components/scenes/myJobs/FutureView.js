@@ -1,8 +1,6 @@
 import React from "react";
 import { Table } from "reactstrap";
 import _ from "lodash";
-import PropTypes from "prop-types";
-import { formatTime } from "../../../utilities";
 import FutureJobItem from "./FutureJobItem";
 
 export default class FutureView extends React.Component {

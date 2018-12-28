@@ -5,7 +5,7 @@ import DashFuture from "./DashFuture";
 import DashPast from "./DashPast";
 import DashStats from "./DashStats";
 
-const DashboardView = ({ jobs, stats, uid }) => {
+const DashboardView = ({ jobs, stats }) => {
   return (
     <div className="container-fluid">
       <div className="row">
@@ -28,8 +28,3 @@ const DashboardView = ({ jobs, stats, uid }) => {
 };
 
 export default DashboardView;
-
-DashboardView.propTypes = {
-  jobs: PropTypes.array,
-  stats: PropTypes.object.isRequired
-};

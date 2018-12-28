@@ -2,47 +2,41 @@ import React from "react";
 import { Col, Table } from "reactstrap";
 import { formatTime, formatDate } from "../../../../utilities";
 import PropTypes from "prop-types";
+import DashFutureJob from "./DashFutureJob";
 
-const Job = ({ id, date, startTime, client, location }) => {
-  return (
-    <tr key={id}>
-      <td>{formatDate(date)}</td>
-      <td>{formatTime(startTime)}</td>
-      <td>{client}</td>
-      <td>{location}</td>
-    </tr>
-  );
-};
-
-const DashFuture = ({ jobs }) => {
-  return (
-    <Col>
-      <h5 className="tableHeading">Upcomping Jobs</h5>
-      <Table hover striped responsive>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Client</th>
-            <th>Location</th>
-          </tr>
-        </thead>
-        <tbody>
-          {jobs.map(job => {
-            return <Job {...job} key={job.id} />;
-          })}
-        </tbody>
-      </Table>
-    </Col>
-  );
-};
+class DashFuture extends React.Component {
+  renderJobs = () => {
+    const { jobs } = this.props;
+    const jobsArr = _.map(jobs, (value, key) => {
+      return <DashFutureJob key={key} job={value} />;
+    });
+    if (!_.isEmpty(jobsArr)) {
+      return jobsArr;
+    }
+    return (
+      <tr>
+        <td>No upcoming jobs have been added yet</td>
+      </tr>
+    );
+  };
+  render() {
+    return (
+      <Col>
+        <h5 className="tableHeading">Upcomping Jobs</h5>
+        <Table hover striped responsive>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Client</th>
+              <th>Location</th>
+            </tr>
+          </thead>
+          <tbody>{this.renderJobs()}</tbody>
+        </Table>
+      </Col>
+    );
+  }
+}
 
 export default DashFuture;
-
-DashFuture.propTypes = {
-  jobs: PropTypes.array.isRequired
-};
-
-DashFuture.defaultProps = {
-  jobs: [{ id: "1", client: "", date: "" }, { id: "2", client: "", date: "" }]
-};

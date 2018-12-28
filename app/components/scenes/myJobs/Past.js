@@ -2,8 +2,6 @@ import React from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
 import { fetchJobs } from "../../../actions/actions";
-import { firestore, auth } from "../../../firebase";
-import { collectIdsAndDocs } from "../../../utilities";
 import PastView from "./PastView";
 
 class Past extends React.Component {

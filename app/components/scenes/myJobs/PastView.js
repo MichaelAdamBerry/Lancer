@@ -1,9 +1,7 @@
 import React from "react";
 import { Table } from "reactstrap";
 import _ from "lodash";
-import PropTypes from "prop-types";
 import PastJobItem from "./PastJobItem";
-import { formatDate } from "../../../utilities";
 
 export default class PastView extends React.Component {
   renderJobs = () => {
