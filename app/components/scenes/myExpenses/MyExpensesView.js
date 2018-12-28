@@ -2,21 +2,30 @@ import React from "react";
 import { Table } from "reactstrap";
 import PropTypes from "prop-types";
 
-const Expense = ({ price, description, handleRemove, id }) => {
+const ExpenseItem = ({ expense }) => {
   return (
     <tr>
-      <td>{price}</td>
-      <td>{description}</td>
+      <td>{expense.price}</td>
+      <td>{expense.description}</td>
       <td>
-        <button
-          type="button"
-          onClick={() => {
-            handleRemove(id);
-          }}
-          className="btn btn-small btn-danger">
+        <button type="button" className="btn btn-small btn-danger">
           Remove
         </button>
       </td>
+    </tr>
+  );
+};
+
+const RenderExpenses = ({ expenses }) => {
+  const expenseArr = _.map(expenses, (value, key) => {
+    return <ExpenseItem key={key} expense={value} />;
+  });
+  if (!_.isEmpty(expenseArr)) {
+    return expenseArr;
+  }
+  return (
+    <tr>
+      <td>You have no expenses added yet</td>
     </tr>
   );
 };
@@ -33,9 +42,7 @@ export default function MyExpensesView({ expenses, handleRemove }) {
                 <th>Amount</th>
                 <th>Description</th>
               </tr>
-              {expenses.map(expense => {
-                return <Expense {...expense} handleRemove={handleRemove} />;
-              })}
+              {<RenderExpenses expenses={expenses} />}
             </thead>
           </Table>
         </div>
@@ -43,8 +50,3 @@ export default function MyExpensesView({ expenses, handleRemove }) {
     </div>
   );
 }
-
-MyExpensesView.propTypes = {
-  expenses: PropTypes.array.isRequired,
-  handleRemove: PropTypes.func.isRequired
-};

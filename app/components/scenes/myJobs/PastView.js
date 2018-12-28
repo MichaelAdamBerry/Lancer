@@ -7,7 +7,7 @@ const Job = ({ id, client, paid, date, handleRemove, handleEdit }) => {
   return (
     <tr>
       <td>{client}</td>
-      <td>{formatDate(job.date)}</td>
+      <td>{formatDate(date)}</td>
       <td />
       <td>{!paid ? "nope" : "yep"}</td>
       <td>

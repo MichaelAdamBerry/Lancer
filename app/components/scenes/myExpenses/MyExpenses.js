@@ -1,46 +1,39 @@
 import React from "react";
-import { firestore } from "../../../firebase";
-import { collectIdsAndDocs } from "../../../utilities";
 import MyExpensesView from "./MyExpensesView";
+import _ from "lodash";
+import { connect } from "react-redux";
+import * as actions from "../../../actions/actions";
 
-export default class MyExpenses extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  unsubscribe = null;
-
-  componentDidMount = async () => {
-    const uid = "user";
-    this.setState({ uid });
-    this.unsubscribe = await firestore
-      .collection(`users/${uid}/expenses`)
-      .onSnapshot(snapshot => {
-        const expenses = snapshot.docs.map(collectIdsAndDocs);
-        this.setState({ expenses });
-      });
-    console.log(this.state);
+class MyExpenses extends React.Component {
+  componentWillMount = async () => {
+    console.log("fetchExpenses called in componentWillMount");
+    this.props.fetchExpenses();
   };
-
   componentWillUnmount = () => {
-    this.unsubscribe();
+    this.props.fetchExpenses();
   };
 
-  handleRemove = async id => {
-    const uid = "user";
-    await firestore.doc(`users/${uid}/expenses/${id}`).delete();
-  };
+  //todo handleremove
 
   render() {
-    if (!this.state.expenses) {
+    const { expenses } = this.props;
+    console.log(
+      "this.props.expenses at MyExpenses render ",
+      this.props.expenses
+    );
+    if (!expenses) {
       return <div>loading</div>;
     } else {
-      return (
-        <MyExpensesView
-          expenses={this.state.expenses}
-          handleRemove={this.handleRemove}
-        />
-      );
+      return <MyExpensesView expenses={expenses} />;
     }
   }
 }
+
+const mapStateToProps = ({ expenses }) => {
+  return { expenses };
+};
+
+export default connect(
+  mapStateToProps,
+  actions
+)(MyExpenses);
