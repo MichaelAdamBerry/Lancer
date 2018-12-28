@@ -14,11 +14,6 @@ class MyExpenses extends React.Component {
   };
 
   render() {
-    const { expenses } = this.props;
-    console.log(
-      "this.props.expenses at MyExpenses render ",
-      this.props.expenses
-    );
     if (!this.props.expenses) {
       return <div>loading</div>;
     } else {

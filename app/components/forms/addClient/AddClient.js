@@ -1,8 +1,9 @@
 import React from "react";
 import AddClientView from "./AddClientView";
-import { firestore, auth } from "../../../firebase";
+import { connect } from "react-redux";
+import { addClient } from "../../../actions/actions";
 
-export default class AddClient extends React.Component {
+class AddClient extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,6 +19,7 @@ export default class AddClient extends React.Component {
   }
 
   validate = () => {
+    const { addClient } = this.props;
     if (this.state.hrRate === "" && this.state.dayRate === "") {
       console.log("either an hourly rate or a day rate are required");
       return;
@@ -33,16 +35,8 @@ export default class AddClient extends React.Component {
         dayRate: this.state.dayRate,
         otRate: this.state.otRate
       };
-      this.handleCreate(newClient);
+      addClient(newClient);
     }
-  };
-
-  handleCreate = async clientObj => {
-    const uid = "user";
-    const docRef = await firestore
-      .collection(`users/${uid}/clients`)
-      .add(clientObj);
-    return docRef;
   };
 
   clearState = () => {
@@ -91,3 +85,8 @@ export default class AddClient extends React.Component {
     );
   }
 }
+
+export default connect(
+  null,
+  { addClient }
+)(AddClient);
