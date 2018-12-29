@@ -1,6 +1,4 @@
 import React from "react";
-import { firestore } from "../../../firebase";
-import collectIdsAndDocs from "../../../utilities";
 import { connect } from "react-redux";
 import * as actions from "../../../actions/actions";
 import AddJobView from "./AddJobView";
@@ -9,6 +7,7 @@ class AddJob extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: true,
       paid: false,
       client: "",
       clientInvalid: true,
@@ -38,14 +37,13 @@ class AddJob extends React.Component {
     });
   };
 
-  componentWillMount() {
+  componentWillMount = async () => {
     this.props.fetchClients();
-    this.setState({ clientData: this.props.clients });
-  }
+  };
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     this.props.fetchClients();
-  }
+  };
 
   handleSubmit = event => {
     event.preventDefault();
@@ -92,9 +90,9 @@ class AddJob extends React.Component {
 
   render() {
     const state = this.state;
-
     return (
       <AddJobView
+        clients={this.props.clients}
         handleChange={this.handleChange}
         handleRequiredFieldChange={this.handleRequiredFieldChange}
         handleSubmit={this.handleSubmit}

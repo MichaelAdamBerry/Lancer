@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import AddExpenseView from "./AddExpenseView";
-import { addExpense } from "../../../actions/actions";
+import * as actions from "../../../actions/actions";
 
 class AddExpense extends React.Component {
   constructor(props) {
@@ -14,6 +14,13 @@ class AddExpense extends React.Component {
       description: ""
     };
   }
+
+  componentWillMount = async () => {
+    this.props.fetchClients();
+  };
+  componentWillUnmount = () => {
+    this.props.fetchClients();
+  };
 
   handleSubmit = event => {
     event.preventDefault();
@@ -47,6 +54,7 @@ class AddExpense extends React.Component {
     const state = this.state;
     return (
       <AddExpenseView
+        clients={this.props.clients}
         handleChange={this.handleChange}
         handleRequiredFieldChange={this.handleRequiredFieldChange}
         handleSubmit={this.handleSubmit}
@@ -56,7 +64,13 @@ class AddExpense extends React.Component {
   }
 }
 
+const mapStateToProps = ({ clients }) => {
+  return {
+    clients
+  };
+};
+
 export default connect(
-  null,
-  { addExpense }
+  mapStateToProps,
+  actions
 )(AddExpense);

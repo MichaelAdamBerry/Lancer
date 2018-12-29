@@ -1,27 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ClientOption from "./ClientOption";
+import ClientOption from "../inputComponents/ClientOption";
 import _ from "lodash";
 import { Col, Form, FormGroup, FormText, Label, Input } from "reactstrap";
 
 export default class AddJobView extends React.Component {
   renderClientOptions = () => {
-    const { clientData } = this.props;
-    if (clientData != "") {
-      const clientArr = _.map(clientData, (value, key) => {
-        return <ClientOption key={key} client={value} />;
-      });
-      if (!_.isEmpty(clientArr)) {
-        return clientArr;
-      }
-      return (
-        <option className="disabled">
-          Add a Client First to Create a New Job
-        </option>
-      );
-    } else {
-      return <option>loading...</option>;
+    const { clients } = this.props;
+    const clientArr = _.map(clients, (value, key) => {
+      return <ClientOption key={key} client={value} />;
+    });
+    if (this.props.clients) {
+      return clientArr;
     }
+    return (
+      <option className="disabled">
+        Add a Client First to Create a New Job
+      </option>
+    );
   };
   render() {
     return (
