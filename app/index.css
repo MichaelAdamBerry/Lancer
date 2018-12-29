@@ -1,6 +1,6 @@
 .titleBar {
   background-color: rgb(120, 192, 120);
-  height: 20vh;
+  height: 7em;
   color: #6d5050;
 }
 .content {
@@ -84,15 +84,15 @@ html {
   }
 
   .userAvatar {
-    height: 25px;
+    height: 2em;
   }
 
   .userCard {
     height: 100px;
     width: 100px;
     position: absolute;
-    top: 3em;
-    right: 5px;
+    top: 2em;
+    right: 1em;
   }
 }
 
@@ -106,12 +106,12 @@ html {
     height: 100px;
     width: 100px;
     position: absolute;
-    top: 3em;
-    right: 5px;
+    top: 2em;
+    right: 1em;
   }
 
   .userAvatar {
-    height: 50px;
+    height: 2em;
     width: auto;
     margin: auto;
   }
