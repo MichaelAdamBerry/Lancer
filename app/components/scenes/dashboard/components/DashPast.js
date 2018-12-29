@@ -1,10 +1,11 @@
 import React from "react";
 import { Table } from "reactstrap";
 import DashPastJob from "./DashPastJob";
+import { filterFutureJobs } from "../../../../utilities";
 
 class DashPast extends React.Component {
   renderJobs = () => {
-    const { jobs } = this.props;
+    const jobs = filterFutureJobs(this.props.jobs);
     const jobsArr = _.map(jobs, (value, key) => {
       return <DashPastJob key={key} job={value} />;
     });

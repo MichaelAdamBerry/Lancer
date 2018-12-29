@@ -74,6 +74,9 @@ html {
   color: #6d5050;
 }
 
+.marginAuto {
+  margin: auto;
+}
 /* Extra Small Devices, Phones */
 @media screen and (max-width: 480px) {
   html {

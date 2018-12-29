@@ -2,10 +2,12 @@ import React from "react";
 import { Table } from "reactstrap";
 import _ from "lodash";
 import PastJobItem from "./PastJobItem";
+import moment from "moment";
+import { filterFutureJobs } from "../../../utilities";
 
 export default class PastView extends React.Component {
   renderJobs = () => {
-    const { jobs } = this.props;
+    const jobs = filterFutureJobs(this.props.jobs);
     const jobsArr = _.map(jobs, (value, key) => {
       return <PastJobItem key={key} job={value} />;
     });

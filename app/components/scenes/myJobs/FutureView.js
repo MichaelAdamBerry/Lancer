@@ -2,10 +2,11 @@ import React from "react";
 import { Table } from "reactstrap";
 import _ from "lodash";
 import FutureJobItem from "./FutureJobItem";
+import { filterPastJobs } from "../../../utilities";
 
 export default class FutureView extends React.Component {
   renderJobs = () => {
-    const { jobs } = this.props;
+    const jobs = filterPastJobs(this.props.jobs);
     const jobsArr = _.map(jobs, (value, key) => {
       return <FutureJobItem key={key} job={value} />;
     });

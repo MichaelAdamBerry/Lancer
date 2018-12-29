@@ -1,10 +1,11 @@
 import React from "react";
 import { Col, Table } from "reactstrap";
+import { filterPastJobs } from "../../../../utilities";
 import DashFutureJob from "./DashFutureJob";
 
 class DashFuture extends React.Component {
   renderJobs = () => {
-    const { jobs } = this.props;
+    const jobs = filterPastJobs(this.props.jobs);
     const jobsArr = _.map(jobs, (value, key) => {
       return <DashFutureJob key={key} job={value} />;
     });
