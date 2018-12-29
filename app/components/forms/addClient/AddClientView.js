@@ -4,7 +4,7 @@ import { Col, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 
 export default function AddClientView(props) {
   return (
-    <div className="container">
+    <div className="container siteText">
       <div className="row">
         <Col md="12" lg="6" className="addForm shadow">
           <h3 className="text-center formTitle">

@@ -6,7 +6,7 @@ import DashStats from "./DashStats";
 
 const DashboardView = ({ jobs, stats }) => {
   return (
-    <div className="container-fluid">
+    <div className="container-fluid siteText">
       <div className="row">
         <Col sm="12" md="9">
           <div className="col">

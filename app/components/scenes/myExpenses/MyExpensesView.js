@@ -21,7 +21,7 @@ export default class MyExpensesView extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid siteText">
         <div className="row">
           <div className="col content shadow">
             <h5 className="tableHeading">My Expenses</h5>

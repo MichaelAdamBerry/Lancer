@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Container, Row, Col } from "reactstrap";
+import { Col } from "reactstrap";
 
 export default class Stats extends React.Component {
   static propTypes = {
@@ -16,26 +16,26 @@ export default class Stats extends React.Component {
   render() {
     const { ytd, mtd } = this.props;
     return (
-      <Container fluid>
-        <Row className="underline">
-          <Col>
+      <div className="container-fluid siteText">
+        <div className="row underline">
+          <div className="col">
             <h5>My Stats</h5>
-          </Col>
-        </Row>
-        <Row className="d-flex align-content-around">
-          <Col className="align-content-center">
+          </div>
+        </div>
+        <div className="row d-flex align-content-around">
+          <div className="col align-content-center">
             <h5>Earnings</h5>
-            <Container>
-              <Row>
+            <div className="container">
+              <div className="row">
                 <Col sm="12">Year to Date: {ytd}</Col>
-              </Row>
-              <Row>
+              </div>
+              <div className="row">
                 <Col>Month to Date: {mtd}</Col>
-              </Row>
-            </Container>
-          </Col>
-        </Row>
-      </Container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }

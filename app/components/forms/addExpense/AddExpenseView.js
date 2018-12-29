@@ -4,12 +4,10 @@ import { Col, Form, Label, FormGroup, FormText, Input } from "reactstrap";
 
 export default function AddExpenseView(props) {
   return (
-    <div className="container">
+    <div className="container siteText">
       <div className="row">
         <Col sm="12" md="8" lg="6" className="addForm shadow">
-          <h3 className="text-center siteText formTitle">
-            Record a New Expense
-          </h3>
+          <h3 className="text-center formTitle">Record a New Expense</h3>
           <Form onSubmit={props.handleSubmit}>
             <FormGroup>
               <Label for="jobSelect">Client</Label>

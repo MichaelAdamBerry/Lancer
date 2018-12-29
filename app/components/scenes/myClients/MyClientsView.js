@@ -22,7 +22,7 @@ export default class MyClientsView extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid siteText">
         <div className="row">
           <div className="col content shadow">
             <h5 className="tableHeading">Clients</h5>

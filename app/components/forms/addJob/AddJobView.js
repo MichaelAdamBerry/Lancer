@@ -2,17 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ClientOption from "./ClientOption";
 import _ from "lodash";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  FormGroup,
-  FormText,
-  Label,
-  Input,
-  Button
-} from "reactstrap";
+import { Col, Form, FormGroup, FormText, Label, Input } from "reactstrap";
 
 export default class AddJobView extends React.Component {
   renderClientOptions = () => {
@@ -35,10 +25,10 @@ export default class AddJobView extends React.Component {
   };
   render() {
     return (
-      <Container>
-        <Row>
+      <div className="container siteText">
+        <div className="row">
           <Col md="8" lg="6" className="addForm shadow">
-            <h3 className="text-center siteText formTitle">Record a New Job</h3>
+            <h3 className="text-center formTitle">Record a New Job</h3>
             <Form onSubmit={this.props.handleSubmit}>
               <FormGroup>
                 <Label for="client">Name</Label>
@@ -148,15 +138,15 @@ export default class AddJobView extends React.Component {
                 />
               </FormGroup>
             </Form>
-            <Button
+            <button
               type="button"
               className="btn btn-success shadow p-3 rounded formButton"
               onClick={this.props.handleSubmit}>
               Submit Job
-            </Button>
+            </button>
           </Col>
-        </Row>
-      </Container>
+        </div>
+      </div>
     );
   }
 }

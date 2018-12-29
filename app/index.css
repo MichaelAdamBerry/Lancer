@@ -69,30 +69,48 @@ a {
   color: #6d5050;
 }
 
-.userCard {
-  height: 100px;
-  width: 100px;
-  position: absolute;
-  top: 5px;
-  right: 5px;
-}
-
 html {
   font-size: 0.7rem;
   color: #6d5050;
 }
 
 /* Extra Small Devices, Phones */
-@media only screen and (min-width: 480px) {
+@media screen and (max-width: 480px) {
   html {
     font-size: 1rem;
+  }
+
+  .userAvatar {
+    height: 25px;
+  }
+
+  .userCard {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 3em;
+    right: 5px;
   }
 }
 
 /* Small Devices, Tablets */
-@media only screen and (min-width: 768px) {
+@media screen and (min-width: 768px) {
   html {
     font-size: 1rem;
+  }
+
+  .userCard {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 3em;
+    right: 5px;
+  }
+
+  .userAvatar {
+    height: 50px;
+    width: auto;
+    margin: auto;
   }
 }
 

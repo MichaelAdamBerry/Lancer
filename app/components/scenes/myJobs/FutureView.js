@@ -20,7 +20,7 @@ export default class FutureView extends React.Component {
   };
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid siteText">
         <div className="row">
           <div className="col content shadow">
             <h5 className="tableHeading">Upcomping Jobs</h5>

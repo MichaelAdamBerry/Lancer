@@ -1,7 +1,7 @@
 import React from "react";
 import { removeJob } from "../../../actions/actions";
 import { connect } from "react-redux";
-import { formatTime } from "../../../utilities";
+import { formatTime, formatDate } from "../../../utilities";
 
 class FutureJobItem extends React.Component {
   handleRemove = jobID => {
@@ -12,7 +12,7 @@ class FutureJobItem extends React.Component {
     const { job } = this.props;
     return (
       <tr>
-        <td>{job.date}</td>
+        <td>{formatDate(job.date)}</td>
         <td>{formatTime(job.startTime)}</td>
         <td>{job.client}</td>
         <td>{job.location}</td>
