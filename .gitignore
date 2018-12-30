@@ -1,3 +1,10 @@
 .DS_Store
+.vscode
 node_modules
 firebase.js
+firebase.json
+firebase.indexes.json
+firebase.rules
+storage.rules
+dist
+

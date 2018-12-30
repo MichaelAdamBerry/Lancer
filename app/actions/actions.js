@@ -57,7 +57,6 @@ export const fetchUID = () => async dispatch => {
 export const fetchExpenses = () => async dispatch => {
   const uid = auth.currentUser.uid;
   await firestore.collection(`users/${uid}/expenses`).onSnapshot(snapshot => {
-    console.log(snapshot.docs.map(collectIdsAndDocs));
     const expenses = snapshot.docs.map(collectIdsAndDocs);
     dispatch({
       type: FETCH_EXPENSES,
@@ -81,7 +80,6 @@ export const fetchJobs = () => async dispatch => {
   const uid = auth.currentUser.uid;
   await firestore.collection(`users/${uid}/jobs`).onSnapshot(snapshot => {
     const jobs = snapshot.docs.map(collectIdsAndDocs);
-    console.log("action fetchJobs returns jobs: ", jobs);
     dispatch({
       type: FETCH_JOBS,
       payload: jobs

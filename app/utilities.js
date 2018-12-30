@@ -3,13 +3,11 @@ import _ from "lodash";
 
 export const formatDate = str => {
   const date = moment(str);
-  console.log("formatDate givendate is ", date);
   const now = moment();
   const isInFuture = now.isBefore(date); //bool true if date is after now
   let diff = moment().diff(date, "days");
   diff = Math.abs(diff); // convert moment.diff to positive if it returns negative number
-  console.log("difference in days days", diff);
-  console.log(isInFuture);
+  
   // toNow display example "in 6 days"
   //fromNow displays "6 days ago"
   if (diff > 7) {
@@ -48,12 +46,10 @@ export const filterYTD = jobs => {
   const year = moment()
     .year()
     .toString();
-  console.log(year);
   const JanFirst = `${year}-1-1`;
   const jobsThisYear = _.filter(jobs, value => {
     return moment(value.date).isAfter(JanFirst);
   });
-  console.log("jobs this year", jobsThisYear);
   return jobsThisYear;
 };
 
@@ -63,11 +59,9 @@ export const filterMTD = jobs => {
     .toString();
   let month = moment().month();
   month = (month + 1).toString();
-  console.log(month);
   const monthFirst = `${year}-${month}-1`;
   const jobsThisMonth = _.filter(jobs, value => {
     return moment(value.date).isAfter(monthFirst);
   });
-  console.log("jobs this month", jobsThisMonth);
   return jobsThisMonth;
 };

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 export default class DashStats extends React.Component {
   static propTypes = {
     ytd: PropTypes.number,
-    mtd: PropTypes.string.isRequired
+    mtd: PropTypes.number
   };
   render() {
     const { ytd, mtd } = this.props;
