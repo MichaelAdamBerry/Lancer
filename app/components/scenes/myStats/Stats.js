@@ -1,41 +1,59 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Col } from "reactstrap";
+import StatsView from "./StatsView";
+import { connect } from "react-redux";
+import DashStats from "./DashStats";
+import { fetchJobs } from "../../../actions/actions";
+import { filterYTD, filterMTD } from "../../../utilities";
+import _ from "lodash";
 
-export default class Stats extends React.Component {
-  static propTypes = {
-    ytd: PropTypes.string.isRequired,
-    mtd: PropTypes.string.isRequired,
-    showNav: PropTypes.bool.isRequired
-  };
-  static defaultProps = {
-    ytd: "0",
-    mtd: "0",
-    showNav: true
-  };
-  render() {
-    const { ytd, mtd } = this.props;
-    return (
-      <div className="container-fluid siteText">
-        <div className="row underline">
-          <div className="col">
-            <h5>My Stats</h5>
-          </div>
-        </div>
-        <div className="row d-flex align-content-around">
-          <div className="col align-content-center">
-            <h5>Earnings</h5>
-            <div className="container">
-              <div className="row">
-                <Col sm="12">Year to Date: {ytd}</Col>
-              </div>
-              <div className="row">
-                <Col>Month to Date: {mtd}</Col>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+class Stats extends React.Component {
+  renderStatsView = () => {
+    const jobs = this.props.jobs;
+    const paidJobs = _.filter(jobs, value => {
+      return value.paid == true;
+    });
+    const jobsThisYear = filterYTD(paidJobs);
+    const jobsThisMonth = filterMTD(paidJobs);
+    const ytd = _.reduce(
+      jobsThisYear,
+      (accumulator, current) => {
+        return (accumulator = accumulator + current.net);
+      },
+      0
     );
+    const mtd = _.reduce(
+      jobsThisMonth,
+      (accumulator, current) => {
+        return (accumulator = accumulator + current.net);
+      },
+      0
+    );
+
+    if (this.props.dash === true) {
+      return <DashStats ytd={ytd} mtd={mtd} />;
+    } else {
+      return <StatsView ytd={ytd} mtd={mtd} />;
+    }
+  };
+
+  componentWillMount = async () => {
+    this.props.fetchJobs();
+  };
+  componentWillUnmount = () => {
+    this.props.fetchJobs();
+  };
+
+  render() {
+    return <>{this.renderStatsView()}</>;
   }
 }
+
+const mapStateToProps = ({ jobs }) => {
+  return { jobs };
+};
+
+export default connect(
+  mapStateToProps,
+  { fetchJobs }
+)(Stats);

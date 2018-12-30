@@ -2,7 +2,7 @@ import React from "react";
 import { Col } from "reactstrap";
 import DashFuture from "./DashFuture";
 import DashPast from "./DashPast";
-import DashStats from "./DashStats";
+import Stats from "../../myStats/Stats";
 
 const DashboardView = ({ jobs, stats }) => {
   return (
@@ -17,7 +17,7 @@ const DashboardView = ({ jobs, stats }) => {
               <DashPast jobs={jobs} />
             </div>
             <div className="col dashTable">
-              <DashStats stats={stats} />
+              <Stats dash={true} />
             </div>
           </div>
         </Col>

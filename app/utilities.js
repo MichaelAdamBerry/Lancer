@@ -43,3 +43,31 @@ export const filterPastJobs = jobs => {
     return now.isBefore(value.date);
   });
 };
+
+export const filterYTD = jobs => {
+  const year = moment()
+    .year()
+    .toString();
+  console.log(year);
+  const JanFirst = `${year}-1-1`;
+  const jobsThisYear = _.filter(jobs, value => {
+    return moment(value.date).isAfter(JanFirst);
+  });
+  console.log("jobs this year", jobsThisYear);
+  return jobsThisYear;
+};
+
+export const filterMTD = jobs => {
+  const year = moment()
+    .year()
+    .toString();
+  let month = moment().month();
+  month = (month + 1).toString();
+  console.log(month);
+  const monthFirst = `${year}-${month}-1`;
+  const jobsThisMonth = _.filter(jobs, value => {
+    return moment(value.date).isAfter(monthFirst);
+  });
+  console.log("jobs this month", jobsThisMonth);
+  return jobsThisMonth;
+};
