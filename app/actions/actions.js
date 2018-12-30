@@ -1,6 +1,6 @@
-import { auth, firestore } from "../firebase";
+import { auth, firestore, storage } from "../firebase";
 import { collectIdsAndDocs } from "../utilities";
-import { FETCH_EXPENSES, FETCH_CLIENTS, FETCH_JOBS } from "./types";
+import { FETCH_EXPENSES, FETCH_LOGO, FETCH_CLIENTS, FETCH_JOBS } from "./types";
 
 export const removeExpense = expenseID => async dispatch => {
   const uid = auth.currentUser.uid;
@@ -86,5 +86,15 @@ export const fetchJobs = () => async dispatch => {
       type: FETCH_JOBS,
       payload: jobs
     });
+  });
+};
+
+export const fetchLogo = () => async dispatch => {
+  const url = await storage
+    .ref("images/18552e84d4558a55c7e77a2aa96bd00c.svg")
+    .getDownloadURL();
+  dispatch({
+    type: FETCH_LOGO,
+    payload: url
   });
 };

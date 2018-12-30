@@ -87,12 +87,25 @@ html {
     height: 2em;
   }
 
+  .logoSVG {
+    height: 2em;
+    width: auto;
+  }
+
   .userCard {
     height: 100px;
     width: 100px;
     position: absolute;
     top: 2em;
-    right: 1em;
+    right: 0;
+  }
+
+  .siteLogo {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 2em;
+    left: 0;
   }
 }
 
@@ -110,7 +123,20 @@ html {
     right: 1em;
   }
 
+  .siteLogo {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 2em;
+    left: 1em;
+  }
+
   .userAvatar {
+    height: 2em;
+    width: auto;
+    margin: auto;
+  }
+  .logoSVG {
     height: 2em;
     width: auto;
     margin: auto;
