@@ -4,10 +4,9 @@ import _ from "lodash";
 export const formatDate = str => {
   const date = moment(str);
   const now = moment();
-  const isInFuture = now.isBefore(date); //bool true if date is after now
   let diff = moment().diff(date, "days");
   diff = Math.abs(diff); // convert moment.diff to positive if it returns negative number
-  
+
   // toNow display example "in 6 days"
   //fromNow displays "6 days ago"
   if (diff > 7) {

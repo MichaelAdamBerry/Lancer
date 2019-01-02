@@ -15,14 +15,16 @@ class Stats extends React.Component {
     });
     const jobsThisYear = filterYTD(paidJobs);
     const jobsThisMonth = filterMTD(paidJobs);
-    const ytd = _.reduce(
+    //to calculate sum of jobs within the month (Year To Date)
+    const calculateYTD = _.reduce(
       jobsThisYear,
       (accumulator, current) => {
         return (accumulator = accumulator + current.net);
       },
       0
     );
-    const mtd = _.reduce(
+    //calculate sum of jobs within the month (Month To Date)
+    const calculateMTD = _.reduce(
       jobsThisMonth,
       (accumulator, current) => {
         return (accumulator = accumulator + current.net);
@@ -31,9 +33,9 @@ class Stats extends React.Component {
     );
 
     if (this.props.dash === true) {
-      return <DashStats ytd={ytd} mtd={mtd} />;
+      return <DashStats ytd={calculateYTD} mtd={calculateMTD} />;
     } else {
-      return <StatsView ytd={ytd} mtd={mtd} />;
+      return <StatsView ytd={calculateYTD} mtd={calculateMTD} />;
     }
   };
 

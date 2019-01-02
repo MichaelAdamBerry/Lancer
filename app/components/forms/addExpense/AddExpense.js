@@ -25,9 +25,11 @@ class AddExpense extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     //addExpense a redux action to write to database
-    const { addExpense } = this.props;
+    const { addExpense, clients } = this.props;
     const { price, client, description } = this.state;
+    const clientObj = _.find(clients, val => val.clientName === client);
     const expenseObj = {
+      clientObj: clientObj,
       price: price,
       client: client,
       description: description

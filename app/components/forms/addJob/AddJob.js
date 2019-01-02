@@ -47,8 +47,20 @@ class AddJob extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const addJob = this.props.addJob;
+    const { addJob, clients } = this.props;
+    const clientObj = _.find(clients, val => {
+      return val.clientName === this.state.client;
+    });
+
+    const rateType = this.state.rate;
+    //calculateRate(...this.state)
+    //if this.state.rate === "Hourly" calculateHourlyRate(clientObj.hrRate, date, startTime, endTime)
+    //if this.state.rate === "Day Rate" calculateDayRate(clientObj.dayRate)
+    //if this.state.rate === "Multi Day" calculateMultiDay(clientObj.dayRate, daysWorked)
+    //if this.state.rate === "Custom" calculateCustomRate(amount)
+
     const jobObj = {
+      clientObj: clientObj,
       client: this.state.client,
       date: this.state.date,
       rate: this.state.rate,
@@ -94,6 +106,7 @@ class AddJob extends React.Component {
       <AddJobView
         clients={this.props.clients}
         handleChange={this.handleChange}
+        handleClientSelect={this.handleClientSelect}
         handleRequiredFieldChange={this.handleRequiredFieldChange}
         handleSubmit={this.handleSubmit}
         {...state}
