@@ -20,8 +20,8 @@ class PastJobItem extends React.Component {
     const { job } = this.props;
     return (
       <tr>
-        <td>{job.client}</td>
         <td>{formatDate(job.date)}</td>
+        <td>{job.client}</td>
         <td />
         <td>{!job.paid ? "unpaid" : "paid"}</td>
         <td>

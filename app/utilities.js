@@ -2,17 +2,8 @@ import moment from "moment";
 import _ from "lodash";
 
 export const formatDate = str => {
-  const date = moment(str);
-  const now = moment();
-  let diff = moment().diff(date, "days");
-  diff = Math.abs(diff); // convert moment.diff to positive if it returns negative number
-
-  // toNow display example "in 6 days"
-  //fromNow displays "6 days ago"
-  if (diff > 7) {
-    return date.format("ll");
-  }
-  return now.to(date);
+  //if (diff > 7) {
+  return moment(str).format("ll");
 };
 
 export const formatTime = str => {
@@ -29,15 +20,23 @@ export const collectIdsAndDocs = doc => {
 
 export const filterFutureJobs = jobs => {
   return _.filter(jobs, value => {
+    const dateTime = value.startTime
+      ? `${value.date} ${value.startTime}`
+      : `${value.date}`;
     const now = moment();
-    return now.isAfter(value.date);
+    return now.isAfter(dateTime);
   });
 };
 
 export const filterPastJobs = jobs => {
   return _.filter(jobs, value => {
+    const dateTime = value.startTime
+      ? `${value.date} ${value.startTime}`
+      : `${value.date}`;
     const now = moment();
-    return now.isBefore(value.date);
+    console.log(now);
+    console.log(dateTime);
+    return now.isBefore(dateTime);
   });
 };
 
@@ -47,7 +46,10 @@ export const filterYTD = jobs => {
     .toString();
   const JanFirst = `${year}-1-1`;
   const jobsThisYear = _.filter(jobs, value => {
-    return moment(value.date).isAfter(JanFirst);
+    const dateTime = value.startTime
+      ? `${value.date} ${value.startTime}`
+      : `${value.date}`;
+    return moment(dateTime).isAfter(JanFirst);
   });
   return jobsThisYear;
 };
@@ -60,7 +62,10 @@ export const filterMTD = jobs => {
   month = (month + 1).toString();
   const monthFirst = `${year}-${month}-1`;
   const jobsThisMonth = _.filter(jobs, value => {
-    return moment(value.date).isAfter(monthFirst);
+    const dateTime = value.startTime
+      ? `${value.date} ${value.startTime}`
+      : `${value.date}`;
+    return moment(dateTime).isAfter(monthFirst);
   });
   return jobsThisMonth;
 };

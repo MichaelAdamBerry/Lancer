@@ -59,8 +59,8 @@ export default class PastView extends React.Component {
             <Table hover striped responsive>
               <thead>
                 <tr>
-                  <th>Client</th>
                   <th>Date</th>
+                  <th>Client</th>
                   <th>Total $</th>
                   <th>Status</th>
                 </tr>
