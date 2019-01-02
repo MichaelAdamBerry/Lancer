@@ -48,6 +48,9 @@ a {
   border: solid 1px #cccaca;
   border-radius: 10px;
 }
+.modalForm {
+  width: 100%;
+}
 
 .dashTable {
   margin: auto;

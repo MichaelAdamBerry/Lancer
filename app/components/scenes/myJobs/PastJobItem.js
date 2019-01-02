@@ -10,9 +10,12 @@ class PastJobItem extends React.Component {
     const { removeJob } = this.props;
     removeJob(jobID);
   };
-  handleEdit = jobID => {
+  renderModalWithJob = jobObj => {
     console.log("Edit Icon clicked");
+    this.props.updateCurrentJob(jobObj);
+    this.props.toggle();
   };
+
   render() {
     const { job } = this.props;
     return (
@@ -20,7 +23,7 @@ class PastJobItem extends React.Component {
         <td>{job.client}</td>
         <td>{formatDate(job.date)}</td>
         <td />
-        <td>{!job.paid ? "nope" : "yep"}</td>
+        <td>{!job.paid ? "unpaid" : "paid"}</td>
         <td>
           <button
             type="button"
@@ -35,7 +38,7 @@ class PastJobItem extends React.Component {
           <button
             type="button"
             onClick={() => {
-              this.handleEdit(job.id);
+              this.renderModalWithJob(job);
             }}
             className="btn btn-secondary">
             <FontAwesomeIcon icon={faEdit} />

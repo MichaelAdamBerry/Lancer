@@ -1,8 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 import ClientOption from "../inputComponents/ClientOption";
 import _ from "lodash";
-import { Col, Form, FormGroup, FormText, Label, Input } from "reactstrap";
+import { Form, FormGroup, Label, Input } from "reactstrap";
 
 export default class EditJobFormView extends React.Component {
   renderClientOptions = () => {
@@ -23,7 +22,7 @@ export default class EditJobFormView extends React.Component {
     return (
       <div className="container siteText">
         <div className="row">
-          <div className="addForm shadow">
+          <div className="modalForm">
             <Form onSubmit={this.props.handleSubmit}>
               <FormGroup>
                 <Label for="client">Name</Label>
@@ -37,11 +36,6 @@ export default class EditJobFormView extends React.Component {
                   id="client">
                   {this.renderClientOptions()}
                 </Input>
-                <FormText className="text-right">
-                  {this.props.clientInvalid
-                    ? "required field"
-                    : "👍🏽  Looks Good"}
-                </FormText>
               </FormGroup>
               <FormGroup>
                 <Label for="Date">Date</Label>
