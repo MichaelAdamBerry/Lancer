@@ -1,5 +1,5 @@
 import React from "react";
-import { removeClient } from "../../../actions/actions";
+import * as actions from "../../../actions/actions";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -9,9 +9,11 @@ class ClientItem extends React.Component {
     const { removeClient } = this.props;
     removeClient(expenseID);
   };
-  handleEdit = expenseID => {
-    console.log("Edit Icon clicked");
+  renderModalWithClient = clientObj => {
+    this.props.updateCurrentClient(clientObj);
+    this.props.toggle();
   };
+
   render() {
     const { client } = this.props;
     return (
@@ -33,7 +35,7 @@ class ClientItem extends React.Component {
           <button
             type="button"
             onClick={() => {
-              this.handleEdit(client.id);
+              this.renderModalWithClient(client);
             }}
             className="btn btn-secondary">
             <FontAwesomeIcon icon={faEdit} />
@@ -46,5 +48,5 @@ class ClientItem extends React.Component {
 
 export default connect(
   null,
-  { removeClient }
+  actions
 )(ClientItem);

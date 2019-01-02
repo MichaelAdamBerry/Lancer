@@ -43,6 +43,17 @@ export const addJob = jobObj => async dispatch => {
 };
 
 //Edit Actions
+export const editClient = (id, clientObj) => async dispatch => {
+  const uid = auth.currentUser.uid;
+  console.log(
+    `editExpense action fired, uid is ${uid} and docRef is users/${uid}/clients/${id}`
+  );
+  const docRef = await firestore
+    .collection(`users/${uid}/clients`)
+    .doc(id)
+    .update({ ...clientObj });
+  return docRef;
+};
 
 export const editExpense = (id, expenseObj) => async dispatch => {
   const uid = auth.currentUser.uid;

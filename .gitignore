@@ -7,4 +7,4 @@ firebase.indexes.json
 firebase.rules
 storage.rules
 dist
-
+.firebase

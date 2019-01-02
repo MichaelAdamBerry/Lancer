@@ -3,12 +3,40 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 import { Table } from "reactstrap";
 import ClientItem from "./ClientItem";
+import ModalEditClient from "./ModalEditClient";
 
 export default class MyClientsView extends React.Component {
+  state = { modalOpen: false, currentClient: {} };
+
+  toggle = () => this.setState({ modalOpen: !this.state.modalOpen });
+
+  updateCurrentClient = clientObj => {
+    this.setState({ currentClient: clientObj });
+  };
+
+  renderModal = () => {
+    if (this.state.modalOpen === true) {
+      return (
+        <ModalEditClient
+          isOpen={this.state.modalOpen}
+          currentClient={this.state.currentClient}
+          toggle={this.toggle}
+        />
+      );
+    }
+  };
+
   renderClients = () => {
     const { clients } = this.props;
     const clientArr = _.map(clients, (value, key) => {
-      return <ClientItem key={key} client={value} />;
+      return (
+        <ClientItem
+          key={key}
+          client={value}
+          updateCurrentClient={this.updateCurrentClient}
+          toggle={this.toggle}
+        />
+      );
     });
     if (!_.isEmpty(clientArr)) {
       return clientArr;
@@ -23,6 +51,7 @@ export default class MyClientsView extends React.Component {
   render() {
     return (
       <div className="container-fluid siteText">
+        {this.renderModal()}
         <div className="row">
           <div className="col content shadow">
             <h5 className="tableHeading">Clients</h5>
