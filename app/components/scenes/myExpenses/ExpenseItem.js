@@ -1,5 +1,5 @@
 import React from "react";
-import { removeExpense } from "../../../actions/actions";
+import * as actions from "../../../actions/actions";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -9,9 +9,11 @@ class ExpenseItem extends React.Component {
     const { removeExpense } = this.props;
     removeExpense(expenseID);
   };
-  handleEdit = expenseID => {
-    console.log("Edit Icon clicked");
+  renderModalWithExpense = expenseObj => {
+    this.props.updateCurrentExpense(expenseObj);
+    this.props.toggle();
   };
+
   render() {
     const { expense } = this.props;
     return (
@@ -32,7 +34,7 @@ class ExpenseItem extends React.Component {
           <button
             type="button"
             onClick={() => {
-              this.handleEdit(expense.id);
+              this.renderModalWithExpense(expense);
             }}
             className="btn btn-secondary">
             <FontAwesomeIcon icon={faEdit} />
@@ -45,5 +47,5 @@ class ExpenseItem extends React.Component {
 
 export default connect(
   null,
-  { removeExpense }
+  actions
 )(ExpenseItem);
