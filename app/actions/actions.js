@@ -2,6 +2,8 @@ import { auth, firestore, storage } from "../firebase";
 import { collectIdsAndDocs } from "../utilities";
 import { FETCH_EXPENSES, FETCH_LOGO, FETCH_CLIENTS, FETCH_JOBS } from "./types";
 
+//Delete Actions
+
 export const removeExpense = expenseID => async dispatch => {
   const uid = auth.currentUser.uid;
   await firestore.doc(`users/${uid}/expenses/${expenseID}`).delete();
@@ -17,6 +19,7 @@ export const removeJob = jobID => async dispatch => {
   await firestore.doc(`users/${uid}/jobs/${jobID}`).delete();
 };
 
+//Add Actions
 export const addExpense = expenseObj => async dispatch => {
   const uid = auth.currentUser.uid;
   const docRef = await firestore
@@ -39,6 +42,25 @@ export const addJob = jobObj => async dispatch => {
   return docRef;
 };
 
+//Edit Actions
+
+export const editJob = (id, jobObj) => async dispatch => {
+  const uid = auth.currentUser.uid;
+  console.log(
+    `editJob action fired, uid is ${uid} docRef is users/${uid}/jobs`
+  );
+  console.log(`jobId is ${id}`);
+
+  const docRef = await firestore
+    .collection(`users/${uid}/jobs`)
+    .doc(id)
+    .update({
+      ...jobObj
+    });
+  return docRef;
+};
+
+//Query and Fetch Actions
 export const fetchUser = () => async dispatch => {
   const user = auth.currentUser;
   dispatch({

@@ -10,8 +10,10 @@ class FutureJobItem extends React.Component {
     const { removeJob } = this.props;
     removeJob(jobID);
   };
-  handleEdit = jobID => {
+  renderModalWithJob = jobObj => {
     console.log("Edit Icon clicked");
+    this.props.updateCurrentJob(jobObj);
+    this.props.toggle();
   };
   render() {
     const { job } = this.props;
@@ -35,7 +37,7 @@ class FutureJobItem extends React.Component {
           <button
             type="button"
             onClick={() => {
-              this.handleEdit(job.id);
+              this.renderModalWithJob(job);
             }}
             className="btn btn-secondary">
             <FontAwesomeIcon icon={faEdit} />
