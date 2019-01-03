@@ -69,3 +69,34 @@ export const filterMTD = jobs => {
   });
   return jobsThisMonth;
 };
+
+export const getMinutesWorked = (date, startTime, endTime) => {
+  const dateTimeStart = `${date} ${startTime}`;
+  const dateTimeEnd = `${date} ${endTime}`;
+  const start = moment(dateTimeStart);
+  const end = moment(dateTimeEnd);
+  const diffInMinutes = end.diff(start, "minutes");
+  console.log(`diffInMinutes is ${diffInMinutes}`);
+  return diffInMinutes;
+};
+
+export const calculateGrossJob = (rateType, clientObj, custom) => {
+  if (rateType === "Hourly") {
+    const rate = Number(clientObj.hrRate);
+    const time = 4; // TODO diff endTime - startTime;
+    return rate * time;
+  } else if (rateType === "Day Rate") {
+    const rate = Number(clientObj.dayRate);
+    const daysWorked = 1; //TODO difference between the startTime and endTime in days
+    return rate * daysWorked;
+  }
+  //TODO if custom is selected in the form there should be a popup input for custom rate
+  else if (rateType === "Custom") {
+    const rate = custom;
+    return rate;
+  } else {
+    console.error(
+      "Unable to calculate earnings for this job. Make sure you have entered a valid Rate for this client"
+    );
+  }
+};

@@ -19,6 +19,37 @@ export default class AddJobView extends React.Component {
       </option>
     );
   };
+
+  renderHourlyOptions = () => {
+    return (
+      <>
+        <FormGroup>
+          <Label for="StartTme">Start Time</Label>
+          <Input
+            className="shadow p-3 bg-light rounded"
+            type="time"
+            value={this.props.startTime}
+            onChange={this.props.handleChange}
+            name="startTime"
+            id="startTime"
+            placeholder="time placeholder"
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="EndTime">End Time</Label>
+          <Input
+            className="shadow p-3 bg-light rounded"
+            type="time"
+            name="endTime"
+            value={this.props.endTime}
+            onChange={this.props.handleChange}
+            id="EndTime"
+            placeholder="time placeholder"
+          />
+        </FormGroup>
+      </>
+    );
+  };
   render() {
     return (
       <div className="container siteText">
@@ -29,7 +60,7 @@ export default class AddJobView extends React.Component {
               <FormGroup>
                 <Label for="client">Name</Label>
                 <Input
-                  className="shadow p-3 bg-light rounded"
+                  className="shadow bg-light rounded"
                   type="select"
                   value={this.props.client}
                   placeholder="pick a client"
@@ -38,11 +69,12 @@ export default class AddJobView extends React.Component {
                   id="client"
                   invalid={this.props.clientInvalid}
                   valid={!this.props.clientInvalid}>
+                  <option>Pick a Client</option>
                   {this.renderClientOptions()}
                 </Input>
                 <FormText className="text-right">
                   {this.props.clientInvalid
-                    ? "required field"
+                    ? "** required field"
                     : "👍🏽  Looks Good"}
                 </FormText>
               </FormGroup>
@@ -68,7 +100,7 @@ export default class AddJobView extends React.Component {
               <FormGroup>
                 <Label for="Rate">Rate Type</Label>
                 <Input
-                  className="shadow p-3 bg-light rounded"
+                  className="shadow bg-light rounded"
                   type="select"
                   value={this.props.rate}
                   onChange={this.props.handleRequiredFieldChange}
@@ -76,7 +108,7 @@ export default class AddJobView extends React.Component {
                   id="rate"
                   invalid={this.props.rateInvalid}
                   valid={!this.props.rateInvalid}>
-                  <option disabled>Choose One</option>
+                  <option>Choose One</option>
                   <option>Hourly</option>
                   <option>Day Rate</option>
                   <option>Multi-day Job Rate</option>
@@ -87,30 +119,7 @@ export default class AddJobView extends React.Component {
                     : "👍🏽 Looks Good"}
                 </FormText>
               </FormGroup>
-              <FormGroup>
-                <Label for="StartTme">Start Time</Label>
-                <Input
-                  className="shadow p-3 bg-light rounded"
-                  type="time"
-                  value={this.props.startTime}
-                  onChange={this.props.handleChange}
-                  name="startTime"
-                  id="startTime"
-                  placeholder="time placeholder"
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="EndTime">End Time</Label>
-                <Input
-                  className="shadow p-3 bg-light rounded"
-                  type="time"
-                  name="endTime"
-                  value={this.props.endTime}
-                  onChange={this.props.handleChange}
-                  id="EndTime"
-                  placeholder="time placeholder"
-                />
-              </FormGroup>
+              {this.props.rate === "Hourly" ? this.renderHourlyOptions() : ""}
               <FormGroup>
                 <Label for="location">Location</Label>
                 <Input

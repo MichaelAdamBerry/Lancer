@@ -2,12 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import * as actions from "../../../actions/actions";
 import AddJobView from "./AddJobView";
+import { getMinutesWorked } from "../../../utilities";
 
 class AddJob extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
+      grossPay: 0,
       paid: false,
       client: "",
       clientInvalid: true,
@@ -52,9 +54,15 @@ class AddJob extends React.Component {
       return val.clientName === this.state.client;
     });
 
-    const rateType = this.state.rate;
-    //calculateRate(...this.state)
-    //if this.state.rate === "Hourly" calculateHourlyRate(clientObj.hrRate, date, startTime, endTime)
+    const { rate, date, startTime, endTime, grossPay } = this.state;
+    if (rate === "Hourly" && startTime && endTime) {
+      const minutes = getMinutesWorked(date, startTime, endTime);
+      const hourlyRate = Number(clientObj.hrRate);
+      console.log("gross rate should be ", hourlyRate * (minutes / 60));
+      const gross = hourlyRate * (minutes / 60);
+      this.setState({ grossPay: gross }, console.log(this.state));
+    }
+
     //if this.state.rate === "Day Rate" calculateDayRate(clientObj.dayRate)
     //if this.state.rate === "Multi Day" calculateMultiDay(clientObj.dayRate, daysWorked)
     //if this.state.rate === "Custom" calculateCustomRate(amount)
@@ -67,7 +75,8 @@ class AddJob extends React.Component {
       startTime: this.state.startTime,
       endTime: this.state.endTime,
       location: this.state.location,
-      notes: this.state.notes
+      notes: this.state.notes,
+      grossPay: this.state.grossPay
     };
     this.validateForm();
     if (!this.state.client || !this.state.date || !this.state.rate) {
@@ -75,6 +84,7 @@ class AddJob extends React.Component {
       return;
     } else {
       addJob(jobObj);
+      console.log(jobObj);
       this.clearState();
     }
   };
