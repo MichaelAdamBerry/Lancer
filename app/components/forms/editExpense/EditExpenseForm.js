@@ -2,11 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import EditExpenseFormView from "./EditExpenseFormView";
 import * as actions from "../../../actions/actions";
+import SuccessAlert from "../inputComponents/SuccessAlert";
 
 class EditExpenseForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { ...props.currentExpense };
+    this.state = { ...props.currentExpense, showSuccessAlert: false };
   }
 
   componentWillMount = async () => {
@@ -14,6 +15,14 @@ class EditExpenseForm extends React.Component {
   };
   componentWillUnmount = () => {
     this.props.fetchClients();
+  };
+
+  renderSuccessAlert = () => {
+    if (this.state.showSuccessAlert === true) {
+      return <SuccessAlert message="Expense was updated successfully" />;
+    } else {
+      return <></>;
+    }
   };
 
   handleEditSubmit = event => {
@@ -25,6 +34,7 @@ class EditExpenseForm extends React.Component {
     };
 
     editExpense(this.state.id, { ...expenseObj });
+    this.setState({ showSuccessAlert: true });
   };
 
   handleChange = event => {
@@ -35,12 +45,15 @@ class EditExpenseForm extends React.Component {
   render() {
     const state = this.state;
     return (
-      <EditExpenseFormView
-        clients={this.props.clients}
-        handleChange={this.handleChange}
-        handleEditSubmit={this.handleEditSubmit}
-        {...state}
-      />
+      <>
+        {this.renderSuccessAlert()}
+        <EditExpenseFormView
+          clients={this.props.clients}
+          handleChange={this.handleChange}
+          handleEditSubmit={this.handleEditSubmit}
+          {...state}
+        />
+      </>
     );
   }
 }

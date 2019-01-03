@@ -2,8 +2,6 @@ import React from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
 import { fetchJobs } from "../../../actions/actions";
-import { firestore } from "../../../firebase";
-import { collectIdsAndDocs } from "../../../utilities";
 import DashboardView from "./components/DashboardView";
 
 class Dashboard extends React.Component {

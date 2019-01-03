@@ -1,5 +1,6 @@
 import React from "react";
 import AddClientView from "./AddClientView";
+import SuccessAlert from "../inputComponents/SuccessAlert";
 import { connect } from "react-redux";
 import { addClient } from "../../../actions/actions";
 
@@ -7,6 +8,7 @@ class AddClient extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      showSuccessAlert: false,
       clientName: "",
       clientNameInvalid: true,
       contactName: "",
@@ -36,6 +38,7 @@ class AddClient extends React.Component {
         otRate: this.state.otRate
       };
       addClient(newClient);
+      this.setState({ showSuccessAlert: true });
     }
   };
 
@@ -52,6 +55,13 @@ class AddClient extends React.Component {
     });
   };
 
+  renderSuccessAlert = () => {
+    if (this.state.showSuccessAlert === true) {
+      return <SuccessAlert message="Your client was added successfully!" />;
+    } else {
+      return <></>;
+    }
+  };
   handleSubmit = event => {
     event.preventDefault();
     this.validate();
@@ -76,12 +86,15 @@ class AddClient extends React.Component {
   render() {
     const state = this.state;
     return (
-      <AddClientView
-        handleChange={this.handleChange}
-        handleRequiredFieldChange={this.handleRequiredFieldChange}
-        handleSubmit={this.handleSubmit}
-        {...state}
-      />
+      <>
+        {this.renderSuccessAlert()}
+        <AddClientView
+          handleChange={this.handleChange}
+          handleRequiredFieldChange={this.handleRequiredFieldChange}
+          handleSubmit={this.handleSubmit}
+          {...state}
+        />
+      </>
     );
   }
 }

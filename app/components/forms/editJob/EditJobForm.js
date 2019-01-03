@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import * as actions from "../../../actions/actions";
 import EditJobFormView from "./EditJobFormView";
+import SuccessAlert from "../inputComponents/SuccessAlert";
 
 //EditJobForm is similar to AddJobForm component but only exists inside
 //Modal in the Future and Past components of myJobs/Future & myJobs/Past
@@ -12,7 +13,8 @@ class EditJobForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...this.props.currentJob
+      ...this.props.currentJob,
+      showSuccessAlert: false
     };
   }
 
@@ -22,6 +24,15 @@ class EditJobForm extends React.Component {
 
   componentWillUnmount = () => {
     this.props.fetchClients();
+  };
+
+  renderSuccessAlert = () => {
+    if (this.state.showSuccessAlert == true) {
+      return <SuccessAlert message="Job was updated successfully!" />;
+    } else {
+      return;
+      <></>;
+    }
   };
 
   handleEditSubmit = event => {
@@ -45,6 +56,7 @@ class EditJobForm extends React.Component {
     } else {
       console.log(`handleEditSubmit clicked and the jobObj is  ${jobObj}`);
       editJob(this.state.id, { ...jobObj });
+      this.setState({ showSuccessAlert: true });
     }
   };
 
@@ -56,12 +68,15 @@ class EditJobForm extends React.Component {
   render() {
     const state = this.state;
     return (
-      <EditJobFormView
-        clients={this.props.clients}
-        handleChange={this.handleChange}
-        handleEditSubmit={this.handleEditSubmit}
-        {...state}
-      />
+      <>
+        {this.renderSuccessAlert()}
+        <EditJobFormView
+          clients={this.props.clients}
+          handleChange={this.handleChange}
+          handleEditSubmit={this.handleEditSubmit}
+          {...state}
+        />
+      </>
     );
   }
 }

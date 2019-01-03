@@ -2,11 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import EditClientFormView from "./EditClientFormView";
 import * as actions from "../../../actions/actions";
+import SuccessAlert from "../inputComponents/SuccessAlert";
 
 class EditClientForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { ...props.currentClient };
+    this.state = { ...props.currentClient, showSuccessAlert: false };
   }
 
   handleEditSubmit = event => {
@@ -18,6 +19,15 @@ class EditClientForm extends React.Component {
     };
 
     editClient(this.state.id, { ...clientObj });
+    this.setState({ showSuccessAlert: true });
+  };
+
+  renderSuccessAlert = () => {
+    if (this.state.showSuccessAlert === true) {
+      return <SuccessAlert message="Client Was Updated Successfully" />;
+    } else {
+      <></>;
+    }
   };
 
   handleChange = event => {
@@ -28,11 +38,14 @@ class EditClientForm extends React.Component {
   render() {
     const state = this.state;
     return (
-      <EditClientFormView
-        handleChange={this.handleChange}
-        handleEditSubmit={this.handleEditSubmit}
-        {...state}
-      />
+      <>
+        {this.renderSuccessAlert()}
+        <EditClientFormView
+          handleChange={this.handleChange}
+          handleEditSubmit={this.handleEditSubmit}
+          {...state}
+        />
+      </>
     );
   }
 }

@@ -6,10 +6,8 @@ export default function AddClientView(props) {
   return (
     <div className="container siteText">
       <div className="row">
-        <Col md="12" lg="6" className="addForm shadow">
-          <h3 className="text-center formTitle">
-            Add a New Client to your Client List
-          </h3>
+        <Col md="8" lg="6" className="addForm shadow">
+          <h3 className="text-center formTitle">Add a New Client</h3>
           <Form onSubmit={props.handleSubmit}>
             <FormGroup>
               <Label for="clientName">Name</Label>

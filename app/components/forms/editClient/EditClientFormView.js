@@ -73,7 +73,7 @@ export default function EditClientFormView(props) {
             type="button"
             onClick={props.handleEditSubmit}
             className="btn btn-success shadow formButton">
-            Add a New Client
+            Update Client
           </button>
         </div>
       </div>

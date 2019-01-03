@@ -3,11 +3,13 @@ import { connect } from "react-redux";
 import * as actions from "../../../actions/actions";
 import AddJobView from "./AddJobView";
 import { getMinutesWorked } from "../../../utilities";
+import SuccessAlert from "../inputComponents/SuccessAlert";
 
 class AddJob extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      showSuccessAlert: false,
       loading: true,
       grossPay: 0,
       paid: false,
@@ -47,6 +49,13 @@ class AddJob extends React.Component {
     this.props.fetchClients();
   };
 
+  renderSuccessAlert = () => {
+    if (this.state.showSuccessAlert === true) {
+      return <SuccessAlert message="Your job was added successfully!" />;
+    } else {
+      return <></>;
+    }
+  };
   handleSubmit = event => {
     event.preventDefault();
     const { addJob, clients } = this.props;
@@ -83,6 +92,7 @@ class AddJob extends React.Component {
       console.log("Client Name, Date, and Rate Type are all required fields");
       return;
     } else {
+      this.setState({ showSuccessAlert: true });
       addJob(jobObj);
       console.log(jobObj);
       this.clearState();
@@ -113,14 +123,17 @@ class AddJob extends React.Component {
   render() {
     const state = this.state;
     return (
-      <AddJobView
-        clients={this.props.clients}
-        handleChange={this.handleChange}
-        handleClientSelect={this.handleClientSelect}
-        handleRequiredFieldChange={this.handleRequiredFieldChange}
-        handleSubmit={this.handleSubmit}
-        {...state}
-      />
+      <>
+        {this.renderSuccessAlert()}
+        <AddJobView
+          clients={this.props.clients}
+          handleChange={this.handleChange}
+          handleClientSelect={this.handleClientSelect}
+          handleRequiredFieldChange={this.handleRequiredFieldChange}
+          handleSubmit={this.handleSubmit}
+          {...state}
+        />
+      </>
     );
   }
 }
