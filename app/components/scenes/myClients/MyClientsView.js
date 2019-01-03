@@ -62,8 +62,9 @@ export default class MyClientsView extends React.Component {
                   <th>Main Contact</th>
                   <th>phone</th>
                 </tr>
-                {this.renderClients()}
               </thead>
+
+              <tbody>{this.renderClients()}</tbody>
             </Table>
           </div>
         </div>
