@@ -6,7 +6,7 @@ export default class DashFutureJob extends React.Component {
     const { job } = this.props;
     return (
       <tr>
-        <td>{formatDate(job.date)}</td>
+        <th scope="row">{formatDate(job.date)}</th>
         <td>{formatTime(job.startTime)}</td>
         <td>{job.client}</td>
         <td>{job.location}</td>

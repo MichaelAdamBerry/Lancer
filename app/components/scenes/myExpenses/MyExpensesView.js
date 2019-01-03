@@ -1,5 +1,4 @@
 import React from "react";
-import { Table } from "reactstrap";
 import _ from "lodash";
 import ExpenseItem from "./ExpenseItem";
 import ModalEditExpense from "./ModalEditExpense";
@@ -49,20 +48,23 @@ export default class MyExpensesView extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid siteText">
+      <div className="container siteText">
         {this.renderModal()}
         <div className="row">
           <div className="col content shadow">
             <h5 className="tableHeading">My Expenses</h5>
-            <Table hover striped>
+            <table className="table">
+              <caption>List of Expenses</caption>
               <thead>
                 <tr>
-                  <th>Amount</th>
-                  <th>Description</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Remove</th>
+                  <th scope="col">Edit</th>
                 </tr>
-                {this.renderExpenses()}
               </thead>
-            </Table>
+              <tbody>{this.renderExpenses()}</tbody>
+            </table>
           </div>
         </div>
       </div>

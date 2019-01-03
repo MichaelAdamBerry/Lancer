@@ -6,7 +6,7 @@ export default class DashPastJob extends React.Component {
     const { job } = this.props;
     return (
       <tr>
-        <td>{formatDate(job.date)}</td>
+        <th scope="row">{formatDate(job.date)}</th>
         <td>{job.client}</td>
         <td />
         <td>{!job.paid ? "pending" : "paid"}</td>

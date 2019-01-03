@@ -36,7 +36,7 @@ class ExpenseItem extends React.Component {
             onClick={() => {
               this.renderModalWithExpense(expense);
             }}
-            className="btn btn-secondary">
+            className="btn btn-success">
             <FontAwesomeIcon icon={faEdit} />
           </button>
         </td>

@@ -22,17 +22,18 @@ class DashPast extends React.Component {
     return (
       <div className="col">
         <h5 className="tableHeading">Past Jobs</h5>
-        <Table hover striped responsive>
+        <table className="table table-sm">
+          <caption>Quick View of Past Jobs</caption>
           <thead>
             <tr>
-              <th>Date</th>
-              <th>Client</th>
-              <th>Total $</th>
-              <th>Status</th>
+              <th scope="col">Date</th>
+              <th scope="col">Client</th>
+              <th scope="col">Total $</th>
+              <th scope="col">Status</th>
             </tr>
           </thead>
           <tbody>{this.renderJobs()}</tbody>
-        </Table>
+        </table>
       </div>
     );
   }

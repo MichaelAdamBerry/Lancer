@@ -28,20 +28,20 @@ class PastJobItem extends React.Component {
           <button
             type="button"
             onClick={() => {
-              this.handleRemove(job.id);
+              this.renderModalWithJob(job);
             }}
-            className="btn btn-danger">
-            <FontAwesomeIcon icon={faTrashAlt} />
+            className="btn btn-secondary">
+            <FontAwesomeIcon icon={faEdit} />
           </button>
         </td>
         <td>
           <button
             type="button"
             onClick={() => {
-              this.renderModalWithJob(job);
+              this.handleRemove(job.id);
             }}
-            className="btn btn-secondary">
-            <FontAwesomeIcon icon={faEdit} />
+            className="btn btn-danger">
+            <FontAwesomeIcon icon={faTrashAlt} />
           </button>
         </td>
       </tr>

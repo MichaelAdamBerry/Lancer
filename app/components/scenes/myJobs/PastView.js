@@ -1,5 +1,4 @@
 import React from "react";
-import { Table } from "reactstrap";
 import _ from "lodash";
 import PastJobItem from "./PastJobItem";
 import EditJobModal from "./EditJobModal";
@@ -27,7 +26,6 @@ export default class PastView extends React.Component {
       );
     }
   };
-
   renderJobs = () => {
     const jobs = filterFutureJobs(this.props.jobs);
     const jobsArr = _.map(jobs, (value, key) => {
@@ -56,17 +54,20 @@ export default class PastView extends React.Component {
         <div className="row">
           <div className="col content shadow">
             <h5 className="tableHeading">Past Jobs</h5>
-            <Table hover striped responsive>
+            <table className="table">
+              <caption>Full List of Past Jobs</caption>
               <thead>
                 <tr>
-                  <th>Date</th>
-                  <th>Client</th>
-                  <th>Total $</th>
-                  <th>Status</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Client</th>
+                  <th scope="col">Total $</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Edit</th>
+                  <th scope="col">Remove</th>
                 </tr>
               </thead>
               <tbody>{this.renderJobs()}</tbody>
-            </Table>
+            </table>
           </div>
         </div>
       </div>

@@ -23,26 +23,29 @@ class ClientItem extends React.Component {
 
   renderAlert = clientObj => {
     return (
-      <div>
-        <Alert
-          color="danger"
-          isOpen={this.state.alertOpen}
-          toggle={this.toggle}>
-          <h5 className="alert-heading">Are you sure?</h5>
-          <p>
-            Removing a client will delete all associated with{" "}
-            {clientObj.clientName}, including all job, expense and payment data.
-          </p>
-          <button
-            className="btn btn-outline-danger"
-            onClick={() => this.handleRemove(clientObj.id)}>
-            Remove Client
-          </button>
-          <button className="btn btn-outline-success" onClick={this.toggle}>
-            Nevermind
-          </button>
-        </Alert>
-      </div>
+      <tr>
+        <td colSpan="5">
+          <Alert
+            color="danger"
+            isOpen={this.state.alertOpen}
+            toggle={this.toggle}>
+            <h5 className="alert-heading">Are you sure?</h5>
+            <p>
+              Removing a client will delete all data associated with{" "}
+              {clientObj.clientName}, including all job, expense and payment
+              data.
+            </p>
+            <button
+              className="btn btn-outline-danger"
+              onClick={() => this.handleRemove(clientObj.id)}>
+              Remove Client
+            </button>
+            <button className="btn btn-outline-success" onClick={this.toggle}>
+              Nevermind
+            </button>
+          </Alert>
+        </td>
+      </tr>
     );
   };
 
@@ -59,20 +62,20 @@ class ClientItem extends React.Component {
             <button
               type="button"
               onClick={() => {
-                this.toggle();
+                this.renderModalWithClient(client);
               }}
-              className="btn btn-danger">
-              <FontAwesomeIcon icon={faTrashAlt} />
+              className="btn btn-secondary">
+              <FontAwesomeIcon icon={faEdit} />
             </button>
           </td>
           <td>
             <button
               type="button"
               onClick={() => {
-                this.renderModalWithClient(client);
+                this.toggle();
               }}
-              className="btn btn-secondary">
-              <FontAwesomeIcon icon={faEdit} />
+              className="btn btn-danger">
+              <FontAwesomeIcon icon={faTrashAlt} />
             </button>
           </td>
         </tr>

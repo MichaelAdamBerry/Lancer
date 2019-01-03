@@ -1,5 +1,4 @@
 import React from "react";
-import { Table } from "reactstrap";
 import _ from "lodash";
 import FutureJobItem from "./FutureJobItem";
 import { filterPastJobs } from "../../../utilities";
@@ -57,17 +56,20 @@ export default class FutureView extends React.Component {
         <div className="row">
           <div className="col content shadow">
             <h5 className="tableHeading">Upcomping Jobs</h5>
-            <Table hover striped responsive>
+            <table className="table">
+              <caption>Full View of Upcoming Jobs</caption>
               <thead>
                 <tr>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>Client</th>
-                  <th>Location</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Client</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Edit</th>
+                  <th scope="col">Remove</th>
                 </tr>
               </thead>
               <tbody>{this.renderJobs()}</tbody>
-            </Table>
+            </table>
           </div>
         </div>
       </div>

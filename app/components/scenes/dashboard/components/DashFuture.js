@@ -1,5 +1,4 @@
 import React from "react";
-import { Col, Table } from "reactstrap";
 import { filterPastJobs } from "../../../../utilities";
 import DashFutureJob from "./DashFutureJob";
 
@@ -20,20 +19,21 @@ class DashFuture extends React.Component {
   };
   render() {
     return (
-      <Col>
+      <div className="col">
         <h5 className="tableHeading">Upcomping Jobs</h5>
-        <Table hover striped responsive>
+        <table className="table table-sm">
+          <caption>Quick View of Upcoming Jobs</caption>
           <thead>
             <tr>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Client</th>
-              <th>Location</th>
+              <th scope="col">Date</th>
+              <th scope="col">Time</th>
+              <th scope="col">Client</th>
+              <th scope="col">Location</th>
             </tr>
           </thead>
           <tbody>{this.renderJobs()}</tbody>
-        </Table>
-      </Col>
+        </table>
+      </div>
     );
   }
 }

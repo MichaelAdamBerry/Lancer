@@ -1,7 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
 import _ from "lodash";
-import { Table } from "reactstrap";
 import ClientItem from "./ClientItem";
 import ModalEditClient from "./ModalEditClient";
 
@@ -50,22 +48,24 @@ export default class MyClientsView extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid siteText">
+      <div className="container siteText">
         {this.renderModal()}
         <div className="row">
           <div className="col content shadow">
             <h5 className="tableHeading">Clients</h5>
-            <Table hover striped>
+            <table className="table">
+              <caption>List of Users</caption>
               <thead>
                 <tr>
-                  <th>Client</th>
-                  <th>Main Contact</th>
-                  <th>phone</th>
+                  <th scope="col">Client</th>
+                  <th scope="col">Main Contact</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Edit</th>
+                  <th scope="col">Remove</th>
                 </tr>
               </thead>
-
               <tbody>{this.renderClients()}</tbody>
-            </Table>
+            </table>
           </div>
         </div>
       </div>
