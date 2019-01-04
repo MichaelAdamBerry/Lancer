@@ -50,6 +50,12 @@ export default class MainNav extends React.Component {
   }
 }
 
+const dropDownStyles = {
+  backgroundColor: "#6d5050",
+  height: "75vh",
+  width: "25vw"
+};
+
 const RenderMainNav = ({ uid, dropdownOpen, toggle }) => {
   return (
     <Row className="mainNav d-flex justify-content-around">
@@ -59,7 +65,7 @@ const RenderMainNav = ({ uid, dropdownOpen, toggle }) => {
             <FontAwesomeIcon icon={faBars} />
             <p className="d-none d-md-inline">| My Data </p>
           </DropdownToggle>
-          <DropdownMenu>
+          <DropdownMenu style={dropDownStyles}>
             <DropdownContent />
           </DropdownMenu>
         </Dropdown>

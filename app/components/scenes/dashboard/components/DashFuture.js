@@ -28,7 +28,6 @@ class DashFuture extends React.Component {
               <th scope="col">Date</th>
               <th scope="col">Time</th>
               <th scope="col">Client</th>
-              <th scope="col">Location</th>
             </tr>
           </thead>
           <tbody>{this.renderJobs()}</tbody>

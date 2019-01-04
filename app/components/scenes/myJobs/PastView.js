@@ -28,11 +28,11 @@ export default class PastView extends React.Component {
   };
   renderJobs = () => {
     const jobs = filterFutureJobs(this.props.jobs);
-    const jobsArr = _.map(jobs, (value, key) => {
+    const jobsArr = _.map(jobs, (job, key) => {
       return (
         <PastJobItem
           key={key}
-          job={value}
+          job={job}
           toggle={this.toggle}
           updateCurrentJob={this.updateCurrentJob}
         />

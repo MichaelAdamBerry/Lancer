@@ -7,28 +7,24 @@ export default class SuccessAlert extends React.Component {
 
   static defaultProps = {
     isOpen: true,
-    message: "form was submitted Successfully",
-    toggle: () => this.setState({ isOpen: !this.state.isOpen })
+    message: "form was submitted Successfully"
   };
+  toggle = () => this.setState({ isOpen: !this.state.isOpen });
 
-  componentWillMount() {
-    setTimeout(() => {
-      this.setState({ isOpen: false });
-    }, 2000);
+  componentDidMount() {
+    setTimeout(() => this.toggle(), 2000);
   }
+
   componentWillUnmount() {
-    clearTimeout();
+    clearTimeout(this.toggle);
   }
 
   render() {
-    const { toggle, message } = this.props;
+    const { message } = this.props;
     const { isOpen } = this.state;
+
     return (
-      <Alert
-        className="formSuccessAlert"
-        isOpen={isOpen}
-        color="success"
-        toggle={toggle}>
+      <Alert className="formSuccessAlert" isOpen={isOpen} color="success">
         <div>
           <p>{message}</p>
         </div>

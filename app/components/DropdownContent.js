@@ -1,36 +1,35 @@
 import React from "react";
-import { DropdownItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
 
 const DropdownContent = () => {
   return (
-    <>
-      <DropdownItem>
+    <div className="navDropDownContainer" style={{ height: "100%" }}>
+      <div className="dropdownNav">
         <NavLink to="/myjobs/past" activeClassName="selected">
           Past Jobs
         </NavLink>
-      </DropdownItem>
-      <DropdownItem>
+      </div>
+      <div className="dropdownNav">
         <NavLink to="/myjobs/future" activeClassName="selected">
           Upcoming Jobs
         </NavLink>
-      </DropdownItem>
-      <DropdownItem>
+      </div>
+      <div className="dropdownNav">
         <NavLink to="/myclients" activeClassName="selected">
           My Clients
         </NavLink>
-      </DropdownItem>
-      <DropdownItem>
+      </div>
+      <div className="dropdownNav">
         <NavLink to="/myexpenses" activeClassName="selected">
           My Expenses
         </NavLink>
-      </DropdownItem>
-      <DropdownItem>
+      </div>
+      <div className="dropdownNav">
         <NavLink to="/mystats" activeClassName="selected">
           My Stats
         </NavLink>
-      </DropdownItem>
-    </>
+      </div>
+    </div>
   );
 };
 

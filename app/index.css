@@ -9,6 +9,13 @@
   border: solid 1px #cccaca;
 }
 
+.dropdownNav {
+  background-color: #efefef;
+  font-size: larger;
+  margin-top: 2em;
+  text-align: center;
+}
+
 .jumbotron {
   text-align: center;
   margin-top: 10%;
@@ -123,6 +130,16 @@ html {
     position: absolute;
     top: 2em;
     left: 0;
+  }
+
+  .dashTable {
+    font-size: small;
+  }
+  .fullTable {
+    font-size: small;
+  }
+  .deleteIcon {
+    display: none;
   }
 }
 

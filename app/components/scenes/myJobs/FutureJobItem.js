@@ -24,7 +24,7 @@ class FutureJobItem extends React.Component {
         <td>{job.client}</td>
         <td>{job.location}</td>
         <td>
-          <div>
+          <div className="tableIcons">
             <span
               onClick={() => {
                 this.renderModalWithJob(job);

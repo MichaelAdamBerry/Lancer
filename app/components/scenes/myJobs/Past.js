@@ -18,7 +18,7 @@ class Past extends React.Component {
       return <div>loading</div>;
     } else {
       return (
-        <div className="col">
+        <div className="col fullTable">
           <PastView jobs={this.props.jobs} />
         </div>
       );

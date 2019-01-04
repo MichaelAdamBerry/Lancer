@@ -28,8 +28,7 @@ class DashPast extends React.Component {
             <tr>
               <th scope="col">Date</th>
               <th scope="col">Client</th>
-              <th scope="col">Total $</th>
-              <th scope="col">Status</th>
+              <th scope="col">$</th>
             </tr>
           </thead>
           <tbody>{this.renderJobs()}</tbody>

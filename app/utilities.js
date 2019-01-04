@@ -5,6 +5,11 @@ export function formatDate(str) {
   return moment(str).format("ll");
 }
 
+export function dollarFormat(number) {
+  var dollars = Number(number).toFixed(2);
+  return `$${dollars}`;
+}
+
 //named function declaration  for formatTime
 export function formatTime(timeStr) {
   var hours = Number(timeStr.split(":")[0]);

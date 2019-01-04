@@ -18,7 +18,7 @@ class Future extends React.Component {
       return <div>loading</div>;
     } else {
       return (
-        <div className="col">
+        <div className="col fullTable">
           <FutureView jobs={this.props.jobs} />
         </div>
       );

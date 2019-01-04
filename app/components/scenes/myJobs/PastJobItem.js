@@ -1,7 +1,8 @@
 import React from "react";
 import { removeJob } from "../../../actions/actions";
 import { connect } from "react-redux";
-import { formatDate } from "../../../utilities";
+import { formatDate, dollarFormat } from "../../../utilities";
+import { renderPaymentTD } from "./utils/myJobFunctions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 
@@ -22,8 +23,7 @@ class PastJobItem extends React.Component {
       <tr>
         <td>{formatDate(job.date)}</td>
         <td>{job.client}</td>
-        <td />
-        <td>{!job.paid ? "unpaid" : "paid"}</td>
+        <td className="text-small">{renderPaymentTD(job)}</td>
         <td>
           <div className="tableIcons">
             <span
