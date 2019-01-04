@@ -20,6 +20,20 @@
   margin: auto;
 }
 
+.editIcon {
+  color: rgb(120, 192, 120);
+  cursor: pointer;
+}
+.deleteIcon {
+  color: #d0021b;
+  cursor: pointer;
+}
+
+.tableIcons {
+  display: flex;
+  justify-content: space-around;
+}
+
 .formContainer {
   margin-top: 5%;
 }

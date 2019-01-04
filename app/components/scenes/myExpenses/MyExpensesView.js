@@ -7,63 +7,103 @@ import ModalEditExpense from "./ModalEditExpense";
 
 export default class MyExpensesView extends React.Component {
   state = {
-    modalOpen: false,
-    currentExpense: {}
+    editModalOpen: false,
+    selectedExpense: {},
+    selectedClient: "",
+    filterExpenses: false
   };
-  renderModal = () => {
-    if (this.state.modalOpen === true) {
+
+  componentDidMount = () => {
+    this.setState({ expenses: this.props.expenses });
+  };
+  renderEditModal = () => {
+    if (this.state.editModalOpen === true) {
       return (
         <ModalEditExpense
-          isOpen={this.state.modalOpen}
-          toggle={this.toggle}
-          currentExpense={this.state.currentExpense}
+          isOpen={this.state.editModalOpen}
+          toggle={this.toggleModalEdit}
+          currentExpense={this.state.selectedExpense}
         />
       );
     }
   };
-  toggle = () => this.setState({ modalOpen: !this.state.modalOpen });
-  updateCurrentExpense = currentExpense => this.setState({ currentExpense });
+  toggleFilterExpenses = () => {
+    this.setState({ filterExpenses: !this.state.filterExpenses });
+  };
+
+  toggleModalEdit = () =>
+    this.setState({ editModalOpen: !this.state.editModalOpen });
+
+  updateSelectedExpense = expense =>
+    this.setState({ selectedExpense: expense });
+
+  updateSelectedClient = client => {
+    this.setState({ selectedClient: client });
+  };
+
+  renderEmptyMessage = () => {
+    return (
+      <tr>
+        <td colSpan="5">You have no expenses added yet</td>
+      </tr>
+    );
+  };
 
   renderExpenses = () => {
-    const { expenses } = this.props;
-    const expenseArr = _.map(expenses, (value, key) => {
+    var { expenses } = this.props;
+    var { filterExpenses, selectedClient } = this.state;
+    var expenseAfterFilter = !filterExpenses
+      ? expenses
+      : _.filter(expenses, expense => {
+          return selectedClient === expense.client;
+        });
+    console.log("expensesAfterFilter = ", expenseAfterFilter);
+    const expenseArr = _.map(expenseAfterFilter, (value, key) => {
       return (
         <ExpenseItem
           key={key}
           expense={value}
-          toggle={this.toggle}
-          updateCurrentExpense={this.updateCurrentExpense}
+          toggle={this.toggleModalEdit}
+          updateCurrentExpense={this.updateSelectedExpense}
+          updateSelectedClient={this.updateSelectedClient}
+          toggleFilterExpenses={this.toggleFilterExpenses}
         />
       );
     });
     if (!_.isEmpty(expenseArr)) {
       return expenseArr;
     }
-    return (
-      <tr>
-        <td>You have no expenses added yet</td>
-      </tr>
-    );
+    return this.renderEmptyMessage();
   };
 
   render() {
     return (
       <div className="container siteText">
-        {this.renderModal()}
+        {this.renderEditModal()}
         <div className="row">
           <div className="col content shadow">
             <h5 className="tableHeading">My Expenses</h5>
-            <table className="table">
+            <table className="table table-sm">
               <caption>List of Expenses</caption>
               <thead>
                 <tr>
+                  <th scope="col">Client</th>
                   <th scope="col">Amount</th>
                   <th scope="col">Description</th>
-                  <th scope="col">Remove</th>
-                  <th scope="col">Edit</th>
+                  <th scope="col" />
+                </tr>
+                <tr>
+                  <td colSpan="5">
+                    <small>
+                      Select a client to see only expenses from that client
+                    </small>
+                  </td>
                 </tr>
               </thead>
-              <tbody>{this.renderExpenses()}</tbody>
+              <tbody>
+                {this.renderExpenses()}
+                <tr />
+              </tbody>
             </table>
           </div>
         </div>

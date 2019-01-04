@@ -20,7 +20,7 @@ class AddClient extends React.Component {
       rateInvalid: true
     };
   }
-
+  //TODO make validate() an imported function
   validate = () => {
     const { addClient } = this.props;
     if (this.state.hrRate === "" && this.state.dayRate === "") {
@@ -30,6 +30,7 @@ class AddClient extends React.Component {
       console.log("the client must have a name");
       return;
     } else {
+      //TODO make an imported createNewCLient function
       const newClient = {
         clientName: this.state.clientName,
         contactName: this.state.contactName,

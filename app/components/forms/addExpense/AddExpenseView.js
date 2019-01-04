@@ -38,6 +38,7 @@ export default class AddExpenseView extends React.Component {
                   id="jobSethis.props.lect"
                   className="shadow p-3 bg-light rounded"
                   name="client">
+                  <option className="text-muted">Choose a Client</option>
                   {this.renderClientOptions()}
                 </Input>
                 <FormText className="text-right">

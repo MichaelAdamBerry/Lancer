@@ -36,6 +36,7 @@ export default class EditExpenseFormView extends React.Component {
                   id="jobSelect"
                   className="shadow bg-light rounded"
                   name="client">
+                  <option className="text-muted">Choose A Client</option>
                   {this.renderClientOptions()}
                 </Input>
               </FormGroup>
