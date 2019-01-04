@@ -3,6 +3,7 @@ import AddClientView from "./AddClientView";
 import SuccessAlert from "../inputComponents/SuccessAlert";
 import { connect } from "react-redux";
 import { addClient } from "../../../actions/actions";
+import { defaultOvertime, defaultDayRate } from "../utils/formFunctions";
 
 class AddClient extends React.Component {
   constructor(props) {
@@ -73,6 +74,13 @@ class AddClient extends React.Component {
     this.setState({ [name]: value });
   };
 
+  handleHourlyChange = event => {
+    const { name, value } = event.target;
+    var overtime = defaultOvertime(value);
+    var dayRate = defaultDayRate(value);
+    this.setState({ [name]: value, otRate: overtime, dayRate: dayRate });
+  };
+
   handleRequiredFieldChange = event => {
     const { name, value } = event.target;
     const invalidName = `${name}Invalid`;
@@ -92,6 +100,7 @@ class AddClient extends React.Component {
           handleChange={this.handleChange}
           handleRequiredFieldChange={this.handleRequiredFieldChange}
           handleSubmit={this.handleSubmit}
+          handleHourlyChange={this.handleHourlyChange}
           {...state}
         />
       </>

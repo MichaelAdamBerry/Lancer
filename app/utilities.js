@@ -1,45 +1,51 @@
 import moment from "moment";
 import _ from "lodash";
 
-export const formatDate = str => {
-  //if (diff > 7) {
+export function formatDate(str) {
   return moment(str).format("ll");
-};
+}
 
-export const formatTime = str => {
-  const num = Number(str.split(":")[0]);
-  const hrs = num % 12 !== 0 ? (num % 12).toString() : "12";
-  const min = str.split(":")[1];
-  const amPm = num > 12 ? "pm" : "am";
-  return `${hrs}:${min} ${amPm}`;
-};
+//named function declaration  for formatTime
+export function formatTime(timeStr) {
+  var hours = Number(timeStr.split(":")[0]);
+  //hours to account for 12am read as 0
+  var hoursStr = hours % 12 !== 0 ? (hours % 12).toString() : "12";
+  var minutesStr = timeStr.split(":")[1];
+  var suffix = hours > 12 ? "pm" : "am";
+  return hoursStr + ":" + minutesStr + " " + suffix;
+}
 
-export const collectIdsAndDocs = doc => {
+export function collectIdsAndDocs(doc) {
   return { id: doc.id, ...doc.data() };
-};
+}
 
-export const filterFutureJobs = jobs => {
-  return _.filter(jobs, value => {
-    const dateTime = value.startTime
-      ? `${value.date} ${value.startTime}`
-      : `${value.date}`;
-    const now = moment();
+export function filterFutureJobs(jobs) {
+  function callbackFilterFuture(value) {
+    if (!value.startTime) {
+      var dateTime = value.date;
+    } else {
+      var dateTime = value.date + " " + value.startTime;
+    }
+    var now = moment();
     return now.isAfter(dateTime);
-  });
-};
+  }
+  return _.filter(jobs, callbackFilterFuture);
+}
 
-export const filterPastJobs = jobs => {
-  return _.filter(jobs, value => {
-    const dateTime = value.startTime
-      ? `${value.date} ${value.startTime}`
-      : `${value.date}`;
-    const now = moment();
-    console.log(now);
-    console.log(dateTime);
+export function filterPastJobs(jobs) {
+  function callbackFilterPast(value) {
+    if (!value.startTime) {
+      var dateTime = value.date;
+    } else {
+      var dateTime = value.date + " " + value.startTime;
+    }
+    var now = moment();
     return now.isBefore(dateTime);
-  });
-};
+  }
+  return _.filter(jobs, callbackFilterPast);
+}
 
+//TODO named function
 export const filterYTD = jobs => {
   const year = moment()
     .year()
@@ -54,31 +60,51 @@ export const filterYTD = jobs => {
   return jobsThisYear;
 };
 
-export const filterMTD = jobs => {
-  const year = moment()
+function callbackFilter(jobObj) {
+  if (!jobObj.startTime) {
+    var dateTime = jobObj.date;
+  } else {
+    var dateTime = jobObj.date + " " + jobObj.startTime;
+  }
+  var year = moment()
     .year()
     .toString();
   let month = moment().month();
   month = (month + 1).toString();
-  const monthFirst = `${year}-${month}-1`;
-  const jobsThisMonth = _.filter(jobs, value => {
-    const dateTime = value.startTime
-      ? `${value.date} ${value.startTime}`
-      : `${value.date}`;
-    return moment(dateTime).isAfter(monthFirst);
-  });
-  return jobsThisMonth;
-};
+  var firstOfMonth = year.concat("-", month, "-1");
+  return moment(dateTime).isAfter(firstOfMonth);
+}
 
-export const getMinutesWorked = (date, startTime, endTime) => {
-  const dateTimeStart = `${date} ${startTime}`;
-  const dateTimeEnd = `${date} ${endTime}`;
-  const start = moment(dateTimeStart);
-  const end = moment(dateTimeEnd);
-  const diffInMinutes = end.diff(start, "minutes");
+//TODO named function
+export function filterMTD(jobs) {
+  function callbackFilter(jobObj) {
+    if (!jobObj.startTime) {
+      var dateTime = jobObj.date;
+    } else {
+      var dateTime = jobObj.date + " " + jobObj.startTime;
+    }
+    var year = moment()
+      .year()
+      .toString();
+    let month = moment().month();
+    month = (month + 1).toString();
+    var firstOfMonth = year.concat("-", month, "-1");
+    return moment(dateTime).isAfter(firstOfMonth);
+  }
+  var jobsThisMonth = _.filter(jobs, callbackFilter);
+  console.log(jobsThisMonth);
+  return jobsThisMonth;
+}
+
+export function getMinutesWorked(date, startTime, endTime) {
+  var dateTimeStart = date.concat(" ", startTime);
+  var dateTimeEnd = date.concat(" ", endTime);
+  var start = moment(dateTimeStart);
+  var end = moment(dateTimeEnd);
+  var diffInMinutes = end.diff(start, "minutes");
   console.log(`diffInMinutes is ${diffInMinutes}`);
   return diffInMinutes;
-};
+}
 
 export const calculateGrossJob = (rateType, clientObj, custom) => {
   if (rateType === "Hourly") {

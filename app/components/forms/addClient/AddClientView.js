@@ -51,7 +51,7 @@ export default function AddClientView(props) {
                 type="number"
                 name="hrRate"
                 value={props.hrRate}
-                onChange={props.handleChange}
+                onChange={props.handleHourlyChange}
                 className="shadow p-3 bg-light rounded"
               />
               <Label for="dayRate">Day Rate</Label>
