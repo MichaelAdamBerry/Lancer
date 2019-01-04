@@ -41,7 +41,7 @@ export default class MyClientsView extends React.Component {
     }
     return (
       <tr>
-        <td>You haven't added any clients yet</td>
+        <td colSpan="4">You haven't added any clients yet</td>
       </tr>
     );
   };
@@ -53,15 +53,14 @@ export default class MyClientsView extends React.Component {
         <div className="row">
           <div className="col content shadow">
             <h5 className="tableHeading">Clients</h5>
-            <table className="table">
+            <table className="table table-sm">
               <caption>List of Users</caption>
               <thead>
                 <tr>
                   <th scope="col">Client</th>
                   <th scope="col">Main Contact</th>
                   <th scope="col">Phone</th>
-                  <th scope="col">Edit</th>
-                  <th scope="col">Remove</th>
+                  <th scope="col" />
                 </tr>
               </thead>
               <tbody>{this.renderClients()}</tbody>

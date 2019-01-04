@@ -43,7 +43,7 @@ export default class PastView extends React.Component {
     }
     return (
       <tr>
-        <td>No upcoming jobs have been added yet</td>
+        <td colSpan="5">No upcoming jobs have been added yet</td>
       </tr>
     );
   };
@@ -54,16 +54,15 @@ export default class PastView extends React.Component {
         <div className="row">
           <div className="col content shadow">
             <h5 className="tableHeading">Past Jobs</h5>
-            <table className="table">
+            <table className="table table-sm">
               <caption>Full List of Past Jobs</caption>
               <thead>
                 <tr>
                   <th scope="col">Date</th>
                   <th scope="col">Client</th>
-                  <th scope="col">Total $</th>
+                  <th scope="col">$</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Edit</th>
-                  <th scope="col">Remove</th>
+                  <th scope="col" />
                 </tr>
               </thead>
               <tbody>{this.renderJobs()}</tbody>

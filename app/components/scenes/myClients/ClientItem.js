@@ -59,24 +59,22 @@ class ClientItem extends React.Component {
           <td>{client.contactName}</td>
           <td>{client.phone}</td>
           <td>
-            <button
-              type="button"
-              onClick={() => {
-                this.renderModalWithClient(client);
-              }}
-              className="btn btn-secondary">
-              <FontAwesomeIcon icon={faEdit} />
-            </button>
-          </td>
-          <td>
-            <button
-              type="button"
-              onClick={() => {
-                this.toggle();
-              }}
-              className="btn btn-danger">
-              <FontAwesomeIcon icon={faTrashAlt} />
-            </button>
+            <div className="tableIcons">
+              <span
+                onClick={() => {
+                  this.renderModalWithClient(client);
+                }}
+                className="editIcon">
+                <FontAwesomeIcon icon={faEdit} />
+              </span>
+              <span
+                onClick={() => {
+                  this.toggle();
+                }}
+                className="deleteIcon">
+                <FontAwesomeIcon icon={faTrashAlt} />
+              </span>
+            </div>
           </td>
         </tr>
       </>

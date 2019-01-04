@@ -25,24 +25,22 @@ class PastJobItem extends React.Component {
         <td />
         <td>{!job.paid ? "unpaid" : "paid"}</td>
         <td>
-          <button
-            type="button"
-            onClick={() => {
-              this.renderModalWithJob(job);
-            }}
-            className="btn btn-secondary">
-            <FontAwesomeIcon icon={faEdit} />
-          </button>
-        </td>
-        <td>
-          <button
-            type="button"
-            onClick={() => {
-              this.handleRemove(job.id);
-            }}
-            className="btn btn-danger">
-            <FontAwesomeIcon icon={faTrashAlt} />
-          </button>
+          <div className="tableIcons">
+            <span
+              onClick={() => {
+                this.renderModalWithJob(job);
+              }}
+              className="editIcon">
+              <FontAwesomeIcon icon={faEdit} />
+            </span>
+            <span
+              onClick={() => {
+                this.handleRemove(job.id);
+              }}
+              className="deleteIcon">
+              <FontAwesomeIcon icon={faTrashAlt} />
+            </span>
+          </div>
         </td>
       </tr>
     );
