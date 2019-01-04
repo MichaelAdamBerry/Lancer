@@ -4,38 +4,21 @@ import StatsView from "./StatsView";
 import { connect } from "react-redux";
 import DashStats from "./DashStats";
 import { fetchJobs } from "../../../actions/actions";
-import { filterYTD, filterMTD } from "../../../utilities";
 import _ from "lodash";
+import {
+  calculateNetMonthToDate,
+  calculateNetYearToDate
+} from "./utils/statFunctions";
 
 class Stats extends React.Component {
   renderStatsView = () => {
-    const jobs = this.props.jobs;
-    const paidJobs = _.filter(jobs, value => {
-      return value.paid == true;
-    });
-    const jobsThisYear = filterYTD(paidJobs);
-    const jobsThisMonth = filterMTD(paidJobs);
-    //to calculate sum of jobs within the month (Year To Date)
-    const calculateYTD = _.reduce(
-      jobsThisYear,
-      (accumulator, current) => {
-        return (accumulator = accumulator + current.net);
-      },
-      0
-    );
-    //calculate sum of jobs within the month (Month To Date)
-    const calculateMTD = _.reduce(
-      jobsThisMonth,
-      (accumulator, current) => {
-        return (accumulator = accumulator + current.net);
-      },
-      0
-    );
-
+    var jobs = this.props.jobs;
+    var netYear = calculateNetYearToDate(jobs);
+    var netMonth = calculateNetMonthToDate(jobs);
     if (this.props.dash === true) {
-      return <DashStats ytd={calculateYTD} mtd={calculateMTD} />;
+      return <DashStats ytd={netYear} mtd={netMonth} />;
     } else {
-      return <StatsView ytd={calculateYTD} mtd={calculateMTD} />;
+      return <StatsView ytd={netYear} mtd={netMonth} />;
     }
   };
 

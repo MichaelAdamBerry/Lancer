@@ -5,7 +5,7 @@ import { Col } from "reactstrap";
 export default class Stats extends React.Component {
   static propTypes = {
     ytd: PropTypes.number,
-    mtd: PropTypes.string.isRequired
+    mtd: PropTypes.number
   };
   render() {
     const { ytd, mtd } = this.props;

@@ -45,57 +45,6 @@ export function filterPastJobs(jobs) {
   return _.filter(jobs, callbackFilterPast);
 }
 
-//TODO named function
-export const filterYTD = jobs => {
-  const year = moment()
-    .year()
-    .toString();
-  const JanFirst = `${year}-1-1`;
-  const jobsThisYear = _.filter(jobs, value => {
-    const dateTime = value.startTime
-      ? `${value.date} ${value.startTime}`
-      : `${value.date}`;
-    return moment(dateTime).isAfter(JanFirst);
-  });
-  return jobsThisYear;
-};
-
-function callbackFilter(jobObj) {
-  if (!jobObj.startTime) {
-    var dateTime = jobObj.date;
-  } else {
-    var dateTime = jobObj.date + " " + jobObj.startTime;
-  }
-  var year = moment()
-    .year()
-    .toString();
-  let month = moment().month();
-  month = (month + 1).toString();
-  var firstOfMonth = year.concat("-", month, "-1");
-  return moment(dateTime).isAfter(firstOfMonth);
-}
-
-//TODO named function
-export function filterMTD(jobs) {
-  function callbackFilter(jobObj) {
-    if (!jobObj.startTime) {
-      var dateTime = jobObj.date;
-    } else {
-      var dateTime = jobObj.date + " " + jobObj.startTime;
-    }
-    var year = moment()
-      .year()
-      .toString();
-    let month = moment().month();
-    month = (month + 1).toString();
-    var firstOfMonth = year.concat("-", month, "-1");
-    return moment(dateTime).isAfter(firstOfMonth);
-  }
-  var jobsThisMonth = _.filter(jobs, callbackFilter);
-  console.log(jobsThisMonth);
-  return jobsThisMonth;
-}
-
 export function getMinutesWorked(date, startTime, endTime) {
   var dateTimeStart = date.concat(" ", startTime);
   var dateTimeEnd = date.concat(" ", endTime);
