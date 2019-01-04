@@ -2,7 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import * as actions from "../../../actions/actions";
 import AddJobView from "./AddJobView";
-import { getMinutesWorked } from "../../../utilities";
+import {
+  getRegularHoursWorked,
+  estimateNetPay,
+  calculateGrossPay,
+  getNghtOverTimeHoursWorked
+} from "./utils/jobFunctions";
 
 import SuccessAlert from "../inputComponents/SuccessAlert";
 
@@ -60,18 +65,14 @@ class AddJob extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     const { addJob, clients } = this.props;
-    const clientObj = _.find(clients, val => {
+    var clientObj = _.find(clients, val => {
       return val.clientName === this.state.client;
     });
-
-    const { rate, date, startTime, endTime, grossPay } = this.state;
-    if (rate === "Hourly" && startTime && endTime) {
-      const minutes = getMinutesWorked(date, startTime, endTime);
-      const hourlyRate = Number(clientObj.hrRate);
-      console.log("gross rate should be ", hourlyRate * (minutes / 60));
-      const gross = hourlyRate * (minutes / 60);
-      this.setState({ grossPay: gross }, console.log(this.state));
-    }
+    var { date, rate, startTime, endTime } = this.state;
+    var hours = getRegularHoursWorked(date, startTime, endTime);
+    var otHours = getNghtOverTimeHoursWorked(startTime, date);
+    var gross = calculateGrossPay(rate, clientObj, hours, otHours);
+    var estNet = estimateNetPay(gross);
 
     //if this.state.rate === "Day Rate" calculateDayRate(clientObj.dayRate)
     //if this.state.rate === "Multi Day" calculateMultiDay(clientObj.dayRate, daysWorked)
@@ -86,11 +87,14 @@ class AddJob extends React.Component {
       endTime: this.state.endTime,
       location: this.state.location,
       notes: this.state.notes,
-      grossPay: this.state.grossPay
+      regularHours: hours,
+      overTimeHours: otHours,
+      gross: gross,
+      estNet: estNet
     };
     this.validateForm();
     if (!this.state.client || !this.state.date || !this.state.rate) {
-      console.log("Client Name, Date, and Rate Type are all required fields");
+      console.warn("Client Name, Date, and Rate Type are all required fields");
       return;
     } else {
       this.setState({ showSuccessAlert: true });

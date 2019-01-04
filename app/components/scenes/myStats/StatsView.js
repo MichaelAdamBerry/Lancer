@@ -5,10 +5,12 @@ import { Col } from "reactstrap";
 export default class Stats extends React.Component {
   static propTypes = {
     ytd: PropTypes.number,
-    mtd: PropTypes.number
+    mtd: PropTypes.number,
+    pendingGross: PropTypes.number,
+    EstimatedNet: PropTypes.number
   };
   render() {
-    const { ytd, mtd } = this.props;
+    const { ytd, mtd, pendingGross, estPendingNet } = this.props;
     return (
       <div className="container-fluid siteText">
         <div className="row underline">
@@ -22,9 +24,11 @@ export default class Stats extends React.Component {
             <div className="container">
               <div className="row">
                 <Col sm="12">Year to Date: {ytd}</Col>
+                <Col>Month to Date: {mtd}</Col>
               </div>
               <div className="row">
-                <Col>Month to Date: {mtd}</Col>
+                <Col>Pending Payments: {pendingGross} </Col>
+                <Col>Estimated Net Pending Payments: {estPendingNet}</Col>
               </div>
             </div>
           </div>

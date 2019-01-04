@@ -45,16 +45,6 @@ export function filterPastJobs(jobs) {
   return _.filter(jobs, callbackFilterPast);
 }
 
-export function getMinutesWorked(date, startTime, endTime) {
-  var dateTimeStart = date.concat(" ", startTime);
-  var dateTimeEnd = date.concat(" ", endTime);
-  var start = moment(dateTimeStart);
-  var end = moment(dateTimeEnd);
-  var diffInMinutes = end.diff(start, "minutes");
-  console.log(`diffInMinutes is ${diffInMinutes}`);
-  return diffInMinutes;
-}
-
 export const calculateGrossJob = (rateType, clientObj, custom) => {
   if (rateType === "Hourly") {
     const rate = Number(clientObj.hrRate);
