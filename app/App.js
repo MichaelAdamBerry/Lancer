@@ -2,7 +2,7 @@ import React from "react";
 import Dashboard from "./components/scenes/dashboard/Dashboard";
 import TitleBar from "./components/TitleBar";
 import Future from "./components/scenes/myJobs/Future";
-import Past from "./components/scenes/myJobs/Past";
+import Past from "./components/scenes/myJobs/past/Past";
 import AddJob from "./components/forms/addJob/AddJob";
 import AddClient from "./components/forms/addClient/AddClient";
 import Clients from "./components/scenes/myClients/Clients";
