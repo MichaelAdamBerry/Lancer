@@ -3,12 +3,16 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { renderPaymentTD } from "../../utils/myJobFunctions";
-import { formatDate } from "../../../../../utilities";
+import { formatDate, formatMobileDate } from "../../../../../utilities";
 
 export default function Item({ job, renderModalWithJob, handleRemove }) {
   return (
     <tr>
-      <td>{formatDate(job.date)}</td>
+      <td>
+        {" "}
+        <span className="d-md-none">{formatMobileDate(job.date)}</span>
+        <span className="d-none d-md-block">{formatDate(job.date)}</span>
+      </td>
       <td>{job.client}</td>
       <td className="text-small">{renderPaymentTD(job)}</td>
       <td>

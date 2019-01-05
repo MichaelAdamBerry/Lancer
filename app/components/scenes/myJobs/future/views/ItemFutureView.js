@@ -1,6 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatTime, formatDate } from "../../../../../utilities";
+import {
+  formatTime,
+  formatDate,
+  formatMobileDate
+} from "../../../../../utilities";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 //TODO proptypes
@@ -11,7 +15,11 @@ export default function ItemFutureView({
 }) {
   return (
     <tr>
-      <td>{formatDate(job.date)}</td>
+      <td>
+        {" "}
+        <span className="d-md-none">{formatMobileDate(job.date)}</span>
+        <span className="d-none d-md-block">{formatDate(job.date)}</span>
+      </td>
       <td>{formatTime(job.startTime)}</td>
       <td>{job.client}</td>
       <td>{job.location}</td>

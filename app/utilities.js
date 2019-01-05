@@ -5,12 +5,15 @@ export function formatDate(str) {
   return moment(str).format("ll");
 }
 
+export function formatMobileDate(str) {
+  return moment(str).format("M/D/YY");
+}
+
 export function dollarFormat(number) {
   var dollars = Number(number).toFixed(2);
   return `$${dollars}`;
 }
 
-//named function declaration  for formatTime
 export function formatTime(timeStr) {
   var hours = Number(timeStr.split(":")[0]);
   //hours to account for 12am read as 0
