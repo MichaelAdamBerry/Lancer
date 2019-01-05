@@ -2,15 +2,28 @@ import React from "react";
 import CurrentUser from "./CurrentUser";
 import SignInAndSignUp from "./SignInAndSignUp";
 import PropTypes from "prop-types";
+import Home from "./home/Home";
 
-const Authentication = ({ user, loading, signOut, signInWithPopup }) => {
+const Authentication = ({
+  user,
+  loading,
+  signOut,
+  signInWithPopup,
+  showWelcomeSplash,
+  toggleShowWelcomeSplash
+}) => {
   if (loading) {
     return null;
   }
   return (
     <>
       {user ? (
-        <CurrentUser user={user} signOut={signOut} />
+        <Home
+          user={user}
+          signOut={signOut}
+          showWelcomeSplash={showWelcomeSplash}
+          toggleShowWelcomeSplash={toggleShowWelcomeSplash}
+        />
       ) : (
         <SignInAndSignUp signInWithPopup={signInWithPopup} />
       )}

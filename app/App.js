@@ -9,15 +9,16 @@ import Clients from "./components/scenes/myClients/Clients";
 import MyExpenses from "./components/scenes/myExpenses/MyExpenses";
 import AddExpense from "./components/forms/addExpense/AddExpense";
 import Stats from "./components/scenes/myStats/Stats";
-import MainNav from "./components/MainNav";
+import MainNav from "./components/mainNav/MainNav";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { auth, firestore, signInWithPopup } from "./firebase";
+import { auth, signInWithPopup } from "./firebase";
 import Authentication from "./components/Authentication";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { user: null };
+    this.state = { user: null, showWelcomeSplash: true };
+    this.toggleShowWelcomeSplash = this.toggleShowWelcomeSplash.bind(this);
   }
 
   unsubscribeToAuth = null;
@@ -32,20 +33,25 @@ export default class App extends React.Component {
     this.unsubscribeToAuth();
   }
 
+  toggleShowWelcomeSplash() {
+    this.setState({ showWelcomeSplash: !this.state.showWelcomeSplash });
+  }
+
   render() {
     const signOut = () => auth.signOut();
+    const { user, showWelcomeSplash } = this.state;
 
     return (
       <Router>
         <>
           <TitleBar />
           <Authentication
-            user={this.state.user}
+            user={user}
             signOut={signOut}
             signInWithPopup={signInWithPopup}
+            showWelcomeSplash={showWelcomeSplash}
+            toggleShowWelcomeSplash={this.toggleShowWelcomeSplash}
           />
-          <MainNav user={this.state.user} />
-
           <Switch>
             <Route path="/myjobs/past" component={Past} />
             <Route path="/myjobs/future" component={Future} />

@@ -9,48 +9,9 @@ import {
   faCalculator,
   faBars
 } from "@fortawesome/free-solid-svg-icons";
-import DropdownContent from "./DropdownContent";
+import DropdownContent from "../DropdownContent";
 
-export default class MainNav extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isLoading: true,
-      dropdownOpen: false
-    };
-  }
-
-  componentDidMount = () => {
-    const uid = "user";
-    this.setState({ uid }, () => {
-      this.setState({ isLoading: false });
-    });
-  };
-
-  toggle() {
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen
-    }));
-  }
-  render() {
-    if (this.state.isLoading === false) {
-      const { uid, dropdownOpen } = this.state;
-      return (
-        <RenderMainNav
-          uid={uid}
-          dropdownOpen={dropdownOpen}
-          toggle={this.toggle}
-        />
-      );
-    } else {
-      return <div>loading</div>;
-    }
-  }
-}
-
-const RenderMainNav = ({ uid, dropdownOpen, toggle }) => {
+export default function MainNavView({ uid, dropdownOpen, toggle }) {
   return (
     <Row className="mainNav d-flex justify-content-around">
       <Col xs="2">
@@ -101,4 +62,4 @@ const RenderMainNav = ({ uid, dropdownOpen, toggle }) => {
       </Col>
     </Row>
   );
-};
+}
