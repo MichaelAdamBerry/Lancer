@@ -19,6 +19,15 @@ export default function PastView({ renderModal, renderJobs }) {
               </tr>
             </thead>
             <tbody>{renderJobs()}</tbody>
+            <td
+              colSpan="5"
+              style={{
+                text: "muted",
+                fontStyle: "italic",
+                fontSize: "smaller"
+              }}>
+              Pending payments appear in red.
+            </td>
           </table>
         </div>
       </div>

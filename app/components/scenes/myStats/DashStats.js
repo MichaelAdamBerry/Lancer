@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { dollarFormat } from "../../../utilities";
 
 export default class DashStats extends React.Component {
   static propTypes = {
@@ -17,13 +18,16 @@ export default class DashStats extends React.Component {
         </div>
         <div className="row d-flex align-content-around">
           <div className="col align-content-center">
-            <h5>Earnings</h5>
             <div className="container">
               <div className="row">
-                <div className="col-sm-12">Year to Date: {ytd}</div>
+                <div className="col-sm-12">
+                  <p>Income year to date:{dollarFormat(ytd)}</p>
+                </div>
               </div>
               <div className="row">
-                <div className="col">Month to Date: {mtd}</div>
+                <div className="col">
+                  <p>Income month to date: {dollarFormat(mtd)}</p>
+                </div>
               </div>
             </div>
           </div>

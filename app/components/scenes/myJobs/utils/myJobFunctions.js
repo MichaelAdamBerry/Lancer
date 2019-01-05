@@ -1,11 +1,14 @@
 import { dollarFormat } from "../../../../utilities";
 
 function renderEstimatedNet(estNet) {
-  return `Est. net ${dollarFormat(estNet)}`;
+  return {
+    string: `${dollarFormat(estNet)}`,
+    style: { color: "red", fontStyle: "italic" }
+  };
 }
 
 function renderNet(net) {
-  return `${dollarFormat(net)}`;
+  return { string: `${dollarFormat(net)}`, style: { fontWeight: "bold" } };
 }
 
 export function renderPaymentTD(job) {

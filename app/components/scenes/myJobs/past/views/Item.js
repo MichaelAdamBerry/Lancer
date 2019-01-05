@@ -6,6 +6,7 @@ import { renderPaymentTD } from "../../utils/myJobFunctions";
 import { formatDate, formatMobileDate } from "../../../../../utilities";
 
 export default function Item({ job, renderModalWithJob, handleRemove }) {
+  var payment = renderPaymentTD(job);
   return (
     <tr>
       <td>
@@ -14,7 +15,9 @@ export default function Item({ job, renderModalWithJob, handleRemove }) {
         <span className="d-none d-md-block">{formatDate(job.date)}</span>
       </td>
       <td>{job.client}</td>
-      <td className="text-small">{renderPaymentTD(job)}</td>
+      <td className="text-small" style={payment.style}>
+        {payment.string}
+      </td>
       <td>
         <div className="tableIcons">
           <span
