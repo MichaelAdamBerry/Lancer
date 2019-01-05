@@ -1,10 +1,11 @@
 import React from "react";
 import _ from "lodash";
+import FutureView from "./views/FutureView";
 import FutureJobItem from "./FutureJobItem";
-import { filterPastJobs } from "../../../utilities";
-import EditJobModal from "./EditJobModal";
+import { filterPastJobs } from "../../../../utilities";
+import EditJobModal from "../EditJobModal";
 
-export default class FutureView extends React.Component {
+export default class RednerFuture extends React.Component {
   constructor(props) {
     super(props);
     this.state = { modalOpen: false, currentJob: {} };
@@ -51,27 +52,7 @@ export default class FutureView extends React.Component {
   };
   render() {
     return (
-      <div className="container-fluid siteText">
-        {this.renderModal()}
-        <div className="row">
-          <div className="col content shadow">
-            <h5 className="tableHeading">Upcomping Jobs</h5>
-            <table className="table table-sm">
-              <caption>Full View of Upcoming Jobs</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Date</th>
-                  <th scope="col">Time</th>
-                  <th scope="col">Client</th>
-                  <th scope="col">Location</th>
-                  <th scope="col" />
-                </tr>
-              </thead>
-              <tbody>{this.renderJobs()}</tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <FutureView renderJobs={this.renderJobs} renderModal={this.renderModal} />
     );
   }
 }
