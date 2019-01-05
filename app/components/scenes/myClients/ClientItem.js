@@ -1,9 +1,8 @@
 import React from "react";
 import * as actions from "../../../actions/actions";
 import { connect } from "react-redux";
-import { Alert } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
+import ClientItemView from "./views/ClientItemView";
+import ClientAlert from "./views/ClientAlert";
 
 class ClientItem extends React.Component {
   state = { alertOpen: false };
@@ -22,62 +21,26 @@ class ClientItem extends React.Component {
   };
 
   renderAlert = clientObj => {
+    const { alertOpen } = this.state;
     return (
-      <tr>
-        <td colSpan="5">
-          <Alert
-            color="danger"
-            isOpen={this.state.alertOpen}
-            toggle={this.toggle}>
-            <h5 className="alert-heading">Are you sure?</h5>
-            <p>
-              Removing a client will delete all data associated with{" "}
-              {clientObj.clientName}, including all job, expense and payment
-              data.
-            </p>
-            <button
-              className="btn btn-outline-danger"
-              onClick={() => this.handleRemove(clientObj.id)}>
-              Remove Client
-            </button>
-            <button className="btn btn-outline-success" onClick={this.toggle}>
-              Nevermind
-            </button>
-          </Alert>
-        </td>
-      </tr>
+      <ClientAlert
+        clientObj={clientObj}
+        alertOpen={alertOpen}
+        toggle={this.toggle}
+        handleRemove={this.handleRemove}
+      />
     );
   };
 
   render() {
     const { client } = this.props;
     return (
-      <>
-        {this.renderAlert(client)}
-        <tr>
-          <td>{client.clientName}</td>
-          <td>{client.contactName}</td>
-          <td>{client.phone}</td>
-          <td>
-            <div className="tableIcons">
-              <span
-                onClick={() => {
-                  this.renderModalWithClient(client);
-                }}
-                className="editIcon">
-                <FontAwesomeIcon icon={faEdit} />
-              </span>
-              <span
-                onClick={() => {
-                  this.toggle();
-                }}
-                className="deleteIcon">
-                <FontAwesomeIcon icon={faTrashAlt} />
-              </span>
-            </div>
-          </td>
-        </tr>
-      </>
+      <ClientItemView
+        client={client}
+        renderAlert={this.renderAlert}
+        renderModalWithClient={this.renderModalWithClient}
+        toggle={this.toggle}
+      />
     );
   }
 }

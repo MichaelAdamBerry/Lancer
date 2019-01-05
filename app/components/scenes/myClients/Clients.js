@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
 import { fetchClients } from "../../../actions/actions";
-import MyClientsView from "./MyClientsView";
+import RenderClients from "./RenderClients";
 
 class Clients extends React.Component {
   componentWillMount = async () => {
@@ -17,7 +17,7 @@ class Clients extends React.Component {
     if (!this.props.clients) {
       return <div>loading</div>;
     } else {
-      return <MyClientsView clients={this.props.clients} />;
+      return <RenderClients clients={this.props.clients} />;
     }
   }
 }
