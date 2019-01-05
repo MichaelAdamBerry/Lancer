@@ -2,10 +2,11 @@ import React from "react";
 import _ from "lodash";
 import ExpenseItem from "./ExpenseItem";
 import ModalEditExpense from "./ModalEditExpense";
+import ExpensesView from "./views/ExpensesView";
 
 //TODO ake ModalEditExpense component
 
-export default class MyExpensesView extends React.Component {
+export default class RenderMyExpenses extends React.Component {
   state = {
     editModalOpen: false,
     selectedExpense: {},
@@ -78,36 +79,10 @@ export default class MyExpensesView extends React.Component {
 
   render() {
     return (
-      <div className="container siteText">
-        {this.renderEditModal()}
-        <div className="row">
-          <div className="col content shadow">
-            <h5 className="tableHeading">My Expenses</h5>
-            <table className="table table-sm">
-              <caption>List of Expenses</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Client</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Description</th>
-                  <th scope="col" />
-                </tr>
-                <tr>
-                  <td colSpan="5">
-                    <small>
-                      Select a client to see only expenses from that client
-                    </small>
-                  </td>
-                </tr>
-              </thead>
-              <tbody>
-                {this.renderExpenses()}
-                <tr />
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <ExpensesView
+        renderEditModal={this.renderEditModal}
+        renderExpenses={this.renderExpenses}
+      />
     );
   }
 }
