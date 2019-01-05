@@ -1,7 +1,24 @@
 export function defaultOvertime(hrRate) {
-  return hrRate * 1.5;
+  const rate = hrRate * 1.5;
+  return rate.toString();
 }
 
 export function defaultDayRate(hrRate) {
-  return hrRate * 10;
+  const rate = hrRate * 10;
+  return rate.toString();
 }
+
+export function createClientObject(obj) {
+  return {
+    clientName: obj.clientName,
+    contactName: obj.contactName,
+    phone: obj.phone,
+    hrRate: obj.hrRate,
+    dayRate: obj.dayRate,
+    otRate: obj.otRate
+  };
+}
+
+//export function PhoneNumber() {}
+//function validateHours
+//function

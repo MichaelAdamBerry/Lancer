@@ -5,7 +5,7 @@ import { filterFutureJobs } from "../../../../utilities";
 
 class DashPast extends React.Component {
   renderJobs = () => {
-    const { jobs } = filterFutureJobs(this.props);
+    const jobs = filterFutureJobs(this.props.jobs);
     var jobsArr = _.map(jobs, (value, key) => {
       return <DashPastJob key={key} job={value} />;
     });

@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const DropdownContent = () => {
   return (
-    <div className="navDropDownContainer" style={{ height: "100%" }}>
+    <div className="navDropDownContainer">
       <div className="dropdownNav">
         <NavLink to="/myjobs/past" activeClassName="selected">
           Past Jobs

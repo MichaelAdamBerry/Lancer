@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import AddExpenseView from "./AddExpenseView";
+import RenderAddExpense from "./RenderAddExpense";
 import SuccessAlert from "../inputComponents/SuccessAlert";
 import * as actions from "../../../actions/actions";
 
@@ -68,7 +68,7 @@ class AddExpense extends React.Component {
     return (
       <>
         {this.renderSuccessAlert()}
-        <AddExpenseView
+        <RenderAddExpense
           clients={this.props.clients}
           handleChange={this.handleChange}
           handleRequiredFieldChange={this.handleRequiredFieldChange}

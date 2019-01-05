@@ -1,15 +1,22 @@
 import React from "react";
-import AddClientView from "./AddClientView";
+import AddClientView from "./views/AddClientView";
 import SuccessAlert from "../inputComponents/SuccessAlert";
 import { connect } from "react-redux";
 import { addClient } from "../../../actions/actions";
-import { defaultOvertime, defaultDayRate } from "../utils/formFunctions";
+import {
+  defaultOvertime,
+  defaultDayRate,
+  createClientObject
+} from "../utils/formFunctions";
 
 class AddClient extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      showPreviewAlert: false,
+      showWarningAlert: false,
       showSuccessAlert: false,
+      showErrorAlert: false,
       clientName: "",
       clientNameInvalid: true,
       contactName: "",
@@ -20,7 +27,7 @@ class AddClient extends React.Component {
       rateInvalid: true
     };
   }
-  //TODO make validate() an imported function
+  //TODO clean up form validations
   validate = () => {
     const { addClient } = this.props;
     if (this.state.hrRate === "" && this.state.dayRate === "") {
@@ -31,23 +38,19 @@ class AddClient extends React.Component {
       return;
     } else {
       //TODO make an imported createNewCLient function
-      const newClient = {
-        clientName: this.state.clientName,
-        contactName: this.state.contactName,
-        phone: this.state.phone,
-        hrRate: this.state.hrRate,
-        dayRate: this.state.dayRate,
-        otRate: this.state.otRate
-      };
-      addClient(newClient);
+      const formData = this.state;
+      var createdClient = createClientObject(formData);
+      addClient(createdClient);
       this.setState({ showSuccessAlert: true });
+      //this.setState({ showPreviewAlert: true });
     }
   };
 
   clearState = () => {
     this.setState({
+      showErrorAlert: false,
       clientName: "",
-      clientNameInvalid: true,
+      clientNameInvalid: "",
       contactName: "",
       phone: "",
       hrRate: "",
@@ -55,6 +58,14 @@ class AddClient extends React.Component {
       otRate: "",
       rateInvalid: true
     });
+  };
+  //TODO finish Preview Alert. Contains button to submit
+  renderPreviewAlert = () => {
+    if (this.state.showPreviewAlert === true) {
+      return <SuccessAlert message="you sure?" />;
+    } else {
+      return <></>;
+    }
   };
 
   renderSuccessAlert = () => {
