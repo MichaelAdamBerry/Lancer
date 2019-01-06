@@ -47,6 +47,7 @@ export function isInSameCalendarMonth(dateStr) {
   return now.isSame(dateStr, "month");
 }
 
+//TODO only past jobs should be calculated in income statistics
 export function calculateSumOfPendingGross(allJobs) {
   return _.reduce(allJobs, reduceForPendingGross, 0);
 }

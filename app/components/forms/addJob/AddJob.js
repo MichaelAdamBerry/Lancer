@@ -3,12 +3,13 @@ import { connect } from "react-redux";
 import * as actions from "../../../actions/actions";
 import AddJobView from "./AddJobView";
 import {
+  validateStartBeforeEnd,
   getRegularHoursWorked,
   estimateNetPay,
   calculateGrossPay,
   getNghtOverTimeHoursWorked
 } from "./utils/jobFunctions";
-
+import ErrorAlert from "../inputComponents/ErrorAlert";
 import SuccessAlert from "../inputComponents/SuccessAlert";
 
 class AddJob extends React.Component {
@@ -16,6 +17,7 @@ class AddJob extends React.Component {
     super(props);
     this.state = {
       showSuccessAlert: false,
+      showErrorAlert: false,
       loading: true,
       grossPay: 0,
       paid: false,
@@ -62,6 +64,15 @@ class AddJob extends React.Component {
       return <></>;
     }
   };
+
+  renderErrorAlert = () => {
+    if (this.state.showErrorAlert === true) {
+      return <ErrorAlert />;
+    } else {
+      return <></>;
+    }
+  };
+
   handleSubmit = event => {
     event.preventDefault();
     const { addJob, clients } = this.props;
@@ -73,10 +84,6 @@ class AddJob extends React.Component {
     var otHours = getNghtOverTimeHoursWorked(startTime, date);
     var gross = calculateGrossPay(rate, clientObj, hours, otHours);
     var estNet = estimateNetPay(gross);
-
-    //if this.state.rate === "Day Rate" calculateDayRate(clientObj.dayRate)
-    //if this.state.rate === "Multi Day" calculateMultiDay(clientObj.dayRate, daysWorked)
-    //if this.state.rate === "Custom" calculateCustomRate(amount)
 
     const jobObj = {
       clientObj: clientObj,
@@ -93,11 +100,17 @@ class AddJob extends React.Component {
       estNet: estNet
     };
     this.validateForm();
+    var timeValid = validateStartBeforeEnd(date, startTime, endTime);
     if (!this.state.client || !this.state.date || !this.state.rate) {
+      //TODO this should render an <Alert> component
       console.warn("Client Name, Date, and Rate Type are all required fields");
       return;
+    } else if (!timeValid) {
+      this.setState({ showErrorAlert: true });
+      //TODO this should render an <Alert> component with message
+      console.warn("start time cannot be after the end time");
     } else {
-      this.setState({ showSuccessAlert: true });
+      this.setState({ showSuccessAlert: true, showErrorAlert: false });
       addJob(jobObj);
       console.log(jobObj);
       this.clearState();
@@ -130,6 +143,8 @@ class AddJob extends React.Component {
     return (
       <>
         {this.renderSuccessAlert()}
+        <></>
+        {this.renderErrorAlert()}
         <AddJobView
           clients={this.props.clients}
           handleChange={this.handleChange}
