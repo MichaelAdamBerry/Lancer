@@ -15,6 +15,7 @@ import {
 class Stats extends React.Component {
   renderStatsView = () => {
     var jobs = this.props.jobs;
+    console.log(jobs);
     var netYear = calculateNetYearToDate(jobs);
     var netMonth = calculateNetMonthToDate(jobs);
     var pendingGross = calculateSumOfPendingGross(jobs);

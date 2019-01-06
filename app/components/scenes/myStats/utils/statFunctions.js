@@ -3,7 +3,7 @@ import _ from "lodash";
 
 function reduceForMonth(accumulator, current) {
   var inMonth = isInSameCalendarMonth(current.date);
-  if (current.paid && inMonth) {
+  if (current.net && inMonth) {
     accumulator = accumulator + current.net;
   }
   return accumulator;
@@ -11,7 +11,7 @@ function reduceForMonth(accumulator, current) {
 
 function reduceForYear(accumulator, current) {
   var inYear = isInSameCalendarYear(current.date);
-  if (current.paid && inYear) {
+  if (current.net && inYear) {
     accumulator = accumulator + current.net;
   }
   return accumulator;
@@ -21,22 +21,28 @@ function reduceForPendingGross(accumulator, current) {
   if (!current.paid) {
     accumulator = accumulator + current.gross;
   }
-  return accumulator;
+  //rounds to nearest 2nd decimal place returns a string
+  var roundedStr = Number(accumulator).toFixed(2);
+  //converts back to  Number ("12.50" will be 12.5)
+  return Number(roundedStr);
 }
 
 function reduceForPendingEstNet(accumulator, current) {
   if (!current.paid) {
     accumulator = accumulator + current.estNet;
   }
-  return accumulator;
+  //rounds to nearest 2nd decimal place returns a string
+  var roundedStr = Number(accumulator).toFixed(2);
+  //converts back to  Number ("12.50" will be 12.5)
+  return Number(roundedStr);
 }
 
-function isInSameCalendarYear(dateStr) {
+export function isInSameCalendarYear(dateStr) {
   var now = moment();
   return now.isSame(dateStr, "year");
 }
 
-function isInSameCalendarMonth(dateStr) {
+export function isInSameCalendarMonth(dateStr) {
   var now = moment();
   return now.isSame(dateStr, "month");
 }
